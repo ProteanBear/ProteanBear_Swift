@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>C0BC9D4F-BEB8-4E3A-AFCE-7A02F237A952</string>
+	<string>3B6BCEF4-2E19-47A4-9D1E-01D0A28C15E5</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PbSwiftDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>https://github.com/ProteanBear/ProteanBear_Swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>PbSwiftDemo/PbSwiftDemo.xcodeproj</string>
+	<string>PbSwiftDemo/PbSwiftDemo.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>AA947E79475C9858FED6B031156948160F87318B</key>
-		<string>../../..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/ProteanBear/ProteanBear_Swift.git</string>

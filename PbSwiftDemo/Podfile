@@ -1,0 +1,5 @@
+platform:ios,"8.4"
+use_frameworks!
+target 'PbSwiftDemo' do
+   pod 'ReachabilitySwift'
+end

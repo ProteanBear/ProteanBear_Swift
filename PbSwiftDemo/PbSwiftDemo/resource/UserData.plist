@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>userId</key>
+	<string></string>
+	<key>userName</key>
+	<string></string>
+	<key>userPass</key>
+	<string></string>
+	<key>userFontsize</key>
+	<integer>16</integer>
+	<key>userLineHeight</key>
+	<real>1.4</real>
+	<key>isHeightAutoFit</key>
+	<false/>
+	<key>userShareGroup</key>
+	<dict>
+		<key>sinaWeibo</key>
+		<dict>
+			<key>title</key>
+			<string>新浪微博</string>
+			<key>appKey</key>
+			<string>1037697529</string>
+			<key>appSecret</key>
+			<string>cbeece34a4e535a0cca185d47c6417ee</string>
+			<key>appRedirectURI</key>
+			<string>http://www.sina.com.cn/</string>
+			<key>userId</key>
+			<string></string>
+			<key>userPass</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>plugins</key>
+	<dict>
+		<key>photo</key>
+		<true/>
+		<key>video</key>
+		<true/>
+		<key>comment</key>
+		<true/>
+		<key>scan</key>
+		<true/>
+		<key>favorite</key>
+		<true/>
+		<key>user</key>
+		<true/>
+		<key>share</key>
+		<true/>
+		<key>qrcode</key>
+		<true/>
+		<key>push</key>
+		<true/>
+		<key>photoup</key>
+		<true/>
+		<key>coupon</key>
+		<true/>
+		<key>forum</key>
+		<true/>
+	</dict>
+</dict>
+</plist>
