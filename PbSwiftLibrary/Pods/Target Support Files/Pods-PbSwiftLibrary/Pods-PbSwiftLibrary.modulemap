@@ -1,0 +1,6 @@
+framework module Pods_PbSwiftLibrary {
+  umbrella header "Pods-PbSwiftLibrary-umbrella.h"
+
+  export *
+  module * { export * }
+}
