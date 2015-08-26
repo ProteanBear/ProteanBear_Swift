@@ -8,6 +8,8 @@ Pod::Spec.new do |s|
 
   s.description  = <<-DESC
 
+                    说明：由ProteanBear创作使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用方法、数据绑定和一些常用的UI组件以及视图控制器。
+
                    DESC
 
   s.homepage     = "https://github.com/ProteanBear/ProteanBear_Swift"
@@ -33,7 +35,7 @@ Pod::Spec.new do |s|
 
   # ――― Source Code
 
-  s.source_files  = "library/**/*.{swift,h,m}"
+  s.source_files  = "library/**/*.{swift}"
   # s.public_header_files = "Classes/**/*.h"
 
   # ――― Resources

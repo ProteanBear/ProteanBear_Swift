@@ -15,5 +15,10 @@ FOUNDATION_EXPORT double PbSwiftLibraryVersionNumber;
 FOUNDATION_EXPORT const unsigned char PbSwiftLibraryVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PbSwiftLibrary/PublicHeader.h>
-
+class PbLog
+{
+    static let isDebug
+    class func debug(infor:String)
+    class func error(error:String)
+}
 
