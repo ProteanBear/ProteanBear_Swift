@@ -38,4 +38,17 @@ extension UIImage
         
         return newImage
     }
+    
+    //imageWithColor:根据颜色生成图片
+    class func imageWithColor(color:UIColor,size:CGSize) -> UIImage
+    {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, color.CGColor)
+        CGContextFillRect(context, rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
