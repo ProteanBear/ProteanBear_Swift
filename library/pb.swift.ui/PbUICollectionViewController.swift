@@ -441,7 +441,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             }
             if let cellClass: AnyClass=self.pbCellClassForCollectionView(indexPath, data: data)
             {
-                self.collectionView?.registerClass(cellClass, forCellWithReuseIdentifier:loadCellIdentifier)
+                self.collectionView?.registerClass(cellClass, forCellWithReuseIdentifier:self.pbIdentifierForCollectionView(indexPath, data: data))
             }
             
             //获取未使用的单元对象

@@ -30,7 +30,8 @@ class PbUIAnimatedPageControlIndicator:CALayer
     var indicatorSize:CGFloat!{
         willSet
         {
-            if(indicatorSize==newValue){return}
+            if(self.indicatorSize != nil
+                && self.indicatorSize==newValue){return}
         }
     }
     //indicatorColor:
@@ -38,14 +39,14 @@ class PbUIAnimatedPageControlIndicator:CALayer
     //currentRect:
     var currentRect:CGRect!
     //lastContentOffset:
-    var lastContentOffset:CGFloat!
+    var lastContentOffset:CGFloat=0
     //scrollDirection:
     var scrollDirection=PbUIAnimatedPageControlScrollDirection.None
     
     //animateIndicator:
     func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
     //restoreAnimation:
-    func restoreAnimation(distince:Float) -> Void {}
+    func restoreAnimation(distince:Float) -> Void{}
     //restoreAnimation:
     func restoreAnimation(distince:Float,after:NSTimeInterval) -> Void
     {
@@ -529,10 +530,12 @@ class PbUIAnimatedPageControl: UIView
     //willMoveToSuperview:
     override func willMoveToSuperview(newSuperview: UIView?)
     {
-        self.layer.addSublayer(self.line)
+        self.layer.addSublayer(self.pageControlLine())
+        self.layer.insertSublayer(self.getIndicator(),above: self.pageControlLine())
+        self.getLine().setNeedsDisplay()
     }
     
-    //pageControlLine:
+    //pageControlLine:获取线条
     func pageControlLine() -> PbUIAnimatedPageControlLine
     {
         return self.getLine()
@@ -551,6 +554,66 @@ class PbUIAnimatedPageControl: UIView
         
         //恢复动画
         self.indicator.restoreAnimation(Float(distince/Double(self.pageCount)),after: 0.2)
+    }
+    
+    //tapAction:
+    func tapAction(recognizer:UITapGestureRecognizer)
+    {
+        if(self.bindScrollView != nil)
+        {
+            let location = recognizer.locationInView(self)
+            if (CGRectContainsPoint(self.line!.frame, location))
+            {
+                let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
+                var index =  Double(location.x) / ballDistance
+                if ((Double(location.x) - Double(index*ballDistance)) >= Double(ballDistance/2))
+                {
+                    index += 1.0
+                }
+                
+                let distince =  abs(self.line!.selectedLineLength-index*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))/((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
+                
+                //背景线条动画
+                self.line!.animateSelectedLineToNewIndex(Int(index+1))
+                
+                //scrollview 滑动
+                self.bindScrollView!.setContentOffset(CGPointMake(self.bindScrollView!.frame.size.width*CGFloat(index),0), animated:true)
+                
+                //恢复动画
+                self.indicator.restoreAnimation(Float(distince/Double(self.pageCount)), after:0.2)
+                
+                if(self.didSelectIndexBlock != nil)
+                {
+                    self.didSelectIndexBlock!(index:Int(index+1))
+                }
+            }
+        }
+    }
+    
+    //panAction:
+    func panAction(recognizer:UIPanGestureRecognizer)
+    {
+        if (!self.swipeEnable)
+        {
+            return
+        }
+        
+        let location=recognizer.locationInView(self)
+        if (CGRectContainsPoint(self.line!.frame, location))
+        {
+            let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
+            var index:Int =  Int(Double(location.x) / ballDistance)
+            if ((Double(location.x) - Double(index)*ballDistance) >= ballDistance/2)
+            {
+                index += 1
+            }
+            
+            if (index != self.lastIndex)
+            {
+                self.animationToIndex(index)
+                self.lastIndex=index
+            }
+        }
     }
     
     //getLine:
@@ -596,7 +659,7 @@ class PbUIAnimatedPageControl: UIView
             self.rotateRect?.indicatorColor = self.selectedColor
             self.rotateRect?.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
             self.rotateRect?.indicatorSize  = self.indicatorSize
-            self.rotateRect?.contentsScale = UIScreen.mainScreen().scale 
+            self.rotateRect?.contentsScale = UIScreen.mainScreen().scale
         }
         
         return self.rotateRect!
@@ -605,7 +668,7 @@ class PbUIAnimatedPageControl: UIView
     //getIndicator:
     private func getIndicator() -> PbUIAnimatedPageControlIndicator
     {
-        if (self.indicator != nil)
+        if (self.indicator == nil)
         {
             switch (self.indicatorStyle)
             {
@@ -623,65 +686,5 @@ class PbUIAnimatedPageControl: UIView
         }
         
         return self.indicator
-    }
-    
-    //tapAction:
-    private func tapAction(recognizer:UITapGestureRecognizer)
-    {
-        if(self.bindScrollView != nil)
-        {
-            let location = recognizer.locationInView(self)
-            if (CGRectContainsPoint(self.line!.frame, location))
-            {
-                let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
-                var index =  Double(location.x) / ballDistance
-                if ((Double(location.x) - Double(index*ballDistance)) >= Double(ballDistance/2))
-                {
-                    index += 1.0
-                }
-                
-                let distince =  abs(self.line!.selectedLineLength-index*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))/((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
-                
-                //背景线条动画
-                self.line!.animateSelectedLineToNewIndex(Int(index+1))
-                
-                //scrollview 滑动
-                self.bindScrollView!.setContentOffset(CGPointMake(self.bindScrollView!.frame.size.width*CGFloat(index),0), animated:true)
-                
-                //恢复动画
-                self.indicator.restoreAnimation(Float(distince/Double(self.pageCount)), after:0.2)
-                
-                if(self.didSelectIndexBlock != nil)
-                {
-                    self.didSelectIndexBlock!(index:Int(index+1))
-                }
-            }
-        }
-    }
-    
-    //panAction:
-    private func panAction(recognizer:UIPanGestureRecognizer)
-    {
-        if (!self.swipeEnable)
-        {
-            return
-        }
-        
-        let location=recognizer.locationInView(self) 
-        if (CGRectContainsPoint(self.line!.frame, location))
-        {
-            let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
-            var index:Int =  Int(Double(location.x) / ballDistance)
-            if ((Double(location.x) - Double(index)*ballDistance) >= ballDistance/2)
-            {
-                index += 1
-            }
-            
-            if (index != self.lastIndex)
-            {
-                self.animationToIndex(index)
-                self.lastIndex=index
-            }
-        }
     }
 }

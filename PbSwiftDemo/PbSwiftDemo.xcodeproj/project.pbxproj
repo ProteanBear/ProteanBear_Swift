@@ -44,10 +44,13 @@
 		D38965371B8D7B1500F89C3E /* PbTestUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389652F1B8D7B1500F89C3E /* PbTestUITableCell.swift */; };
 		D398B6011B91FED000BFD116 /* PbUIAnimatedPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */; };
 		D398B6031B92101400BFD116 /* ExtensionCALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6021B92101400BFD116 /* ExtensionCALayer.swift */; };
+		D3AC7C731BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */; };
 		D3E837B41B8D550F00FEF50F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E837B31B8D550F00FEF50F /* AppDelegate.swift */; };
 		D3E837B91B8D550F00FEF50F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3E837B71B8D550F00FEF50F /* Main.storyboard */; };
 		D3E837BE1B8D550F00FEF50F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3E837BC1B8D550F00FEF50F /* LaunchScreen.xib */; };
 		D3E837CA1B8D550F00FEF50F /* PbSwiftDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E837C91B8D550F00FEF50F /* PbSwiftDemoTests.swift */; };
+		D3FCE1DC1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FCE1DB1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift */; };
+		D3FCE1DE1B97EB0A00EC2885 /* PbUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +103,7 @@
 		D389652F1B8D7B1500F89C3E /* PbTestUITableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestUITableCell.swift; sourceTree = "<group>"; };
 		D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUIAnimatedPageControl.swift; sourceTree = "<group>"; };
 		D398B6021B92101400BFD116 /* ExtensionCALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionCALayer.swift; sourceTree = "<group>"; };
+		D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForLaunchHelpViewController.swift; sourceTree = "<group>"; };
 		D3E837AE1B8D550F00FEF50F /* PbSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PbSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E837B21B8D550F00FEF50F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3E837B31B8D550F00FEF50F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 		D3E837C31B8D550F00FEF50F /* PbSwiftDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PbSwiftDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E837C81B8D550F00FEF50F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3E837C91B8D550F00FEF50F /* PbSwiftDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PbSwiftDemoTests.swift; sourceTree = "<group>"; };
+		D3FCE1DB1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbWidgetLaunchHelpViewController.swift; sourceTree = "<group>"; };
+		D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUICollectionViewCell.swift; sourceTree = "<group>"; };
 		FB1F92A5B1C576D4916E9B17 /* Pods-PbSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PbSwiftDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PbSwiftDemo/Pods-PbSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +175,7 @@
 				D38965001B8D7B0300F89C3E /* ExtensionUIImageView.swift */,
 				D38965011B8D7B0300F89C3E /* ExtensionUIScrollView.swift */,
 				D38965021B8D7B0300F89C3E /* ExtensionUIViewController.swift */,
+				D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */,
 				D38965031B8D7B0300F89C3E /* PbUICollectionViewCellForLoad.swift */,
 				D38965041B8D7B0300F89C3E /* PbUICollectionViewController.swift */,
 				D38965051B8D7B0300F89C3E /* PbUIRefreshView.swift */,
@@ -189,6 +196,7 @@
 				D38965251B8D7B1500F89C3E /* PbTestForCollectionViewController.swift */,
 				D38965261B8D7B1500F89C3E /* PbTestForPhotoManager.swift */,
 				D38965271B8D7B1500F89C3E /* PbTestForTableViewController.swift */,
+				D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 		D398B5F91B91F11400BFD116 /* pb.swift.widget */ = {
 			isa = PBXGroup;
 			children = (
+				D3FCE1DB1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift */,
 			);
 			name = pb.swift.widget;
 			path = ../../library/pb.swift.widget;
@@ -485,12 +494,15 @@
 				D389651E1B8D7B0300F89C3E /* PbUIRefreshView.swift in Sources */,
 				D38965141B8D7B0300F89C3E /* PbDataParser.swift in Sources */,
 				D38965191B8D7B0300F89C3E /* ExtensionUIImageView.swift in Sources */,
+				D3AC7C731BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift in Sources */,
+				D3FCE1DC1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift in Sources */,
 				D3E837B41B8D550F00FEF50F /* AppDelegate.swift in Sources */,
 				D38965131B8D7B0300F89C3E /* PbDataCacheFile.swift in Sources */,
 				D389651F1B8D7B0300F89C3E /* PbUIRingSpinnerCoverView.swift in Sources */,
 				D389650F1B8D7B0300F89C3E /* PbObjectFile.swift in Sources */,
 				D38965171B8D7B0300F89C3E /* PbDataRequester.swift in Sources */,
 				D389650B1B8D7B0300F89C3E /* ExtensionString.swift in Sources */,
+				D3FCE1DE1B97EB0A00EC2885 /* PbUICollectionViewCell.swift in Sources */,
 				D38965231B8D7B0300F89C3E /* PbUITabViewController.swift in Sources */,
 				D389650C1B8D7B0300F89C3E /* ExtensionUIColor.swift in Sources */,
 				D38965201B8D7B0300F89C3E /* PbUIRingSpinnerView.swift in Sources */,

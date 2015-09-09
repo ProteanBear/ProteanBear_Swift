@@ -130,6 +130,44 @@ class PbSystem
         return CGSizeMake(screenCurrentWidth(),screenCurrentHeight())
     }
     
+    //获取当前屏幕的宽度
+    class func screenWidth(full:Bool) -> CGFloat
+    {
+        var width=UIScreen.mainScreen().applicationFrame.size.width
+        return full ? width : self.screenWidth()
+    }
+    
+    //获取当前屏幕的高度
+    class func screenHeight(full:Bool) -> CGFloat
+    {
+        var height=UIScreen.mainScreen().applicationFrame.size.height
+        return full ? height+(os8() ? 20:0) : self.screenHeight()
+    }
+    
+    //获取当前屏幕的尺寸
+    class func screenSize(full:Bool) -> CGSize
+    {
+        return CGSizeMake(screenWidth(full),screenHeight(full))
+    }
+    
+    //获取当前翻转模式下屏幕的宽度
+    class func screenCurrentWidth(full:Bool) -> CGFloat
+    {
+        return UIDevice.currentDevice().orientation.isLandscape ? screenHeight(full) : screenWidth(full)
+    }
+    
+    //获取当前翻转模式下屏幕的高度
+    class func screenCurrentHeight(full:Bool) -> CGFloat
+    {
+        return UIDevice.currentDevice().orientation.isLandscape ? screenWidth(full) : screenHeight(full)
+    }
+    
+    //获取当前翻转模式下屏幕的尺寸
+    class func screenCurrentSize(full:Bool) -> CGSize
+    {
+        return CGSizeMake(screenCurrentWidth(full),screenCurrentHeight(full))
+    }
+    
     //度数转化为弧度
     class func toRadians(degrees:Double) -> Double
     {
