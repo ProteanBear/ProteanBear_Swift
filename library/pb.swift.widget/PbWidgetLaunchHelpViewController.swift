@@ -86,6 +86,14 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.pageControl.swipeEnable = true
         self.pageControl.frame=CGRectMake(0, 0,self.pageControlSize().width,self.pageControlSize().height)
         
+        //startButton
+        self.startButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.startButton.setTitle("开始使用",forState:.Normal)
+        self.startButton.setTitleColor(UIColor.darkGrayColor(),forState:.Normal)
+        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.smokeWhiteColor(), size: self.startButtonSize()), forState: UIControlState.Normal)
+        self.startButton.clipsToBounds=true
+        self.startButton.layer.opacity=0
+        
         //collectionView
         self.collectionView?.backgroundColor=UIColor.whiteColor()
         self.collectionView?.showsHorizontalScrollIndicator=false
@@ -106,6 +114,12 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         return CGSizeMake(80,15)
     }
     
+    //startButtonSize:设置进入按钮的大小(覆盖此方法重设进入按钮大小)
+    func startButtonSize() -> CGSize
+    {
+        return CGSizeMake(200,34)
+    }
+    
     //setCollectionViewLayout:设置单元格布局
     private func setCollectionViewLayout()
     {
@@ -120,12 +134,38 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         layout.itemSize=PbSystem.screenCurrentSize(true)
         self.collectionView?.setCollectionViewLayout(layout,animated: false)
         
-        //pageControl
-        let metrics=["width":self.pageControlSize().width,"height":self.pageControlSize().height]
-        let views=["pageControl":self.pageControl]
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[pageControl(==height)]-20-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: metrics, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[pageControl(==width)]", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: metrics, views:views))
+        //pageControl+startButton
+        let metrics=["width":self.pageControlSize().width,"height":self.pageControlSize().height,"btnWidth":self.startButtonSize().width,"btnHeight":self.startButtonSize().height,"margin":20]
+        let views=["pageControl":self.pageControl,"startButton":self.startButton]
+        //纵向
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[startButton(==btnHeight)]-margin-[pageControl(==height)]-margin-|", options:.AlignAllCenterX, metrics: metrics, views:views))
+        //横向
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[pageControl(==width)]", options:.AlignAllBaseline, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[startButton(==btnWidth)]", options:.AlignAllBaseline, metrics: metrics, views:views))
+        //中心位置
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.CenterX, relatedBy:.Equal, toItem: self.pageControl,attribute:.CenterX, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.CenterX, relatedBy:.Equal, toItem: self.startButton,attribute:.CenterX, multiplier: 1, constant: 0))
+    }
+    
+    //displayStartButton:显示进入按钮
+    private func displayStartButton(show:Bool)
+    {
+        if(show)
+        {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                self.startButton.layer.opacity=1
+                }) { (finished) -> Void in
+                    
+            }
+        }
+        else
+        {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                self.startButton.layer.opacity=0
+                }) { (finished) -> Void in
+                    
+            }
+        }
     }
     
     //scrollViewDidScroll:滚动时执行粘土动画
@@ -144,6 +184,10 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     //scrollViewWillBeginDecelerating:将要开始滚动，重置指示器位置
     override func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
     {
+        if(self.startButton.layer.opacity==1)
+        {
+            self.displayStartButton(false)
+        }
         self.pageControl.indicator.restoreAnimation(1.0/Float(self.pageControl.pageCount))
     }
     
@@ -151,11 +195,10 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         self.pageControl.indicator.lastContentOffset=scrollView.contentOffset.x
-    }
-    
-    //scrollViewDidEndScrollingAnimation:结束滚动动画，记录最后位置
-    override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView)
-    {
-        self.pageControl.indicator.lastContentOffset=scrollView.contentOffset.x
+        self.pageControl.selectedPage=Int(Double(scrollView.contentOffset.x)/Double((self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width))
+        if(self.pageControl.selectedPage == self.collectionData!.count-1)
+        {
+            self.displayStartButton(true)
+        }
     }
 }
