@@ -88,9 +88,11 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         
         //startButton
         self.startButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.startButton.setTitle("开始使用",forState:.Normal)
-        self.startButton.setTitleColor(UIColor.darkGrayColor(),forState:.Normal)
-        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.smokeWhiteColor(), size: self.startButtonSize()), forState: UIControlState.Normal)
+        self.startButton.setTitle("进入应用",forState:.Normal)
+        self.startButton.setTitleColor(UIColor.blackColor(),forState:.Normal)
+        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor(), size: self.startButtonSize()), forState: UIControlState.Normal)
+        self.startButton.titleLabel?.font=UIFont.systemFontOfSize(15)
+        self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true
         self.startButton.layer.opacity=0
         
