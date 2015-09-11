@@ -9,111 +9,742 @@
 import Foundation
 import UIKit
 
+//扩展标准颜色值
 extension UIColor
 {
+    //红色（Red）
+    static let standardRedColor:Array<UInt32>=[
+        0xfde0dc,0xf9bdbb,0xf69988,0xf36c60,0xe84e40,
+        0xe51c23,0xdd191d,0xd01716,0xc41411,0xb0120a,
+        0xff7997,0xff5177,0xff2d6f,0xe00032
+    ]
+    //粉色（Pink）
+    static let standardPinkColor:Array<UInt32>=[
+        0xfce4ec,0xf8bbd0,0xf48fb1,0xf06292,0xec407a,
+        0xe91e63,0xd81b60,0xc2185b,0xad1457,0x880e4f,
+        0xff80ab,0xff4081,0xf50057,0xc51162
+    ]
+    //紫色（Purple）
+    static let standardPurpleColor:Array<UInt32>=[
+        0xf3e5f5,0xe1bee7,0xce93d8,0xba68c8,0xab47bc,
+        0x9c27b0,0x8e24aa,0x7b1fa2,0x6a1b9a,0x4a148c,
+        0xea80fc,0xe040fb,0xd500f9,0xaa00ff
+    ]
+    
+    //深紫色（Deep Purple）
+    static let standardPurpleDeepColor:Array<UInt32>=[
+        0xede7f6,0xd1c4e9,0xb39ddb,0x9575cd,0x7e57c2,
+        0x673ab7,0x5e35b1,0x512da8,0x4527a0,0x311b92,
+        0xb388ff,0x7c4dff,0x651fff,0x6200ea
+    ]
+    //靛蓝色（Indigo）
+    static let standardIndigoColor:Array<UInt32>=[
+        0xe8eaf6,0xc5cae9,0x9fa8da,0x7986cb,0x5c6bc0,
+        0x3f51b5,0x3949ab,0x303f9f,0x283593,0x1a237e,
+        0x8c9eff,0x526dfe,0x3d5afe,0x304ffe
+    ]
+    //蓝色（Blue）
+    static let standardBlueColor:Array<UInt32>=[
+        0xe7e9fd,0xd0d9ff,0xafbfff,0x91a7ff,0x738ffe,
+        0x5677fc,0x4e6cef,0x455ede,0x3b50ce,0x2a36b1,
+        0xa6baff,0x6889ff,0x4d73ff,0x4d69ff
+    ]
+    
+    //浅蓝色（Light Blue）
+    static let standardBlueLightColor:Array<UInt32>=[
+        0xe1f5fe,0xb3e5fc,0x81d4fa,0x4fc3f7,0x29b6f6,
+        0x03a9f4,0x039be5,0x0288d1,0x0277bd,0x01579b,
+        0x80d8ff,0x40c4ff,0x00b0ff,0x0091ea
+    ]
+    //青色（Cyan）
+    static let standardCyanColor:Array<UInt32>=[
+        0xe0f7fa,0xb2ebf2,0x80deea,0x4dd0e1,0x26c6da,
+        0x00bcd4,0x00acc1,0x0097a7,0x00838f,0x006064,
+        0x84ffff,0x18ffff,0x00e5ff,0x00b8d4
+    ]
+    //蓝绿色（Teal）
+    static let standardTealColor:Array<UInt32>=[
+        0xe0f2f1,0xb2dfdb,0x80cbc4,0x4db6ac,0x26a69a,
+        0x009688,0x00897b,0x00796b,0x00695c,0x004d40,
+        0xa7ffeb,0x64ffda,0x1de9b6,0x00bfa5
+    ]
+    
+    //绿色（Green）
+    static let standardGreenColor:Array<UInt32>=[
+        0xd0f8ce,0xa3e9a4,0x72d572,0x42bd41,0x2baf2b,
+        0x259b24,0x0a8f08,0x0a7e07,0x056f00,0x0d5302,
+        0xa2f78d,0x5af158,0x14e715,0x12c700
+    ]
+    //浅绿色（Light Green）
+    static let standardGreenLightColor:Array<UInt32>=[
+        0xf1f8e9,0xdcedc8,0xc5e1a5,0xaed581,0x9ccc65,
+        0x8bc34a,0x7cb342,0x689f38,0x558b2f,0x33691e,
+        0xccff90,0xb2ff59,0x76ff03,0x64dd17
+    ]
+    //绿黄色（Lime）
+    static let standardLimeColor:Array<UInt32>=[
+        0xf9fbe7,0xf0f4c3,0xe6ee9c,0xdce775,0xd4e157,
+        0xcddc39,0xc0ca33,0xafb42b,0x9ead24,0x827717,
+        0xf4ff81,0xeeff41,0xc6ff00,0xaeea00
+    ]
+    
+    //黄色（Yellow）
+    static let standardYellowColor:Array<UInt32>=[
+        0xfffde7,0xfff9c4,0xfff59d,0xfff176,0xffee58,
+        0xffeb3b,0xfdd835,0xfbc02d,0xf9a825,0xf57f17,
+        0xffff8d,0xffff00,0xffea00,0xffd600
+    ]
+    //琥珀色（Amber）
+    static let standardAmberColor:Array<UInt32>=[
+        0xfff8e1,0xffecb3,0xffe082,0xffd54f,0xffca28,
+        0xffc107,0xffb300,0xffa000,0xff8f00,0xff6f00,
+        0xffe57f,0xffd740,0xffc400,0xffab00
+    ]
+    //橙色（Orange）
+    static let standardOrangeColor:Array<UInt32>=[
+        0xfff3e0,0xffe0b2,0xffcc80,0xffb74d,0xffa726,
+        0xff9800,0xfb8c00,0xf57c00,0xef6c00,0xe65100,
+        0xffd180,0xffab40,0xff9100,0xff6d00
+    ]
+    
+    //深橙色（Deep Orange）
+    static let standardOrangeDeepColor:Array<UInt32>=[
+        0xfbe9e7,0xffccbc,0xffab91,0xff8a65,0xff7043,
+        0xff5722,0xf4511e,0xe64a19,0xd84315,0xbf360c,
+        0xff9e80,0xff6e40,0xff3d00,0xdd2c00
+    ]
+    //棕色（Brown）
+    static let standardBrownColor:Array<UInt32>=[
+        0xefebe9,0xd7ccc8,0xbcaaa4,0xa1887f,0x8d6e63,
+        0x795548,0x6d4c41,0x5d4037,0x4e342e,0x3e2723
+    ]
+    //灰色（Grey）
+    static let standardGreyColor:Array<UInt32>=[
+        0xfafafa,0xf5f5f5,0xeeeeee,0xe0e0e0,0xbdbdbd,
+        0x9e9e9e,0x757575,0x616161,0x424242,0x212121
+    ]
+    //蓝灰色（Blue Grey）
+    static let standardGreyBlueColor:Array<UInt32>=[
+        0xeceff1,0xcfd8dc,0xb0bec5,0x90a4ae,0x78909c,
+        0x607d8b,0x546e7a,0x455a64,0x37474f,0x263238
+    ]
+    
+    //获取RGB值
+    class func pbUInt32ToFloatRed(value:UInt32) -> CGFloat
+    {
+        return CGFloat(Double((value & 0xFF0000) >> 16) / Double(0xff))
+    }
+    class func pbUInt32ToFloatGreen(value:UInt32) -> CGFloat
+    {
+        return CGFloat(Double((value & 0x00FF00) >> 8) / Double(0xff))
+    }
+    class func pbUInt32ToFloatBlue(value:UInt32) -> CGFloat
+    {
+        return CGFloat(Double(value & 0x0000FF) / Double(0xff))
+    }
+}
+
+//PbUIColorLevel:颜色级别
+enum PbUIColorLevel:Int
+{
+    //枚举值
+    case level50,level100,level200,level300,level400,level500,level600,level700,level800,level900,levelA100,levelA200,levelA400,levelA700
+    //描述
+    var description:String{
+        switch self{
+            case .level50:return "50"
+            case .level100:return "100"
+            case .level200:return "200"
+            case .level300:return "300"
+            case .level400:return "400"
+            case .level500:return "500"
+            case .level600:return "600"
+            case .level700:return "700"
+            case .level800:return "800"
+            case .level900:return "900"
+            case .levelA100:return "A100"
+            case .levelA200:return "A200"
+            case .levelA400:return "A400"
+            case .levelA700:return "A700"
+            default:return "0"
+        }
+    }
+    
+    //标准颜色值
+    //红色（Red）
+    var redColor:UIColor{
+        let color=UIColor.standardRedColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //粉色（Pink）
+    var pinkColor:UIColor{
+        let color=UIColor.standardPinkColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //紫色（Purple）
+    var purpleColor:UIColor{
+        let color=UIColor.standardPurpleColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //深紫色（Deep Purple）
+    var purpleDeepColor:UIColor{
+        let color=UIColor.standardPurpleDeepColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //靛蓝色（Indigo）
+    var indigoColor:UIColor{
+        let color=UIColor.standardIndigoColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //蓝色（Blue）
+    var blueColor:UIColor{
+        let color=UIColor.standardBlueColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //浅蓝色（Light Blue）
+    var blueLightColor:UIColor{
+        let color=UIColor.standardBlueLightColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //青色（Cyan）
+    var cyanColor:UIColor{
+        let color=UIColor.standardCyanColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //蓝绿色（Teal）
+    var tealColor:UIColor{
+        let color=UIColor.standardTealColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //绿色（Green）
+    var greenColor:UIColor{
+        let color=UIColor.standardGreenColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //浅绿色（Light Green）
+    var greenLightColor:UIColor{
+        let color=UIColor.standardGreenLightColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //绿黄色（Lime）
+    var limeColor:UIColor{
+        let color=UIColor.standardLimeColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //黄色（Yellow）
+    var yellowColor:UIColor{
+        let color=UIColor.standardYellowColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //琥珀色（Amber）
+    var amberColor:UIColor{
+        let color=UIColor.standardAmberColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //橙色（Orange）
+    var orangeColor:UIColor{
+        let color=UIColor.standardOrangeColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //深橙色（Deep Orange）
+    var orangeDeepColor:UIColor{
+        let color=UIColor.standardOrangeDeepColor[self.rawValue]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //棕色（Brown）
+    var brownColor:UIColor{
+        let index=(self.rawValue > UIColor.standardBrownColor.count-1) ? 4 : self.rawValue
+        let color=UIColor.standardBrownColor[index]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //灰色（Grey）
+    var greyColor:UIColor{
+        let index=(self.rawValue > UIColor.standardGreyColor.count-1) ? 4 : self.rawValue
+        let color=UIColor.standardGreyColor[index]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    //蓝灰色（Blue Grey）
+    var greyBlueColor:UIColor{
+        let index=(self.rawValue > UIColor.standardGreyBlueColor.count-1) ? 4 : self.rawValue
+        let color=UIColor.standardGreyBlueColor[index]
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha: 1)
+    }
+    
+    //获取颜色值的描述
+    func colorDescription(standardColor:Array<UInt32>) -> String
+    {
+        let index=(self.rawValue > standardColor.count-1) ? 4 : self.rawValue
+        return String(format:"#%06x",standardColor[index])
+    }
+}
+
+extension UIColor
+{
+    //-----------------------开始：Design标准颜色值
+    //levelName:获取级别名称
+    class func pbLevelName(levelRaw:Int) -> String
+    {
+        return PbUIColorLevel(rawValue: levelRaw)!.description
+    }
+    
+    //红色Red
+    class func pbRedColor(levelRaw:Int) -> UIColor
+    {
+        return pbRedColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbRedColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.redColor
+    }
+    class func pbRedColorValue(levelRaw:Int) -> String
+    {
+        return pbRedColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbRedColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardRedColor)
+    }
+    
+    //粉色Pink
+    class func pbPinkColor(levelRaw:Int) -> UIColor
+    {
+        return pbPinkColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPinkColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.pinkColor
+    }
+    class func pbPinkColorValue(levelRaw:Int) -> String
+    {
+        return pbPinkColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPinkColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardPinkColor)
+    }
+    
+    //紫色Purple
+    class func pbPurpleColor(levelRaw:Int) -> UIColor
+    {
+        return pbPurpleColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPurpleColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.purpleColor
+    }
+    class func pbPurpleColorValue(levelRaw:Int) -> String
+    {
+        return pbPurpleColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPurpleColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardPurpleColor)
+    }
+    
+    //深紫色DeepPurple
+    class func pbPurpleDeepColor(levelRaw:Int) -> UIColor
+    {
+        return pbPurpleDeepColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPurpleDeepColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.purpleDeepColor
+    }
+    class func pbPurpleDeepColorValue(levelRaw:Int) -> String
+    {
+        return pbPurpleDeepColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbPurpleDeepColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardPurpleDeepColor)
+    }
+    
+    //靛蓝色Indigo
+    class func pbIndigoColor(levelRaw:Int) -> UIColor
+    {
+        return pbIndigoColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbIndigoColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.indigoColor
+    }
+    class func pbIndigoColorValue(levelRaw:Int) -> String
+    {
+        return pbIndigoColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbIndigoColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardIndigoColor)
+    }
+    
+    //蓝色Blue
+    class func pbBlueColor(levelRaw:Int) -> UIColor
+    {
+        return pbBlueColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBlueColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.blueColor
+    }
+    class func pbBlueColorValue(levelRaw:Int) -> String
+    {
+        return pbBlueColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBlueColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardBlueColor)
+    }
+    
+    //浅蓝色LightBlue
+    class func pbBlueLightColor(levelRaw:Int) -> UIColor
+    {
+        return pbBlueLightColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBlueLightColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.blueLightColor
+    }
+    class func pbBlueLightColorValue(levelRaw:Int) -> String
+    {
+        return pbBlueLightColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBlueLightColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardBlueLightColor)
+    }
+    
+    //青色Cyan
+    class func pbCyanColor(levelRaw:Int) -> UIColor
+    {
+        return pbCyanColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbCyanColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.cyanColor
+    }
+    class func pbCyanColorValue(levelRaw:Int) -> String
+    {
+        return pbCyanColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbCyanColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardCyanColor)
+    }
+    
+    //蓝绿色Teal
+    class func pbTealColor(levelRaw:Int) -> UIColor
+    {
+        return pbTealColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbTealColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.tealColor
+    }
+    class func pbTealColorValue(levelRaw:Int) -> String
+    {
+        return pbTealColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbTealColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardTealColor)
+    }
+    
+    //绿色Green
+    class func pbGreenColor(levelRaw:Int) -> UIColor
+    {
+        return pbGreenColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreenColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.greenColor
+    }
+    class func pbGreenColorValue(levelRaw:Int) -> String
+    {
+        return pbGreenColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreenColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardGreenColor)
+    }
+    
+    //浅绿色Light Green
+    class func pbGreenLightColor(levelRaw:Int) -> UIColor
+    {
+        return pbGreenLightColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreenLightColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.greenLightColor
+    }
+    class func pbGreenLightColorValue(levelRaw:Int) -> String
+    {
+        return pbGreenLightColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreenLightColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardGreenLightColor)
+    }
+    
+    //黄绿色Lime
+    class func pbLimeColor(levelRaw:Int) -> UIColor
+    {
+        return pbLimeColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbLimeColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.limeColor
+    }
+    class func pbLimeColorValue(levelRaw:Int) -> String
+    {
+        return pbLimeColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbLimeColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardLimeColor)
+    }
+    
+    //黄色（Yellow）
+    class func pbYellowColor(levelRaw:Int) -> UIColor
+    {
+        return pbYellowColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbYellowColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.yellowColor
+    }
+    class func pbYellowColorValue(levelRaw:Int) -> String
+    {
+        return pbYellowColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbYellowColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardYellowColor)
+    }
+    
+    //琥珀色（Amber）
+    class func pbAmberColor(levelRaw:Int) -> UIColor
+    {
+        return pbAmberColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbAmberColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.amberColor
+    }
+    class func pbAmberColorValue(levelRaw:Int) -> String
+    {
+        return pbAmberColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbAmberColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardAmberColor)
+    }
+    
+    //橙色（Orange）
+    class func pbOrangeColor(levelRaw:Int) -> UIColor
+    {
+        return pbOrangeColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbOrangeColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.orangeColor
+    }
+    class func pbOrangeColorValue(levelRaw:Int) -> String
+    {
+        return pbOrangeColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbOrangeColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardOrangeColor)
+    }
+    
+    //深橙色（Deep Orange）
+    class func pbOrangeDeepColor(levelRaw:Int) -> UIColor
+    {
+        return pbOrangeDeepColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbOrangeDeepColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.orangeDeepColor
+    }
+    class func pbOrangeDeepColorValue(levelRaw:Int) -> String
+    {
+        return pbOrangeDeepColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbOrangeDeepColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardOrangeDeepColor)
+    }
+    
+    //棕色（Brown）
+    class func pbBrownColor(levelRaw:Int) -> UIColor
+    {
+        return pbBrownColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBrownColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.brownColor
+    }
+    class func pbBrownColorValue(levelRaw:Int) -> String
+    {
+        return pbBrownColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbBrownColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardBrownColor)
+    }
+    
+    //灰色（Grey）
+    class func pbGreyColor(levelRaw:Int) -> UIColor
+    {
+        return pbGreyColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreyColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.greyColor
+    }
+    class func pbGreyColorValue(levelRaw:Int) -> String
+    {
+        return pbGreyColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreyColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardGreyColor)
+    }
+    
+    //蓝灰色（Blue Grey）
+    class func pbGreyBlueColor(levelRaw:Int) -> UIColor
+    {
+        return pbGreyBlueColor(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreyBlueColor(level:PbUIColorLevel) -> UIColor
+    {
+        return level.greyBlueColor
+    }
+    class func pbGreyBlueColorValue(levelRaw:Int) -> String
+    {
+        return pbGreyBlueColorValue(PbUIColorLevel(rawValue:levelRaw)!)
+    }
+    class func pbGreyBlueColorValue(level:PbUIColorLevel) -> String
+    {
+        return level.colorDescription(UIColor.standardGreyBlueColor)
+    }
+    //-----------------------结束：Design标准颜色值
+    
+    //-----------------------开始：iOS常用颜色值
     //黑灰色系
     //象牙黑（#292421）
-    class func ivoryBlackColor() -> UIColor
+    class func pbIvoryBlackColor() -> UIColor
     {
-        return UIColor(red: 41/255, green: 36/255, blue: 33/255, alpha: 1)
+        return UIColor(red: 0x29/0xff, green: 0x24/0xff, blue: 0x21/0xff, alpha: 1)
+    }
+    //冷灰（#808A87）
+    class func pbColdGrayColor() -> UIColor
+    {
+        return UIColor(red: 0x80/0xff, green: 0x8a/0xff, blue: 0x87/0xff, alpha: 1)
     }
     //石板灰（#708069）
-    class func slateGrayColor() -> UIColor
+    class func pbSlateGrayColor() -> UIColor
     {
-        return UIColor(red: 112/255, green: 128/255, blue: 105/255, alpha: 1)
+        return UIColor(red: 0x70/0xff, green: 0x80/0xff, blue: 0x69/0xff, alpha: 1)
     }
     //暖灰色（#808069）
-    class func warmGrayColor() -> UIColor
+    class func pbWarmGrayColor() -> UIColor
     {
-        return UIColor(red: 128/255, green: 128/255, blue: 105/255, alpha: 1)
+        return UIColor(red: 0x80/0xff, green: 0x80/0xff, blue: 0x69/0xff, alpha: 1)
     }
     
     //白色系
     //古董白（#FAEBD7）
-    class func antiqueWhiteColor() -> UIColor
+    class func pbAntiqueWhiteColor() -> UIColor
     {
-        return UIColor(red: 250/255, green: 235/255, blue: 215/255, alpha: 1)
+        return UIColor(red: 0xfa/0xff, green: 0xeb/0xff, blue: 0xd7/0xff, alpha: 1)
     }
     //天蓝色（#F0FFFF）
-    class func skyBlueColor() -> UIColor
+    class func pbSkyBlueColor() -> UIColor
     {
-        return UIColor(red: 240/255, green: 255/255, blue: 255/255, alpha: 1)
+        return UIColor(red: 0xf0/0xff, green: 0xff/0xff, blue: 0xff/0xff, alpha: 1)
     }
     //白烟（#F5F5F5）
-    class func smokeWhiteColor() -> UIColor
+    class func pbSmokeWhiteColor() -> UIColor
     {
-        return UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        return UIColor(red: 0xf5/0xff, green: 0xf5/0xff, blue: 0xf5/0xff, alpha: 1)
     }
     //白杏仁（#FFFFCD）
-    class func almondWhiteColor() -> UIColor
+    class func pbAlmondWhiteColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 235/255, blue: 205/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xff/0xff, blue: 0xcd/0xff, alpha: 1)
     }
     //cornsilk（#FFF8DC）
-    class func cornsilkColor() -> UIColor
+    class func pbCornsilkColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 248/255, blue: 220/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xf8/0xff, blue: 0xdc/0xff, alpha: 1)
     }
     //蛋壳色（#FCE6C9）
-    class func yellowEggColor() -> UIColor
+    class func pbYellowEggColor() -> UIColor
     {
-        return UIColor(red: 252/255, green: 230/255, blue: 201/255, alpha: 1)
+        return UIColor(red: 0xfc/0xff, green: 0xe6/0xff, blue: 0xc9/0xff, alpha: 1)
     }
     //花白（#FFFAF0）
-    class func floralWhiteColor() -> UIColor
+    class func pbFloralWhiteColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 250/255, blue: 240/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xfa/0xff, blue: 0xf0/0xff, alpha: 1)
     }
     //gainsboro（#DCDCDC）
-    class func gainsboroColor() -> UIColor
+    class func pbGainsboroColor() -> UIColor
     {
-        return UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
+        return UIColor(red: 0xdc/0xff, green: 0xdc/0xff, blue: 0xdc/0xff, alpha: 1)
     }
     //ghostWhite（#F8F8FF）
-    class func ghostWhiteColor() -> UIColor
+    class func pbGhostWhiteColor() -> UIColor
     {
-        return UIColor(red: 248/255, green: 248/255, blue: 255/255, alpha: 1)
+        return UIColor(red: 0xf8/0xff, green: 0xf8/0xff, blue: 0xff/0xff, alpha: 1)
     }
     //蜜露橙（#F0FFF0）
-    class func honeyDewColor() -> UIColor
+    class func pbHoneyDewColor() -> UIColor
     {
-        return UIColor(red: 240/255, green: 255/255, blue: 240/255, alpha: 1)
+        return UIColor(red: 0xf0/0xff, green: 0xff/0xff, blue: 0xf0/0xff, alpha: 1)
     }
     //象牙白（#FAFFF0）
-    class func ivoryWhiteColor() -> UIColor
+    class func pbIvoryWhiteColor() -> UIColor
     {
-        return UIColor(red: 250/255, green: 255/255, blue: 240/255, alpha: 1)
+        return UIColor(red: 0xfa/0xff, green: 0xff/0xff, blue: 0xf0/0xff, alpha: 1)
     }
     //亚麻色（#FAF0E6）
-    class func flaxenColor() -> UIColor
+    class func pbFlaxenColor() -> UIColor
     {
-        return UIColor(red: 250/255, green: 240/255, blue: 230/255, alpha: 1)
+        return UIColor(red: 0xfa/0xff, green: 0xf0/0xff, blue: 0xe6/0xff, alpha: 1)
     }
     //navajoWhite（#FFDEAD）
-    class func navajoWhiteColor() -> UIColor
+    class func pbNavajoWhiteColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 222/255, blue: 173/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xde/0xff, blue: 0xad/0xff, alpha: 1)
     }
     //oldLace（#FDF5E6）
-    class func oldLaceColor() -> UIColor
+    class func pbOldLaceColor() -> UIColor
     {
-        return UIColor(red: 253/255, green: 245/255, blue: 230/255, alpha: 1)
+        return UIColor(red: 0xfd/0xff, green: 0xf5/0xff, blue: 0xe6/0xff, alpha: 1)
     }
     //海贝壳色（#FFF5EE）
-    class func seaShellColor() -> UIColor
+    class func pbSeaShellColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 245/255, blue: 238/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xf5/0xff, blue: 0xee/0xff, alpha: 1)
     }
     //雪白（#FFFAFA）
-    class func snowWhiteColor() -> UIColor
+    class func pbSnowWhiteColor() -> UIColor
     {
-        return UIColor(red: 255/255, green: 250/255, blue: 250/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xfa/0xff, blue: 0xfa/0xff, alpha: 1)
     }
     
     //红色系
     //砖红（#9C661F）
     class func brickRedColor() -> UIColor
     {
-        return UIColor(red: 156/255, green: 102/255, blue: 31/255, alpha: 1)
+        return UIColor(red: 0xff/0xff, green: 0xfa/0xff, blue: 0xfa/0xff, alpha: 1)
     }
+    //-----------------------结束：iOS常用颜色值
 }

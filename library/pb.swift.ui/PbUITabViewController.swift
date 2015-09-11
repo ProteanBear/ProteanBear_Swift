@@ -137,7 +137,7 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
         collectionView=UICollectionView(frame:CGRectZero, collectionViewLayout: layout)
         collectionView.dataSource=self;
         collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        collectionView.backgroundColor=UIColor.almondWhiteColor()
+        collectionView.backgroundColor=UIColor.pbAlmondWhiteColor()
         collectionView.showsHorizontalScrollIndicator=false
         collectionView.showsVerticalScrollIndicator=false
         self.addSubview(collectionView)

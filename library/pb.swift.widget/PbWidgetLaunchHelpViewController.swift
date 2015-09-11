@@ -78,8 +78,8 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.pageControl.bindScrollView=self.collectionView
         self.pageControl.pageCount=self.collectionData!.count
         self.pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.pageControl.unSelectedColor=UIColor.smokeWhiteColor()
-        self.pageControl.selectedColor=UIColor.skyBlueColor()
+        self.pageControl.unSelectedColor=UIColor.pbSmokeWhiteColor()
+        self.pageControl.selectedColor=UIColor.pbSkyBlueColor()
         self.pageControl.shouldShowProgressLine = true
         self.pageControl.indicatorStyle = PbUIAnimatedPageControlIndicatorStyle.GooeyCircle
         self.pageControl.indicatorSize = self.pageControlSize().height
@@ -95,6 +95,7 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true
         self.startButton.layer.opacity=0
+        self.startButton.addTarget(self, action: Selector("startButtonAction:"), forControlEvents: UIControlEvents.TouchUpInside)
         
         //collectionView
         self.collectionView?.backgroundColor=UIColor.whiteColor()
@@ -121,6 +122,9 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     {
         return CGSizeMake(200,34)
     }
+    
+    //startButtonAction:设置进入按钮的点击事件(覆盖此方法重设点击事件)
+    func startButtonAction(button:UIButton){}
     
     //setCollectionViewLayout:设置单元格布局
     private func setCollectionViewLayout()

@@ -25,4 +25,16 @@ class PbTestForLaunchHelpViewController: PbWidgetLaunchHelpViewController
     {
         return super.pageControlSize()
     }
+    
+    override func startButtonSize() -> CGSize
+    {
+        return super.startButtonSize()
+    }
+    
+    override func startButtonAction(button:UIButton)
+    {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+        })
+    }
 }
