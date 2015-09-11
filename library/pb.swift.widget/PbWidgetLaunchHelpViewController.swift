@@ -78,8 +78,8 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.pageControl.bindScrollView=self.collectionView
         self.pageControl.pageCount=self.collectionData!.count
         self.pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.pageControl.unSelectedColor=UIColor.smokeWhiteColor()
-        self.pageControl.selectedColor=UIColor.skyBlueColor()
+        self.pageControl.unSelectedColor=UIColor.pbSmokeWhiteColor()
+        self.pageControl.selectedColor=UIColor.pbSkyBlueColor()
         self.pageControl.shouldShowProgressLine = true
         self.pageControl.indicatorStyle = PbUIAnimatedPageControlIndicatorStyle.GooeyCircle
         self.pageControl.indicatorSize = self.pageControlSize().height

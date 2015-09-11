@@ -49,6 +49,7 @@
 		D3E837B91B8D550F00FEF50F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3E837B71B8D550F00FEF50F /* Main.storyboard */; };
 		D3E837BE1B8D550F00FEF50F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3E837BC1B8D550F00FEF50F /* LaunchScreen.xib */; };
 		D3E837CA1B8D550F00FEF50F /* PbSwiftDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E837C91B8D550F00FEF50F /* PbSwiftDemoTests.swift */; };
+		D3F6E42B1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */; };
 		D3FCE1DC1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FCE1DB1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift */; };
 		D3FCE1DE1B97EB0A00EC2885 /* PbUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -112,6 +113,7 @@
 		D3E837C31B8D550F00FEF50F /* PbSwiftDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PbSwiftDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E837C81B8D550F00FEF50F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3E837C91B8D550F00FEF50F /* PbSwiftDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PbSwiftDemoTests.swift; sourceTree = "<group>"; };
+		D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForBasicExtensionUIColor.swift; sourceTree = "<group>"; };
 		D3FCE1DB1B97E50100EC2885 /* PbWidgetLaunchHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbWidgetLaunchHelpViewController.swift; sourceTree = "<group>"; };
 		D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUICollectionViewCell.swift; sourceTree = "<group>"; };
 		FB1F92A5B1C576D4916E9B17 /* Pods-PbSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PbSwiftDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PbSwiftDemo/Pods-PbSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		D38965241B8D7B1500F89C3E /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */,
 				D38965251B8D7B1500F89C3E /* PbTestForCollectionViewController.swift */,
 				D38965261B8D7B1500F89C3E /* PbTestForPhotoManager.swift */,
 				D38965271B8D7B1500F89C3E /* PbTestForTableViewController.swift */,
@@ -365,6 +368,7 @@
 		D3E837A61B8D550F00FEF50F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = ProteanBear;
 				TargetAttributes = {
@@ -506,6 +510,7 @@
 				D38965231B8D7B0300F89C3E /* PbUITabViewController.swift in Sources */,
 				D389650C1B8D7B0300F89C3E /* ExtensionUIColor.swift in Sources */,
 				D38965201B8D7B0300F89C3E /* PbUIRingSpinnerView.swift in Sources */,
+				D3F6E42B1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift in Sources */,
 				D389651A1B8D7B0300F89C3E /* ExtensionUIScrollView.swift in Sources */,
 				D398B6031B92101400BFD116 /* ExtensionCALayer.swift in Sources */,
 			);
