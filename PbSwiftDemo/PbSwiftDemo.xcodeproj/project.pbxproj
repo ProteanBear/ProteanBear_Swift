@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A4BFE430D485B0E872D12CBC /* Pods_PbSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9196F77C64E8D59ADD02B8A /* Pods_PbSwiftDemo.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D38932B01BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */; settings = {ASSET_TAGS = (); }; };
+		D38932B21BB143EE007B9860 /* ExtensionUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932B11BB143EE007B9860 /* ExtensionUITextField.swift */; settings = {ASSET_TAGS = (); }; };
 		D38964ED1B8D7A5500F89C3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38964EC1B8D7A5500F89C3E /* CoreLocation.framework */; };
 		D389650B1B8D7B0300F89C3E /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38964F01B8D7B0300F89C3E /* ExtensionString.swift */; };
 		D389650C1B8D7B0300F89C3E /* ExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38964F11B8D7B0300F89C3E /* ExtensionUIColor.swift */; };
@@ -67,6 +69,8 @@
 /* Begin PBXFileReference section */
 		516EFA1677EC96430015213D /* Pods-PbSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PbSwiftDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PbSwiftDemo/Pods-PbSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B9196F77C64E8D59ADD02B8A /* Pods_PbSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PbSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForBasicExtensionStringCode.swift; sourceTree = "<group>"; };
+		D38932B11BB143EE007B9860 /* ExtensionUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUITextField.swift; sourceTree = "<group>"; };
 		D38964EC1B8D7A5500F89C3E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D38964EF1B8D7B0300F89C3E /* Common-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		D38964F01B8D7B0300F89C3E /* ExtensionString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				D38965001B8D7B0300F89C3E /* ExtensionUIImageView.swift */,
 				D38965011B8D7B0300F89C3E /* ExtensionUIScrollView.swift */,
 				D38965021B8D7B0300F89C3E /* ExtensionUIViewController.swift */,
+				D38932B11BB143EE007B9860 /* ExtensionUITextField.swift */,
 				D3FCE1DD1B97EB0A00EC2885 /* PbUICollectionViewCell.swift */,
 				D38965031B8D7B0300F89C3E /* PbUICollectionViewCellForLoad.swift */,
 				D38965041B8D7B0300F89C3E /* PbUICollectionViewController.swift */,
@@ -200,6 +205,7 @@
 				D38965261B8D7B1500F89C3E /* PbTestForPhotoManager.swift */,
 				D38965271B8D7B1500F89C3E /* PbTestForTableViewController.swift */,
 				D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */,
+				D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -477,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D38932B21BB143EE007B9860 /* ExtensionUITextField.swift in Sources */,
 				D38965181B8D7B0300F89C3E /* PbDataRequesterHttp.swift in Sources */,
 				D38965161B8D7B0300F89C3E /* PbDataPhotoManager.swift in Sources */,
 				D38965101B8D7B0300F89C3E /* PbSystem.swift in Sources */,
@@ -491,6 +498,7 @@
 				D38965301B8D7B1500F89C3E /* PbTestForCollectionViewController.swift in Sources */,
 				D38965361B8D7B1500F89C3E /* PbTestUICollectionCell.swift in Sources */,
 				D398B6011B91FED000BFD116 /* PbUIAnimatedPageControl.swift in Sources */,
+				D38932B01BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift in Sources */,
 				D38965211B8D7B0300F89C3E /* PbUITableViewCellForLoad.swift in Sources */,
 				D38965111B8D7B0300F89C3E /* PbDataAdapter.swift in Sources */,
 				D389650E1B8D7B0300F89C3E /* PbLog.swift in Sources */,
