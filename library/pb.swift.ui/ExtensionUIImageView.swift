@@ -27,7 +27,7 @@ extension UIImageView
     func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //读取本地图片
-        var image=PbDataAppController.getInstance.imageInLocalCache(urlString)
+        let image=PbDataAppController.getInstance.imageInLocalCache(urlString)
         
         //本地图片存在，显示图片
         if(image != nil)
@@ -65,10 +65,10 @@ extension UIImageView
     {
         if(self.image == nil || scale == nil){return}
         
-        var width=CGImageGetWidth(self.image?.CGImage)
-        var height=CGImageGetHeight(self.image?.CGImage)
+        let width=CGImageGetWidth(self.image?.CGImage)
+        let height=CGImageGetHeight(self.image?.CGImage)
         
-        var isFill=(scale > Float(width/height))
+        let isFill=(scale > Float(width/height))
         
         self.contentMode=isFill ? lowMode : overMode
     }
@@ -94,7 +94,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 
@@ -117,7 +117,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 

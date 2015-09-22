@@ -53,7 +53,7 @@ class PbDataPhotoDownloadOperate:NSOperation
         }
         else
         {
-            var data:NSData?=NSData(contentsOfURL: NSURL(string: photoRecord.url)!)
+            let data:NSData?=NSData(contentsOfURL: NSURL(string: photoRecord.url)!)
             
             if(data != nil && data!.length>0)
             {
@@ -158,7 +158,7 @@ class PbDataPhotoManager
     func download(photo:PbDataPhotoRecord,callback:(photoRecord:PbDataPhotoRecord) -> Void)
     {
         //已在进行的进程
-        if let downloadOperation = downloadsInProgress[photo.indexPath]{return}
+        if let _ = downloadsInProgress[photo.indexPath]{return}
         
         //创建任务
         let downloadOperate=PbDataPhotoDownloadOperate(photoRecord:photo)
@@ -168,7 +168,7 @@ class PbDataPhotoManager
             
             dispatch_async(dispatch_get_main_queue(), {
                 
-                var operate=downloadOperate as PbDataPhotoDownloadOperate
+                let operate=downloadOperate as PbDataPhotoDownloadOperate
                 
                 self.downloadsInProgress.removeValueForKey(operate.photoRecord.indexPath)
                 callback(photoRecord: operate.photoRecord)
@@ -185,7 +185,7 @@ class PbDataPhotoManager
     {
         for indexPath:NSIndexPath in downloadsInProgress.keys
         {
-            var operation=downloadsInProgress[indexPath]
+            let operation=downloadsInProgress[indexPath]
             operation?.cancel()
         }
         downloadsInProgress.removeAll(keepCapacity:false)
@@ -194,7 +194,7 @@ class PbDataPhotoManager
     //downloadCancel:取消指定的图片下载任务
     func downloadCancel(indexPath:NSIndexPath)
     {
-        var operation=downloadsInProgress[indexPath]
+        let operation=downloadsInProgress[indexPath]
         operation?.cancel()
         downloadsInProgress.removeValueForKey(indexPath)
     }
@@ -210,7 +210,7 @@ class PbDataPhotoManager
     {
         for indexPath:NSIndexPath in downloadsInProgress.keys
         {
-            var operation=downloadsInProgress[indexPath]
+            let operation=downloadsInProgress[indexPath]
             if(urlString == (operation as! PbDataPhotoDownloadOperate).photoRecord.url)
             {
                 self.downloadCancel(indexPath)

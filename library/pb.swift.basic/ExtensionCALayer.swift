@@ -25,9 +25,6 @@ extension CALayer
     //Spring Animation
     class func pbAnimation(createSpring keyPath:String,duration:CFTimeInterval,usingSpringWithDamping damping:Float,initialSpringVelocity velocity:Float,fromValue:Float,toValue:Float) -> CAKeyframeAnimation
     {
-        let dampingFactor:CGFloat=10.0
-        let velocityFactor:CGFloat=10.0
-        
         let values=CALayer.pbAnimationValues(fromValue, toValue: toValue, usingSpringWithDamping: damping, initialSpringVelocity: velocity, duration: duration)
         let anim = CAKeyframeAnimation(keyPath: keyPath)
         anim.values = values;

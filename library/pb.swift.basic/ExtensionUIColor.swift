@@ -166,7 +166,6 @@ enum PbUIColorLevel:Int
             case .levelA200:return "A200"
             case .levelA400:return "A400"
             case .levelA700:return "A700"
-            default:return "0"
         }
     }
     

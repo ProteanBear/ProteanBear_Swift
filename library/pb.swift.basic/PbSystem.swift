@@ -95,14 +95,14 @@ class PbSystem
     //获取当前屏幕的宽度
     class func screenWidth() -> CGFloat
     {
-        var width=UIScreen.mainScreen().applicationFrame.size.width
+        let width=UIScreen.mainScreen().applicationFrame.size.width
         return ( os7() && (width == CGFloat(sizeiPhone5Width)-CGFloat(sizeTopStatusBarHeight)||(width==CGFloat(sizeiPadHeight)-CGFloat(sizeTopStatusBarHeight))) ) ? (width+CGFloat(sizeTopStatusBarHeight)) : width
     }
     
     //获取当前屏幕的高度
     class func screenHeight() -> CGFloat
     {
-        var height=UIScreen.mainScreen().applicationFrame.size.height
+        let height=UIScreen.mainScreen().applicationFrame.size.height
         return ( os7() && (height == CGFloat(sizeiPhone5Height)-CGFloat(sizeTopStatusBarHeight)||(height==CGFloat(sizeiPadWidth)-CGFloat(sizeTopStatusBarHeight))) ) ? (height+CGFloat(sizeTopStatusBarHeight)) : height
     }
     
@@ -133,14 +133,14 @@ class PbSystem
     //获取当前屏幕的宽度
     class func screenWidth(full:Bool) -> CGFloat
     {
-        var width=UIScreen.mainScreen().applicationFrame.size.width
+        let width=UIScreen.mainScreen().applicationFrame.size.width
         return full ? width : self.screenWidth()
     }
     
     //获取当前屏幕的高度
     class func screenHeight(full:Bool) -> CGFloat
     {
-        var height=UIScreen.mainScreen().applicationFrame.size.height
+        let height=UIScreen.mainScreen().applicationFrame.size.height
         return full ? height+(os8() ? 20:0) : self.screenHeight()
     }
     
@@ -241,7 +241,7 @@ class PbSystem
     }
     class func stringFromDate(timestamp:Int64,format:String) -> String
     {
-        var formatter=NSDateFormatter()
+        let formatter=NSDateFormatter()
         formatter.dateFormat=format
         return formatter.stringFromDate(NSDate(timeIntervalSince1970: NSTimeInterval(timestamp)))
     }

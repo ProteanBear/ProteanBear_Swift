@@ -41,7 +41,7 @@ class PbUIArrowView:UIView
         super.init(frame: frame)
         self.backgroundColor=UIColor.clearColor()
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.backgroundColor=UIColor.clearColor()
@@ -108,7 +108,7 @@ class PbUIRefreshBaseView:UIView
         setup()
     }
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -189,7 +189,7 @@ class PbUIRefreshBaseView:UIView
     func endRefreshing()
     {
         let delayInSeconds:Double = 0.3
-        var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds))
+        let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds))
         
         dispatch_after(popTime, dispatch_get_main_queue(), {
             self.state = PbUIRefreshState.Normal;
@@ -328,7 +328,7 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
                 
                 UIView.animateWithDuration(0.3, animations:
                 {
-                    var top:CGFloat = self.scrollViewOriginalInset.top + self.frame.size.height
+                    let top:CGFloat = self.scrollViewOriginalInset.top + self.frame.size.height
                     var inset:UIEdgeInsets = self.scrollView.contentInset
                     inset.top = top
                     self.scrollView.contentInset = inset
@@ -357,7 +357,7 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
         super.init(frame: frame, config: config)
     }
     
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -368,19 +368,19 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     {
         super.layoutSubviews()
         
-        var statusX:CGFloat = 0
-        var statusY:CGFloat = 6
-        var statusHeight:CGFloat = self.frame.size.height * 0.5
-        var statusWidth:CGFloat = self.frame.size.width
+        let statusX:CGFloat = 0
+        let statusY:CGFloat = 6
+        let statusHeight:CGFloat = self.frame.size.height * 0.5
+        let statusWidth:CGFloat = self.frame.size.width
         
         //状态标签
         self.statusLabel.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight)
         
         //时间标签
-        var lastUpdateY:CGFloat = statusHeight-statusY
-        var lastUpdateX:CGFloat = 0
-        var lastUpdateHeight:CGFloat = statusHeight
-        var lastUpdateWidth:CGFloat = statusWidth
+        let lastUpdateY:CGFloat = statusHeight-statusY
+        let lastUpdateX:CGFloat = 0
+        let lastUpdateHeight:CGFloat = statusHeight
+        let lastUpdateWidth:CGFloat = statusWidth
         self.updateTimeLabel!.frame = CGRectMake(lastUpdateX, lastUpdateY, lastUpdateWidth, lastUpdateHeight);
     }
     
@@ -394,12 +394,12 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //observeValueForKeyPath:监听UIScrollView的contentOffset属性
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>)
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
         if (!self.userInteractionEnabled || self.hidden){return}
         if (self.state == PbUIRefreshState.Refreshing){return}
         
-        if "contentOffset".isEqualToString(keyPath)
+        if "contentOffset".isEqualToString(keyPath!)
         {
             self.adjustStateWithContentOffset()
         }
@@ -408,14 +408,14 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     //adjustStateWithContentOffset:调整状态
     func adjustStateWithContentOffset()
     {
-        var currentOffsetY:CGFloat = self.scrollView.contentOffset.y
-        var happenOffsetY:CGFloat = -self.scrollViewOriginalInset.top
+        let currentOffsetY:CGFloat = self.scrollView.contentOffset.y
+        let happenOffsetY:CGFloat = -self.scrollViewOriginalInset.top
         
         if (currentOffsetY >= happenOffsetY){return}
         
         if self.scrollView.dragging
         {
-            var normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
+            let normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
             if(self.state == PbUIRefreshState.Normal && currentOffsetY < normal2pullingOffsetY)
             {
                 self.state = PbUIRefreshState.Pulling

@@ -87,18 +87,18 @@ class PbDataRequesterHttp:PbDataRequester
         if((params) == nil){return ""}
         
         var result:String=""
-        var keys:NSArray=params!.allKeys
+        let keys:NSArray=params!.allKeys
         
         for(var i=0;i<keys.count;i++)
         {
-            var key: AnyObject=keys.objectAtIndex(i)
-            var value: AnyObject?=params?.objectForKey(key)
+            let key: AnyObject=keys.objectAtIndex(i)
+            let value: AnyObject?=params?.objectForKey(key)
             if(value == nil){continue}
             
             //数组型参数处理
             if(value!.isKindOfClass(NSArray))
             {
-                var array:NSArray=value as! NSArray
+                let array:NSArray=value as! NSArray
                 for(var j=0;j<array.count;j++)
                 {
                     result+=("&"+key.description+"="+array.objectAtIndex(j).description)
@@ -121,7 +121,7 @@ class PbDataRequesterHttp:PbDataRequester
         let session = NSURLSession.sharedSession()
         
         //重设GET传参的URL
-        var url=address+"?"+self.paramString(data)
+        let url=address+"?"+self.paramString(data)
         
         //创建请求对象
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -202,31 +202,30 @@ class PbDataRequesterHttp:PbDataRequester
         request.addValue("multipart/form-data; boundary=" + self.boundary, forHTTPHeaderField: "Content-Type")
         //设置传输的内容体
         let bodyData = NSMutableData()
-        var result:String=""
-        var keys:NSArray=data.allKeys
+        let keys:NSArray=data.allKeys
         
         for(var i=0;i<keys.count;i++)
         {
-            var key: AnyObject=keys.objectAtIndex(i)
-            var value: AnyObject?=data.objectForKey(key)
+            let key: AnyObject=keys.objectAtIndex(i)
+            let value: AnyObject?=data.objectForKey(key)
             if(value == nil){continue}
             
             //图片类型数据
             if(value!.isKindOfClass(UIImage))
             {
-                var image:UIImage=value as! UIImage
+                let image:UIImage=value as! UIImage
                 bodyData.appendData("--\(self.boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 bodyData.appendData("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(key)\".png\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 bodyData.appendData("Content-Type: image/png\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-                bodyData.appendData(UIImagePNGRepresentation(image))
+                bodyData.appendData(UIImagePNGRepresentation(image)!)
                 bodyData.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
             }
             //文件类型数据
             else if(value!.isKindOfClass(PbObjectFile))
             {
-                var file:PbObjectFile=value as! PbObjectFile
+                let file:PbObjectFile=value as! PbObjectFile
                 bodyData.appendData("--\(self.boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-                bodyData.appendData("Content-Disposition: form-data; name=\"\(file.name)\"; filename=\"\(file.url.description.lastPathComponent)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+                bodyData.appendData("Content-Disposition: form-data; name=\"\(file.name)\"; filename=\"\(NSString(string:file.url.description).lastPathComponent)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 if let a = NSData(contentsOfURL: file.url)
                 {
                     bodyData.appendData(a)
@@ -236,7 +235,6 @@ class PbDataRequesterHttp:PbDataRequester
             //普通参数
             else
             {
-                var content:String=value as! String
                 bodyData.appendData("--\(self.boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 bodyData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 bodyData.appendData("\(value)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)

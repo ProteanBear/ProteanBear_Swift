@@ -33,7 +33,7 @@ class PbUICollectionViewCellForLoad: UICollectionViewCell
     }
     
     //重载构造方法
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.setup()
@@ -48,7 +48,7 @@ class PbUICollectionViewCellForLoad: UICollectionViewCell
     //setup:初始化载入指示器
     func setup()
     {
-        self.indicator.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.indicator.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.indicator)
         
         self.addConstraint(NSLayoutConstraint(item: self.indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))

@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         //解析Token
         var token=deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString:"<>"))
-        token=token.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
+        token=token.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions(), range: nil)
         PbLog.debug("application:didRegisterForRemoteNotificationsWithDeviceToken:得到Token:"+token)
     }
     

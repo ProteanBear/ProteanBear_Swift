@@ -30,7 +30,7 @@ class PbTestForCollectionViewController:PbUICollectionViewController
             
             if(data != nil)
             {
-                var status:Int?=data.objectForKey("status") as? Int
+                let status:Int?=data.objectForKey("status") as? Int
                 if(status != nil)
                 {
                     if(status==0)
@@ -52,10 +52,10 @@ class PbTestForCollectionViewController:PbUICollectionViewController
     {
         var dataList:NSArray?
         
-        var statusObj: AnyObject?=response.objectForKey("status")
+        let statusObj: AnyObject?=response.objectForKey("status")
         if(statusObj != nil)
         {
-            var status=statusObj as! Int
+            let status=statusObj as! Int
             if(status == 0)
             {
                 let result=response.objectForKey("result") as! NSDictionary

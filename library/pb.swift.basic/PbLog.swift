@@ -16,12 +16,12 @@ class PbLog
     {
         if(isDebug)
         {
-            println("[DEBUG]"+infor)
+            print("[DEBUG]"+infor)
         }
     }
     
     class func error(error:String)
     {
-        println("[ERROR]"+error)
+        print("[ERROR]"+error)
     }
 }

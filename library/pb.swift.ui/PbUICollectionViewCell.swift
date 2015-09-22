@@ -16,7 +16,7 @@ class PbUICollectionViewCellForImage:UICollectionViewCell
     let imageView=UIImageView(frame:CGRectZero)
     
     //重载构造方法
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.setup()
@@ -30,7 +30,7 @@ class PbUICollectionViewCellForImage:UICollectionViewCell
     //setup:初始化
     func setup()
     {
-        self.imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.imageView.translatesAutoresizingMaskIntoConstraints = false
         self.imageView.contentMode=UIViewContentMode.ScaleAspectFill
         self.addSubview(self.imageView)
         

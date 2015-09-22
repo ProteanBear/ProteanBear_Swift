@@ -68,7 +68,7 @@ class PbUITabMenuViewCell:UICollectionViewCell
         super.init(frame: frame)
         setup()
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -86,7 +86,7 @@ class PbUITabMenuViewCell:UICollectionViewCell
     //初始化网格视图
     private func setup()
     {
-        titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font=UIFont.systemFontOfSize(13)
         titleLabel.textAlignment=NSTextAlignment.Center
         self.addSubview(titleLabel)
@@ -108,7 +108,7 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
     }
     
     //初始化方法
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         setup()
@@ -136,7 +136,7 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
         
         collectionView=UICollectionView(frame:CGRectZero, collectionViewLayout: layout)
         collectionView.dataSource=self;
-        collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor=UIColor.pbAlmondWhiteColor()
         collectionView.showsHorizontalScrollIndicator=false
         collectionView.showsVerticalScrollIndicator=false
@@ -160,7 +160,7 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
             if(menu.collectionCellClass != nil)
             {
                 self.collectionView.registerClass(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
-                result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath) as? UICollectionViewCell
+                result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath)
                 (result as! PbUITabMenuViewCell).menuData=menu
             }
         }
@@ -268,7 +268,7 @@ class PbUITabViewController:PbUITableViewController
         //菜单栏
         if(indexPath.section==0 && indexPath.row==0)
         {
-            result=(self.tableView.dequeueReusableCellWithIdentifier(self.pbIdentifierForTableView(indexPath, data: nil))) as? UITableViewCell
+            result=(self.tableView.dequeueReusableCellWithIdentifier(self.pbIdentifierForTableView(indexPath, data: nil)))
             if(result == nil)
             {
                 result=PbUITabMenuView(style: UITableViewCellStyle.Default, reuseIdentifier:self.pbIdentifierForTableView(indexPath, data: nil))

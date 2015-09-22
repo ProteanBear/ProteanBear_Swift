@@ -46,7 +46,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
         if let pathArray = self.collectionView?.indexPathsForVisibleItems()
         {
             //创建一个包含所有等待任务的集合
-            let allPendingOperations = NSMutableSet(array:self.photoManager.downloadsInProgress.keys.array)
+            let allPendingOperations = NSMutableSet(array:Array(self.photoManager.downloadsInProgress.keys))
             
             //构建一个需要撤销的任务的集合，从所有任务中除掉可见行的index path
             let toBeCancelled=allPendingOperations.mutableCopy() as! NSMutableSet
@@ -94,7 +94,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
                     
                 })
             default:
-                let temp=0
+                _=0
             }
         }
     }
@@ -238,19 +238,19 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             self.collectionData?.addObjectsFromArray(newData as! [AnyObject])
             
             //设置表格动态增加索引
-            var insertPaths=NSMutableArray(capacity:newData!.count)
+            let insertPaths=NSMutableArray(capacity:newData!.count)
             //获取增量对应的节点
-            var targetSection=self.pbSectionForInsertData()
+            let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
             for (var i=0; i<newData!.count; i++)
             {
-                var newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
+                let newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
             }
             
             //增量增加表格数据
-            self.collectionView?.insertItemsAtIndexPaths(insertPaths as [AnyObject])
+            self.collectionView?.insertItemsAtIndexPaths((insertPaths as [AnyObject]) as! [NSIndexPath])
         }
         else
         {
@@ -259,7 +259,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             
             if(self.pbSupportFooterLoad())
             {
-                self.collectionView?.deleteItemsAtIndexPaths([self.collectionView!.indexPathForCell(self.loadCollectionCell!) as! AnyObject])
+                self.collectionView?.deleteItemsAtIndexPaths([self.collectionView!.indexPathForCell(self.loadCollectionCell!)!])
             }
         }
     }
@@ -402,7 +402,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
             {
                 self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
-                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath) as? UICollectionViewCell
+                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
                 
                 self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
                 if let color = self.pbSupportFooterLoadColor()
@@ -445,8 +445,8 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             }
             
             //获取未使用的单元对象
-            var identifier=self.pbIdentifierForCollectionView(indexPath, data: data)
-            result=(self.collectionView?.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)) as? UICollectionViewCell
+            let identifier=self.pbIdentifierForCollectionView(indexPath, data: data)
+            result=(self.collectionView?.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath))
             
             //创建表格单元对象
             if(result == nil)
@@ -506,7 +506,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             {
                 for indexPath in pathArray
                 {
-                    let indexPath:NSIndexPath=indexPath as! NSIndexPath
+                    let indexPath:NSIndexPath=indexPath 
                     if(indexPath == NSIndexPath(forRow:self.collectionData!.count, inSection:indexPath.section)&&(!self.dataAdapter!.nextIsNull)&&(!self.dataAdapter!.isInitLoad)&&(!self.dataAdapter!.isDataLoading))
                     {
                         //显示翻页载入指示器

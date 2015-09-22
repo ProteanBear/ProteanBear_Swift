@@ -62,7 +62,7 @@ class PbTestForBasicExtensionUIColor: UITableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var cell: UITableViewCell?
-        cell=tableView.dequeueReusableCellWithIdentifier("PbTestCellBasicExtensionUIColor") as? UITableViewCell
+        cell=tableView.dequeueReusableCellWithIdentifier("PbTestCellBasicExtensionUIColor")
         if(cell == nil)
         {
             cell=UITableViewCell(style:.Value1, reuseIdentifier:"PbTestCellBasicExtensionUIColor")

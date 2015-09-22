@@ -61,10 +61,10 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     //pbSetQueueForDisplayRow:设置下载图片的序列，只下载显示区域内的图片
     func pbSetQueueForDisplayRow()
     {
-        if let pathArray = self.tableView.indexPathsForVisibleRows()
+        if let pathArray = self.tableView.indexPathsForVisibleRows
         {
             //创建一个包含所有等待任务的集合
-            let allPendingOperations = NSMutableSet(array:self.photoManager.downloadsInProgress.keys.array)
+            let allPendingOperations = NSMutableSet(array:Array(self.photoManager.downloadsInProgress.keys))
             
             //构建一个需要撤销的任务的集合，从所有任务中除掉可见行的index path
             let toBeCancelled=allPendingOperations.mutableCopy() as! NSMutableSet
@@ -112,7 +112,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
                         
                     })
                 default:
-                    let temp=0
+                    _=0
             }
         }
     }
@@ -296,19 +296,19 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
             self.tableData?.addObjectsFromArray(newData as! [AnyObject])
             
             //设置表格动态增加索引
-            var insertPaths=NSMutableArray(capacity:newData!.count)
+            let insertPaths=NSMutableArray(capacity:newData!.count)
             //获取增量对应的节点
-            var targetSection=self.pbSectionForInsertData()
+            let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
             for (var i=0; i<newData!.count; i++)
             {
-                var newPath=NSIndexPath(forRow:(self.tableData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
+                let newPath=NSIndexPath(forRow:(self.tableData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
             }
             
             //增量增加表格数据
-            self.tableView.insertRowsAtIndexPaths(insertPaths as [AnyObject], withRowAnimation: UITableViewRowAnimation.Fade)
+            self.tableView.insertRowsAtIndexPaths((insertPaths as [AnyObject]) as! [NSIndexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         }
         else
         {
@@ -317,7 +317,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
             
             if(self.pbSupportFooterLoad())
             {
-                self.tableView.deleteRowsAtIndexPaths([(self.tableView.indexPathForCell(self.loadTableCell!) as! AnyObject)], withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.deleteRowsAtIndexPaths([self.tableView.indexPathForCell(self.loadTableCell!)!], withRowAnimation: UITableViewRowAnimation.Fade)
             }
         }
         self.tableView.endUpdates()
@@ -523,8 +523,8 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
             }
             
             //获取未使用的单元对象
-            var identifier=self.pbIdentifierForTableView(indexPath, data: data)
-            result=(self.tableView.dequeueReusableCellWithIdentifier(identifier)) as? UITableViewCell
+            let identifier=self.pbIdentifierForTableView(indexPath, data: data)
+            result=(self.tableView.dequeueReusableCellWithIdentifier(identifier))
             
             //创建表格单元对象
             if(result == nil)
@@ -533,9 +533,9 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
                 if let nibName=self.pbNibNameForTableView(indexPath, data: data)
                 {
                     //获取资源文件
-                    var nib=(NSBundle.mainBundle().loadNibNamed(nibName, owner: self, options: nil)) as NSArray
+                    let nib=(NSBundle.mainBundle().loadNibNamed(nibName, owner: self, options: nil)) as NSArray
                     //获取设置索引
-                    var index=self.pbNibIndexForTableView(indexPath, data: data)
+                    let index=self.pbNibIndexForTableView(indexPath, data: data)
                     //获取单元格对象
                     result=(nib.objectAtIndex(index)) as? UITableViewCell
                 }
@@ -600,11 +600,11 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
         //到达尾部时载入下页
         if(self.pbSupportFooterLoad())
         {
-            if let pathArray = self.tableView.indexPathsForVisibleRows()
+            if let pathArray = self.tableView.indexPathsForVisibleRows
             {
                 for indexPath in pathArray
                 {
-                    let indexPath:NSIndexPath=indexPath as! NSIndexPath
+                    let indexPath:NSIndexPath=indexPath 
                     if(indexPath == NSIndexPath(forRow:self.tableData!.count, inSection:indexPath.section)&&(!self.dataAdapter!.nextIsNull)&&(!self.dataAdapter!.isInitLoad)&&(!self.dataAdapter!.isDataLoading))
                     {
                         //显示翻页载入指示器

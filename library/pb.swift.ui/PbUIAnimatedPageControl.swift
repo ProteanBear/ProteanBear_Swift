@@ -64,7 +64,7 @@ class PbUIAnimatedPageControlIndicator:CALayer
 class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicator
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String!) -> Bool
+    override class func needsDisplayForKey(key: String) -> Bool
     {
         if("factor" == key)
         {
@@ -80,15 +80,15 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
     var factor:CGFloat!
     
     //init:重载构造方法
-    override init!()
+    override init()
     {
         super.init()
     }
-    override init!(layer: AnyObject!)
+    override init(layer: AnyObject)
     {
         super.init(layer:layer)
         
-        var indicator=layer as! PbUIAnimatedPageControlIndicatorGooeyCircle
+        let indicator=layer as! PbUIAnimatedPageControlIndicatorGooeyCircle
         self.indicatorSize=indicator.indicatorSize
         self.indicatorColor=indicator.indicatorColor
         self.currentRect=indicator.currentRect
@@ -96,13 +96,13 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
         self.scrollDirection=indicator.scrollDirection
         self.factor=indicator.factor
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext!)
+    override func drawInContext(ctx: CGContext)
     {
         //设置3.6 出来的弧度最像圆形
         let offset=self.currentRect.size.width/3.6
@@ -184,13 +184,13 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
     }
     
     //animationDidStart:
-    override func animationDidStart(anim: CAAnimation!)
+    override func animationDidStart(anim: CAAnimation)
     {
         self.beginGooeyAnim=true
     }
     
     //animationDidStop:
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool)
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool)
     {
         if(flag)
         {
@@ -203,7 +203,7 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
 class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicator
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String!) -> Bool
+    override class func needsDisplayForKey(key: String) -> Bool
     {
         if("index" == key)
         {
@@ -217,28 +217,28 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
     var index:CGFloat!
     
     //init:重载构造方法
-    override init!()
+    override init()
     {
         super.init()
     }
-    override init!(layer: AnyObject!)
+    override init(layer: AnyObject)
     {
         super.init(layer:layer)
         
-        var indicator=layer as! PbUIAnimatedPageControlIndicatorRotateRect
+        let indicator=layer as! PbUIAnimatedPageControlIndicatorRotateRect
         self.indicatorSize=indicator.indicatorSize
         self.indicatorColor=indicator.indicatorColor
         self.currentRect=indicator.currentRect
         self.lastContentOffset=indicator.lastContentOffset
         self.index=indicator.index
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext!)
+    override func drawInContext(ctx: CGContext)
     {
         let rectPath=UIBezierPath(rect: self.currentRect)
         
@@ -251,7 +251,7 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
         transform = CGAffineTransformTranslate(transform, -center.x, -center.y)
         
         let path=CGPathCreateCopyByTransformingPath(rectPath.CGPath,&transform)
-        rectPath.CGPath=path
+        rectPath.CGPath=path!
         
         CGContextAddPath(ctx, path)
         CGContextSetFillColorWithColor(ctx, self.indicatorColor.CGColor)
@@ -288,7 +288,7 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
 class PbUIAnimatedPageControlLine:CALayer
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String!) -> Bool
+    override class func needsDisplayForKey(key: String) -> Bool
     {
         if("selectedLineLength" == key)
         {
@@ -337,15 +337,15 @@ class PbUIAnimatedPageControlLine:CALayer
     var bindScrollView:UIScrollView?
     
     //重载构造方法
-    override init!()
+    override init()
     {
         super.init()
     }
-    override init!(layer: AnyObject!)
+    override init(layer: AnyObject)
     {
         super.init(layer:layer)
         
-        var line=layer as! PbUIAnimatedPageControlLine
+        let line=layer as! PbUIAnimatedPageControlLine
         self.selectedPage=line.selectedPage
         self.lineHeight=line.lineHeight
         self.ballDiameter=line.ballDiameter
@@ -357,13 +357,13 @@ class PbUIAnimatedPageControlLine:CALayer
         self.bindScrollView=line.bindScrollView
         self.masksToBounds=line.masksToBounds
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext!)
+    override func drawInContext(ctx: CGContext)
     {
         if(self.selectedPage <= self.pageCount){}
         if(self.selectedPage != 0){}
@@ -454,7 +454,7 @@ class PbUIAnimatedPageControlLine:CALayer
     }
     
     //animationDidStop:
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool)
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool)
     {
         if (flag)
         {
@@ -522,7 +522,7 @@ class PbUIAnimatedPageControl: UIView
         
         self.layer.masksToBounds = false
     }
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
@@ -544,7 +544,9 @@ class PbUIAnimatedPageControl: UIView
     //animateToIndex:Animate to index
     func animationToIndex(index:Int)
     {
-        let distince =  abs(self.line!.selectedLineLength-Double(index)*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))/((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
+        let a=abs(self.line!.selectedLineLength-Double(index)*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))
+        let b=((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
+        let distince =  a/b
         
         //背景线条动画
         self.line?.animateSelectedLineToNewIndex(Int(index+1))
@@ -571,7 +573,9 @@ class PbUIAnimatedPageControl: UIView
                     index += 1.0
                 }
                 
-                let distince =  abs(self.line!.selectedLineLength-index*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))/((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
+                let a=abs(self.line!.selectedLineLength-index*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))
+                let b=((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
+                let distince = a/b
                 
                 //背景线条动画
                 self.line!.animateSelectedLineToNewIndex(Int(index+1))
@@ -677,8 +681,6 @@ class PbUIAnimatedPageControl: UIView
                     break
                 case .RotateRect:
                     self.indicator = self.getRotateRect()
-                    break
-                default:
                     break
             }
             

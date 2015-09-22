@@ -32,7 +32,7 @@ class PbTestForPhotoManager: UIViewController
     {
         super.viewDidLoad()
         
-        var manager=PbDataPhotoManager(downloadMaxCount: 1)
+        let manager=PbDataPhotoManager(downloadMaxCount: 1)
         manager.download(
             [
                 PbDataPhotoRecord(urlString:"http://a.36krcnd.com/nil_class/67967e6c-ea12-4acd-9494-aa23bb16f959/QQ20150624-1_2x.jpg!heading", index: NSIndexPath(index: 1)),

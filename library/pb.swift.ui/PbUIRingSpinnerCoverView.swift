@@ -22,7 +22,7 @@ class  PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     }
     
     //init:初始化
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -46,7 +46,7 @@ class  PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     //startAnimating:关闭载入动画
     func stopAnimating()
     {
-        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: [], animations: { () -> Void in
             
             self.layer.opacity=0
             
