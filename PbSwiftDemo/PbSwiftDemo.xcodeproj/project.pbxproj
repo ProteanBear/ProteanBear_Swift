@@ -44,6 +44,7 @@
 		D38965351B8D7B1500F89C3E /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = D389652C1B8D7B1500F89C3E /* UserData.plist */; };
 		D38965361B8D7B1500F89C3E /* PbTestUICollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389652E1B8D7B1500F89C3E /* PbTestUICollectionCell.swift */; };
 		D38965371B8D7B1500F89C3E /* PbTestUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389652F1B8D7B1500F89C3E /* PbTestUITableCell.swift */; };
+		D3929A7F1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */; settings = {ASSET_TAGS = (); }; };
 		D398B6011B91FED000BFD116 /* PbUIAnimatedPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */; };
 		D398B6031B92101400BFD116 /* ExtensionCALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6021B92101400BFD116 /* ExtensionCALayer.swift */; };
 		D3AC7C731BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */; };
@@ -106,6 +107,7 @@
 		D389652C1B8D7B1500F89C3E /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
 		D389652E1B8D7B1500F89C3E /* PbTestUICollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestUICollectionCell.swift; sourceTree = "<group>"; };
 		D389652F1B8D7B1500F89C3E /* PbTestUITableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestUITableCell.swift; sourceTree = "<group>"; };
+		D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForBasicPbSystem.swift; sourceTree = "<group>"; };
 		D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUIAnimatedPageControl.swift; sourceTree = "<group>"; };
 		D398B6021B92101400BFD116 /* ExtensionCALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionCALayer.swift; sourceTree = "<group>"; };
 		D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForLaunchHelpViewController.swift; sourceTree = "<group>"; };
@@ -200,12 +202,13 @@
 		D38965241B8D7B1500F89C3E /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */,
-				D38965251B8D7B1500F89C3E /* PbTestForCollectionViewController.swift */,
+				D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */,
 				D38965261B8D7B1500F89C3E /* PbTestForPhotoManager.swift */,
 				D38965271B8D7B1500F89C3E /* PbTestForTableViewController.swift */,
-				D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */,
+				D38965251B8D7B1500F89C3E /* PbTestForCollectionViewController.swift */,
+				D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */,
 				D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */,
+				D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				D389651C1B8D7B0300F89C3E /* PbUICollectionViewCellForLoad.swift in Sources */,
 				D389651D1B8D7B0300F89C3E /* PbUICollectionViewController.swift in Sources */,
 				D389650D1B8D7B0300F89C3E /* ExtensionUIImage.swift in Sources */,
+				D3929A7F1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift in Sources */,
 				D389651B1B8D7B0300F89C3E /* ExtensionUIViewController.swift in Sources */,
 				D38965371B8D7B1500F89C3E /* PbTestUITableCell.swift in Sources */,
 				D38965151B8D7B0300F89C3E /* PbDataParserJson.swift in Sources */,
