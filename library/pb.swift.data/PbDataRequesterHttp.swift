@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbDataRequesterHttp:PbDataRequester
+public class PbDataRequesterHttp:PbDataRequester
 {
     //boundary:自定义上传数据体时的分隔符
     let boundary="AaB03x"
@@ -27,13 +27,13 @@ class PbDataRequesterHttp:PbDataRequester
     }
     
     //request:发送请求,默认为非上传资源
-    internal func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
+    public func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
     {
         self.request(address, data: data, callback: callback, isMultipart: false)
     }
     
     //request:发送请求，设置是否上传资源数据
-    internal func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void,isMultipart:Bool)
+    public func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void,isMultipart:Bool)
     {
         if(isMultipart)
         {
@@ -53,7 +53,7 @@ class PbDataRequesterHttp:PbDataRequester
     }
     
     //requestForResource:发送请求，获取资源数据
-    internal func requestForResource(address:String,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
+    public func requestForResource(address:String,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
     {
         //创建Session
         let session = NSURLSession.sharedSession()
@@ -82,7 +82,7 @@ class PbDataRequesterHttp:PbDataRequester
     }
     
     //paramsString:获取当前请求参数的字符串格式
-    internal func paramString(params:NSDictionary?)->String
+    public func paramString(params:NSDictionary?)->String
     {
         if((params) == nil){return ""}
         

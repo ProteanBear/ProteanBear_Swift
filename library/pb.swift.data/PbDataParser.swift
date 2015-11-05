@@ -8,11 +8,8 @@
 
 import Foundation
 
-protocol PbDataParser
+public protocol PbDataParser
 {
-    //parserError:记录解析的错误信息
-    var parseError:NSErrorPointer{get set}
-    
     //dictionaryByData:通过数据获取数据字典对象
     mutating func dictionaryByData(data:NSData?) -> NSMutableDictionary
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PbLog
+public class PbLog
 {
     static let isDebug=true
     

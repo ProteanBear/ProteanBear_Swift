@@ -8,13 +8,10 @@
 
 import Foundation
 
-class PbDataParserJson: PbDataParser
+public class PbDataParserJson: PbDataParser
 {
-    //parserError:记录解析的错误信息
-    var parseError:NSErrorPointer=NSErrorPointer()
-    
     //dictionaryByData:通过数据获取数据字典对象
-    func dictionaryByData(data:NSData?) -> NSMutableDictionary
+    public func dictionaryByData(data:NSData?) -> NSMutableDictionary
     {
         //调试信息前缀
         let logPrex:String="PbDataParserJson:dictionaryByData:"

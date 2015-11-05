@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
+public class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
 {
     //animationName:记录动画名称
     let animationName="PbUIRingSpinnerViewAnimation"
@@ -33,14 +33,14 @@ class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
     }
 
     //init:初始化
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
     }
     
     //layoutSubviews:设置指示器大小
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         self.processLayer.frame=CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
@@ -48,14 +48,14 @@ class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
     }
     
     //tintColorDidChange:颜色改变时处理
-    override func tintColorDidChange()
+    override public func tintColorDidChange()
     {
         super.tintColorDidChange()
         self.processLayer.strokeColor=self.tintColor.CGColor
     }
     
     //startAnimating:开始载入动画
-    func startAnimating()
+    public func startAnimating()
     {
         if(isAnimating){return}
         self.hidden=false
@@ -72,7 +72,7 @@ class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
         self.isAnimating = true
     }
     //startAnimating:关闭载入动画
-    func stopAnimating()
+    public func stopAnimating()
     {
         if(!isAnimating){return}
         

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbUITableViewCellForLoad:UITableViewCell
+public class PbUITableViewCellForLoad:UITableViewCell
 {
     //indicator:载入指示器
     private var indicator=UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
@@ -33,7 +33,7 @@ class PbUITableViewCellForLoad:UITableViewCell
     }
 
     //重载构造方法
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.setup()

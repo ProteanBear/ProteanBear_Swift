@@ -10,19 +10,19 @@ import Foundation
 import UIKit
 
 //PbUIRefreshState:刷新状态
-enum PbUIRefreshState:Int
+public enum PbUIRefreshState:Int
 {
     case Pulling,Normal,Refreshing,WillRefreshing
 }
 
 //PbUIRefreshPosition:刷新位置
-enum PbUIRefreshPosition:Int
+public enum PbUIRefreshPosition:Int
 {
     case Header,Footer
 }
 
 //PbUIRefreshConfigProtocol:对刷新控件进行配置
-protocol PbUIRefreshConfigProtocol
+public protocol PbUIRefreshConfigProtocol
 {
     func pbUIRefreshViewBackgroudColor() -> UIColor
     func pbUIRefreshLabelFontSize() -> CGFloat
@@ -33,7 +33,7 @@ protocol PbUIRefreshConfigProtocol
 }
 
 //PbUIArrowView:箭头视图
-class PbUIArrowView:UIView
+public class PbUIArrowView:UIView
 {
     //init:初始化
     override init(frame: CGRect)
@@ -41,14 +41,14 @@ class PbUIArrowView:UIView
         super.init(frame: frame)
         self.backgroundColor=UIColor.clearColor()
     }
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.backgroundColor=UIColor.clearColor()
     }
     
     //绘制内容
-    override func drawRect(rect: CGRect)
+    override public func drawRect(rect: CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
         let offset:CGFloat=4
@@ -70,7 +70,7 @@ class PbUIArrowView:UIView
 }
 
 //PbUIRefreshBaseView:刷新基本视图
-class PbUIRefreshBaseView:UIView
+public class PbUIRefreshBaseView:UIView
 {
     //默认颜色
     let textColor=UIColor.darkGrayColor()
@@ -108,7 +108,7 @@ class PbUIRefreshBaseView:UIView
         setup()
     }
 
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -127,7 +127,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //layoutSubviews:设置内部布局
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         //箭头
@@ -139,7 +139,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //willMoveToSuperview:设置父控件
-    override func willMoveToSuperview(newSuperview: UIView?)
+    override public func willMoveToSuperview(newSuperview: UIView?)
     {
         if (self.superview != nil)
         {
@@ -161,7 +161,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //drawRect:显示到屏幕上
-    override func drawRect(rect: CGRect)
+    override public func drawRect(rect: CGRect)
     {
         super.drawRect(rect)
         if(self.state == PbUIRefreshState.WillRefreshing)
@@ -271,7 +271,7 @@ class PbUIRefreshBaseView:UIView
 }
 
 //PbUIRefreshHeaderView:顶部刷新视图
-class PbUIRefreshHeaderView:PbUIRefreshBaseView
+public class PbUIRefreshHeaderView:PbUIRefreshBaseView
 {
     //lastUpdateTime:记录最后更新时间
     var lastUpdateTime=NSDate(){willSet{}didSet{}}
@@ -357,14 +357,14 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
         super.init(frame: frame, config: config)
     }
     
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
     }
     
     //layoutSubviews:设置内部布局
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         
@@ -385,7 +385,7 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //willMoveToSuperview:设置自己的位置和尺寸
-    override func willMoveToSuperview(newSuperview: UIView!) {
+    override public func willMoveToSuperview(newSuperview: UIView!) {
         super.willMoveToSuperview(newSuperview)
         
         var rect:CGRect = self.frame
@@ -394,7 +394,7 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //observeValueForKeyPath:监听UIScrollView的contentOffset属性
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
+    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
         if (!self.userInteractionEnabled || self.hidden){return}
         if (self.state == PbUIRefreshState.Refreshing){return}

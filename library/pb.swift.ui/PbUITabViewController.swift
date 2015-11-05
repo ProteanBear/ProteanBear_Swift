@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //PbUITabMenuData:Tab栏使用的菜单栏数据记录
-class PbUITabMenuData
+public class PbUITabMenuData
 {
     var index:String?
     var indexId:Int=0

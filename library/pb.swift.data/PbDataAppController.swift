@@ -15,7 +15,7 @@ import ReachabilitySwift
 /*PbDataUpdateMode:
 *  枚举类型，数据更新模式
 */
-enum PbDataUpdateMode:Int
+public enum PbDataUpdateMode:Int
 {
     case First,Update,NextPage
 }

@@ -12,7 +12,7 @@ import UIKit
 extension UIScrollView
 {
     //pbAddUIRefreshViewToHeader:增加顶部下拉刷新视图
-    func pbAddUIRefreshViewToHeader(callback:(() -> Void)!)
+    public func pbAddUIRefreshViewToHeader(callback:(() -> Void)!)
     {
         let headerView=PbUIRefreshHeaderView(frame:CGRectMake(0,0,PbSystem.screenCurrentWidth(),CGFloat(PbSystem.sizeUpdateViewHeight)))
         headerView.beginRefreshingCallback=callback
@@ -21,7 +21,7 @@ extension UIScrollView
     }
     
     //pbAddUIRefreshViewToHeader:增加顶部下拉刷新视图
-    func pbAddUIRefreshViewToHeader(callback:(() -> Void)!,delegate:PbUIRefreshConfigProtocol)
+    public func pbAddUIRefreshViewToHeader(callback:(() -> Void)!,delegate:PbUIRefreshConfigProtocol)
     {
         let headerView=PbUIRefreshHeaderView(frame:CGRectMake(0, 0,PbSystem.screenCurrentWidth(),CGFloat(PbSystem.sizeUpdateViewHeight)),config:delegate)
         headerView.beginRefreshingCallback=callback
@@ -30,7 +30,7 @@ extension UIScrollView
     }
     
     //pbRemoveUIRefreshViewFromHeader:删除顶部下拉刷新视图
-    func pbRemoveUIRefreshViewFromHeader()
+    public func pbRemoveUIRefreshViewFromHeader()
     {
         for view : AnyObject in self.subviews
         {
@@ -42,7 +42,7 @@ extension UIScrollView
     }
     
     //pbUIRefreshHeaderBegin:开始载入
-    func pbUIRefreshHeaderBegin()
+    public func pbUIRefreshHeaderBegin()
     {
         for object : AnyObject in self.subviews
         {
@@ -54,7 +54,7 @@ extension UIScrollView
     }
     
     //pbUIRefreshHeaderEnd:停止载入
-    func pbUIRefreshHeaderEnd()
+    public func pbUIRefreshHeaderEnd()
     {
         for object : AnyObject in self.subviews
         {
@@ -66,7 +66,7 @@ extension UIScrollView
     }
     
     //pbUIRefreshHeaderSetUpdateTime:停止载入
-    func pbUIRefreshHeaderSetUpdateTime(date:NSDate)
+    public func pbUIRefreshHeaderSetUpdateTime(date:NSDate)
     {
         for object : AnyObject in self.subviews
         {

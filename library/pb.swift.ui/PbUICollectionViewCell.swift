@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 //PbUICollectionViewCellForImage:图片单元格
-class PbUICollectionViewCellForImage:UICollectionViewCell
+public class PbUICollectionViewCellForImage:UICollectionViewCell
 {
     //imageView:图片
     let imageView=UIImageView(frame:CGRectZero)
     
     //重载构造方法
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.setup()

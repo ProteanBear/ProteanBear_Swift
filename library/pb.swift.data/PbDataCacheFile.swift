@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbDataCacheFile
+public class PbDataCacheFile
 {
     //fileManager:文件管理器
     let fileManager:NSFileManager=NSFileManager.defaultManager()

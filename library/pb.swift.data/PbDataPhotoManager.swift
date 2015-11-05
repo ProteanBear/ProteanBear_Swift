@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 //PbDataPhotoState:图片处理状态，包括新图片、已下载、已加滤镜和失败
-enum PbDataPhotoState
+public enum PbDataPhotoState
 {
     case New, Downloaded, Filtered, Failed
 }
 
 //PbDataPhotoRecord:记录当前图片处理的相关信息
-class PbDataPhotoRecord
+public class PbDataPhotoRecord
 {
     let url:String
     var state = PbDataPhotoState.New
@@ -31,7 +31,7 @@ class PbDataPhotoRecord
 }
 
 //PbDataPhotoDownloadOperate:图片数据下载器
-class PbDataPhotoDownloadOperate:NSOperation
+public class PbDataPhotoDownloadOperate:NSOperation
 {
     let photoRecord:PbDataPhotoRecord
     
@@ -40,7 +40,7 @@ class PbDataPhotoDownloadOperate:NSOperation
         self.photoRecord=photoRecord
     }
     
-    override func main()
+    override public func main()
     {
         if(self.cancelled){return}
         
@@ -76,7 +76,7 @@ class PbDataPhotoDownloadOperate:NSOperation
 }
 
 //PbDataPhotoFilterOperate:图片使用滤镜加载器
-class PbDataPhotoFilterOperate:NSOperation
+public class PbDataPhotoFilterOperate:NSOperation
 {
     let photoRecord:PbDataPhotoRecord
     
@@ -85,7 +85,7 @@ class PbDataPhotoFilterOperate:NSOperation
         self.photoRecord=photoRecord
     }
     
-    override func main()
+    override public func main()
     {
         if(self.cancelled){return}
         if(self.photoRecord.state != PbDataPhotoState.Downloaded){return}
@@ -101,7 +101,7 @@ class PbDataPhotoFilterOperate:NSOperation
 }
 
 //PbDataPhotoManager:图片下载队列管理器
-class PbDataPhotoManager
+public class PbDataPhotoManager
 {
     //downloadsInProgress:跟踪当前正在进行的下载进程
     lazy var downloadsInProgress=[NSIndexPath:NSOperation]()

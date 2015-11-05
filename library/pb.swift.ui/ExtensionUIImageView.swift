@@ -12,19 +12,19 @@ import UIKit
 extension UIImageView
 {
     //loadWithUrl:异步载入网络图片
-    func loadWithUrl(urlString:String)
+    public func loadWithUrl(urlString:String)
     {
         self.loadWithUrl(urlString,scale:nil)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    func loadWithUrl(urlString:String,scale:Float?)
+    public func loadWithUrl(urlString:String,scale:Float?)
     {
         self.loadWithUrl(urlString, scale: scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //读取本地图片
         let image=PbDataAppController.getInstance.imageInLocalCache(urlString)
@@ -55,13 +55,13 @@ extension UIImageView
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    func autoSetContentMode(scale:Float?)
+    public func autoSetContentMode(scale:Float?)
     {
         self.autoSetContentMode(scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    func autoSetContentMode(scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func autoSetContentMode(scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(self.image == nil || scale == nil){return}
         
@@ -74,19 +74,19 @@ extension UIImageView
     }
     
     //setImage:指定设置比例并动画显示图片
-    func setImage(image:UIImage,scale:Float?)
+    public func setImage(image:UIImage,scale:Float?)
     {
         self.displayAnimation(image, scale:scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //setImage:指定设置比例并动画显示图片
-    func setImage(image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func setImage(image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         self.displayAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
     }
     
     //displayAnimation:动画显示图片
-    func displayAnimation(image:UIImage?)
+    public func displayAnimation(image:UIImage?)
     {
         if(image != nil)
         {

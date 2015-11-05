@@ -12,7 +12,7 @@ import QuartzCore
 extension CALayer
 {
     //Normal Animation
-    class func pbAnimation(create keyPath:String,duration:CFTimeInterval,fromValue:AnyObject,toValue:AnyObject) -> CABasicAnimation
+    public class func pbAnimation(create keyPath:String,duration:CFTimeInterval,fromValue:AnyObject,toValue:AnyObject) -> CABasicAnimation
     {
         let anim=CABasicAnimation(keyPath:keyPath)
         anim.fromValue = fromValue
@@ -23,7 +23,7 @@ extension CALayer
     }
     
     //Spring Animation
-    class func pbAnimation(createSpring keyPath:String,duration:CFTimeInterval,usingSpringWithDamping damping:Float,initialSpringVelocity velocity:Float,fromValue:Float,toValue:Float) -> CAKeyframeAnimation
+    public class func pbAnimation(createSpring keyPath:String,duration:CFTimeInterval,usingSpringWithDamping damping:Float,initialSpringVelocity velocity:Float,fromValue:Float,toValue:Float) -> CAKeyframeAnimation
     {
         let values=CALayer.pbAnimationValues(fromValue, toValue: toValue, usingSpringWithDamping: damping, initialSpringVelocity: velocity, duration: duration)
         let anim = CAKeyframeAnimation(keyPath: keyPath)

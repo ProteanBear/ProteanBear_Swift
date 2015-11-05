@@ -19,7 +19,7 @@ enum PbUIViewType:Int
     case none,system,pull,auto
 }
 
-protocol PbUIActivityIndicator
+public protocol PbUIActivityIndicator
 {
     func startAnimating()
     func stopAnimating()

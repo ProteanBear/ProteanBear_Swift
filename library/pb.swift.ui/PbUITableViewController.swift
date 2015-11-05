@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbUITableViewController:UITableViewController,PbUITableViewControllerProtocol,PbUIRefreshConfigProtocol
+public class PbUITableViewController:UITableViewController,PbUITableViewControllerProtocol,PbUIRefreshConfigProtocol
 {
     //loadCellIdentifier
     let loadCellIdentifier="PbUITableViewLoadCell"
@@ -461,7 +461,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     /*-----------------------开始：实现UITableViewDataSource*/
     
     //tableView:heightForRowAtIndexPath:返回列表单元格的高度
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    override public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         var result:CGFloat=self.pbNormalHeightForRowAtIndexPath(tableView, indexPath: indexPath)
         
@@ -474,7 +474,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     }
     
     //tableView:numberOfRowsInSection:返回列表数据的数据量
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         var result=0
         
@@ -488,7 +488,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     }
     
     //tableView:cellForRowAtIndexPath:返回指定索引对应的列表项
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var result:UITableViewCell?
         
@@ -574,14 +574,14 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     /*-----------------------开始：实现UIScrollViewDelegate*/
     
     //scrollViewWillBeginDragging:滚动视图开始拖动
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView)
+    override public func scrollViewWillBeginDragging(scrollView: UIScrollView)
     {
         //挂起全部图片载入任务
         self.photoManager.downloadPauseAll()
     }
     
     //scrollViewDidEndDragging:滚动视图结束拖动
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
         //self.pbSetQueueForDisplayRow()
@@ -590,7 +590,7 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
         self.pbSetQueueForDisplayRow()
@@ -622,12 +622,12 @@ class PbUITableViewController:UITableViewController,PbUITableViewControllerProto
     
     /*-----------------------开始：实现PbUIRefreshConfigProtocol*/
     
-    func pbUIRefreshViewBackgroudColor() -> UIColor{return UIColor.clearColor()}
-    func pbUIRefreshLabelFontSize() -> CGFloat{return 12}
-    func pbUIRefreshLabelTextColor() -> UIColor{return UIColor.darkGrayColor()}
-    func pbUIRefreshActivityView() -> PbUIActivityIndicator?{return nil}
-    func pbUIRefreshActivityDefaultSize() -> CGSize{return CGSizeMake(32,32)}
-    func pbUIRefreshActivityDefaultColor() -> UIColor{return UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)}
+    public func pbUIRefreshViewBackgroudColor() -> UIColor{return UIColor.clearColor()}
+    public func pbUIRefreshLabelFontSize() -> CGFloat{return 12}
+    public func pbUIRefreshLabelTextColor() -> UIColor{return UIColor.darkGrayColor()}
+    public func pbUIRefreshActivityView() -> PbUIActivityIndicator?{return nil}
+    public func pbUIRefreshActivityDefaultSize() -> CGSize{return CGSizeMake(32,32)}
+    public func pbUIRefreshActivityDefaultColor() -> UIColor{return UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)}
     
     /*-----------------------结束：实现PbUIRefreshConfigProtocol*/
 }

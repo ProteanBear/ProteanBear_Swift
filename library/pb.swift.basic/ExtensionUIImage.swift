@@ -12,7 +12,7 @@ import UIKit
 extension UIImage
 {
     //resizeToNewImage:将指定图片剪裁为指定的大小
-    class func resizeToNewImage(image:UIImage,newSize:CGSize) -> UIImage!
+    public class func resizeToNewImage(image:UIImage,newSize:CGSize) -> UIImage!
     {
         if newSize.width > image.size.width || newSize.height > image.size.height
         {
@@ -40,7 +40,7 @@ extension UIImage
     }
     
     //imageWithColor:根据颜色生成图片
-    class func imageWithColor(color:UIColor,size:CGSize) -> UIImage
+    public class func imageWithColor(color:UIColor,size:CGSize) -> UIImage
     {
         let rect = CGRectMake(0, 0, size.width, size.height)
         UIGraphicsBeginImageContext(rect.size)

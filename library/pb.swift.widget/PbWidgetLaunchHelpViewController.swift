@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbWidgetLaunchHelpViewController:PbUICollectionViewController
+public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
 {
     //pageControl:页码指示器
     let pageControl=PbUIAnimatedPageControl(frame:CGRectZero)
@@ -17,7 +17,7 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     let startButton=UIButton(frame:CGRectZero)
     
     //viewDidLoad:视图设置
-    override func viewDidLoad()
+    override public func viewDidLoad()
     {
         super.viewDidLoad()
         
@@ -175,7 +175,7 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //scrollViewDidScroll:滚动时执行粘土动画
-    override func scrollViewDidScroll(scrollView: UIScrollView)
+    override public func scrollViewDidScroll(scrollView: UIScrollView)
     {
         //Indicator动画
         self.pageControl.indicator.animateIndicator(scrollView, pageControl: self.pageControl)
@@ -188,7 +188,7 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //scrollViewWillBeginDecelerating:将要开始滚动，重置指示器位置
-    override func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
+    override public func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
     {
         if(self.startButton.layer.opacity==1)
         {
@@ -198,7 +198,7 @@ class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //scrollViewDidEndDecelerating:停止滚动，记录最后滚动的位置
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         self.pageControl.indicator.lastContentOffset=scrollView.contentOffset.x
         self.pageControl.selectedPage=Int(Double(scrollView.contentOffset.x)/Double((self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width))

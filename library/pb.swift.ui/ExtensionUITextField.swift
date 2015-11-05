@@ -12,7 +12,7 @@ import UIKit
 extension UITextField
 {
     //pbSetLeftPadding:设置左侧边距
-    func pbSetLeftPadding(width:CGFloat)
+    public func pbSetLeftPadding(width:CGFloat)
     {
         var rect=self.frame
         rect.size.width = width
@@ -21,7 +21,7 @@ extension UITextField
     }
     
     //pbSetRightPadding:设置右侧边距
-    func pbSetRightPadding(width:CGFloat)
+    public func pbSetRightPadding(width:CGFloat)
     {
         var rect=self.frame
         rect.size.width = width

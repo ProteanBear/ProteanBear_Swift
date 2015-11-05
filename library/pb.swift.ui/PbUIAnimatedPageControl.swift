@@ -12,19 +12,19 @@ import UIKit
 import QuartzCore
 
 //PbUIAnimatedPageControlIndicatorStyle:指示器类型
-enum PbUIAnimatedPageControlIndicatorStyle:Int
+public enum PbUIAnimatedPageControlIndicatorStyle:Int
 {
     case GooeyCircle,RotateRect
 }
 
 //PbUIAnimatedPageControlScrollDirection:滚动方向
-enum PbUIAnimatedPageControlScrollDirection:Int
+public enum PbUIAnimatedPageControlScrollDirection:Int
 {
     case None,Right,Left,Up,Down,Crazy
 }
 
 //PbUIAnimatedPageControlIndicator:指示器基类
-class PbUIAnimatedPageControlIndicator:CALayer
+public class PbUIAnimatedPageControlIndicator:CALayer
 {
     //indicatorSize:
     var indicatorSize:CGFloat!{
@@ -471,7 +471,7 @@ class PbUIAnimatedPageControlLine:CALayer
 }
 
 //PbUIAnimatedPageControl:动画页码切换器
-class PbUIAnimatedPageControl: UIView
+public class PbUIAnimatedPageControl: UIView
 {
     //pageCount:页码数量
     var pageCount:Int=0
@@ -522,13 +522,13 @@ class PbUIAnimatedPageControl: UIView
         
         self.layer.masksToBounds = false
     }
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
     
     //willMoveToSuperview:
-    override func willMoveToSuperview(newSuperview: UIView?)
+    override public func willMoveToSuperview(newSuperview: UIView?)
     {
         self.layer.addSublayer(self.pageControlLine())
         self.layer.insertSublayer(self.getIndicator(),above: self.pageControlLine())

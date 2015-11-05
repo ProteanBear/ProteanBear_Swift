@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbSystem
+public class PbSystem
 {
     //字体设置
     static let fontMedium="STHeitiSC-Medium"
