@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-enum PbUIViewControllerErrorType:Int
+public enum PbUIViewControllerErrorType:Int
 {
     case NetNotConnected,NetFailed,NetError,ServerError
 }
 
-enum PbUIViewType:Int
+public enum PbUIViewType:Int
 {
     case none,system,pull,auto
 }
@@ -25,7 +25,7 @@ public protocol PbUIActivityIndicator
     func stopAnimating()
 }
 
-protocol PbUIViewControllerProtocol
+public protocol PbUIViewControllerProtocol
 {
     //pbDoInitForDataLoad:数据适配器初始化时调用
     func pbDoInitForDataLoad(delegate:PbUIViewControllerProtocol?)
@@ -57,7 +57,7 @@ protocol PbUIViewControllerProtocol
     func pbSupportActivityIndicator() -> PbUIActivityIndicator?
 }
 
-protocol PbUITableViewControllerProtocol:PbUIViewControllerProtocol
+public protocol PbUITableViewControllerProtocol:PbUIViewControllerProtocol
 {
     //pbSupportHeaderRefresh:是否支持表格顶部刷新
     func pbSupportHeaderRefresh() -> Bool
@@ -96,7 +96,7 @@ protocol PbUITableViewControllerProtocol:PbUIViewControllerProtocol
     func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
 }
 
-protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
+public protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
 {
     //pbSupportHeaderRefresh:是否支持表格顶部刷新
     func pbSupportHeaderRefresh() -> Bool
@@ -129,7 +129,7 @@ protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
     func pbSetDataForCollectionView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
 }
 
-class PbDataAdapter
+public class PbDataAdapter
 {
     //delegate:数据处理方法绑定委托
     var delegate:PbUIViewControllerProtocol?

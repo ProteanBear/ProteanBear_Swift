@@ -148,7 +148,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     /*-----------------------开始：实现PbUITableViewControllerProtocol*/
     
     //pbDoInitForDataLoad:数据适配器初始化时调用
-    func pbDoInitForDataLoad(delegate:PbUIViewControllerProtocol?)
+    public func pbDoInitForDataLoad(delegate:PbUIViewControllerProtocol?)
     {
         //初始化顶部刷新
         if(self.pbSupportHeaderRefresh())
@@ -216,32 +216,32 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbKeyForDataLoad:返回当前数据访问使用的链接标识
-    func pbKeyForDataLoad() -> String?
+    public func pbKeyForDataLoad() -> String?
     {
         return nil
     }
     
     //pbParamsForDataLoad:返回当前数据访问使用的参数
-    func pbParamsForDataLoad(updateMode:PbDataUpdateMode) -> NSMutableDictionary?
+    public func pbParamsForDataLoad(updateMode:PbDataUpdateMode) -> NSMutableDictionary?
     {
         return NSMutableDictionary()
     }
     
     //pbPageKeyForDataLoad:返回当前数据访问使用的页码参数名称
-    func pbPageKeyForDataLoad() -> String
+    public func pbPageKeyForDataLoad() -> String
     {
         return "page"
     }
     
     //pbPropertyForDataLoad:设置数据请求回执附带属性
     //请求返回时附带页码参数
-    func pbPropertyForDataLoad(updateMode:PbDataUpdateMode) -> NSDictionary?
+    public func pbPropertyForDataLoad(updateMode:PbDataUpdateMode) -> NSDictionary?
     {
         return nil
     }
     
     //pbWillRequestForDataLoad:开始请求前处理
-    func pbWillRequestForDataLoad(updateMode:PbDataUpdateMode)
+    public func pbWillRequestForDataLoad(updateMode:PbDataUpdateMode)
     {
         if(self.pbSupportHeaderRefresh())
         {
@@ -250,18 +250,18 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbErrorForDataLoad:出现访问错误时调用
-    func pbErrorForDataLoad(type:PbUIViewControllerErrorType,error:String)
+    public func pbErrorForDataLoad(type:PbUIViewControllerErrorType,error:String)
     {
     }
     
     //pbResolveFromResponse:解析处理返回的数据
-    func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
+    public func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
     {
         return nil
     }
     
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
-    func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    public func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         if(response == nil){return}
         
@@ -284,7 +284,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbDoInsertForDataLoad:执行增量类相关返回后的处理
-    func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    public func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         let newData=response as? NSArray
         if(self.tableData == nil){self.tableData=NSMutableArray()}
@@ -324,12 +324,12 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbDoUIDisplayForDataLoad:执行相关返回后的视图更新处理
-    func pbDoUIDisplayForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    public func pbDoUIDisplayForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
     //pbDoEndForDataLoad:执行数据载入结束后的处理
-    func pbDoEndForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    public func pbDoEndForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         //结束顶部视图载入状态
         if(self.pbSupportHeaderRefresh() && (updateMode==PbDataUpdateMode.Update))
@@ -357,7 +357,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbAutoUpdateAfterFirstLoad:初次载入后是否立即更新
-    func pbAutoUpdateAfterFirstLoad() -> Bool
+    public func pbAutoUpdateAfterFirstLoad() -> Bool
     {
         return true
     }
@@ -369,7 +369,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbSupportActivityIndicator:是否支持载入显示器
-    func pbSupportActivityIndicator() -> PbUIActivityIndicator?
+    public func pbSupportActivityIndicator() -> PbUIActivityIndicator?
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRectMake(0, 0, 2000, 2000))
         indicator.center=self.view.center
@@ -385,73 +385,73 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbSupportHeaderRefresh:是否支持表格顶部刷新
-    func pbSupportHeaderRefresh() -> Bool
+    public func pbSupportHeaderRefresh() -> Bool
     {
         return true
     }
     
     //pbSupportHeaderRefreshType:返回表格顶部刷新视图类型
-    func pbSupportHeaderRefreshType() -> PbUIViewType
+    public func pbSupportHeaderRefreshType() -> PbUIViewType
     {
         return PbUIViewType.pull
     }
     
     //pbSupportHeaderRefreshColor:表格顶部刷新的颜色
-    func pbSupportHeaderRefreshColor() -> UIColor?
+    public func pbSupportHeaderRefreshColor() -> UIColor?
     {
         return nil
     }
     
     //pbSupportFooterLoad:是否支持表格底部载入
-    func pbSupportFooterLoad() -> Bool
+    public func pbSupportFooterLoad() -> Bool
     {
         return true
     }
     
     //pbSupportFooterLoadType:返回表格底部载入类型
-    func pbSupportFooterLoadType() -> PbUIViewType
+    public func pbSupportFooterLoadType() -> PbUIViewType
     {
         return PbUIViewType.auto
     }
     
     //pbSupportFooterLoadColor:表格底部载入主题颜色（tiniColor）
-    func pbSupportFooterLoadColor() -> UIColor?
+    public func pbSupportFooterLoadColor() -> UIColor?
     {
         return nil
     }
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
     {
         return nil
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    public func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
     {
         return "PbUITableViewDataCell"
     }
     
     //pbNibNameForTableView:返回指定位置单元格使用的资源文件
-    func pbNibNameForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    public func pbNibNameForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
     {
         return nil
     }
     
     //pbNibIndexForTableView:返回指定位置单元格使用的资源文件
-    func pbNibIndexForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> Int
+    public func pbNibIndexForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> Int
     {
         return 0
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    public func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    public func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }

@@ -11,6 +11,7 @@ import UIKit
 
 import CoreLocation
 import ReachabilitySwift
+import CryptoSwift
 
 /*PbDataUpdateMode:
 *  枚举类型，数据更新模式
@@ -23,7 +24,7 @@ public enum PbDataUpdateMode:Int
 /*PbDataGetMode:
  *  枚举类型，数据获取模式
  */
-enum PbDataGetMode:Int
+public enum PbDataGetMode:Int
 {
     case FromNet,FromLocalOrNet,FromLocal
 }
@@ -31,13 +32,13 @@ enum PbDataGetMode:Int
 /*PbDataLocationMode:
 *  枚举类型，定位获取模式
 */
-enum PbDataLocationMode:Int
+public enum PbDataLocationMode:Int
 {
     case None,InUse,Always
 }
 
 //应用数据层控制器
-class PbDataAppController:NSObject,CLLocationManagerDelegate
+public class PbDataAppController:NSObject,CLLocationManagerDelegate
 {
     /*-----------------------开始：静态常量*/
     //KEY_RESPONSE:控制器返回内容
@@ -680,7 +681,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     /*locationManager:didUpdateToLocation:fromLocation:
      *  更新到最新的位置
      */
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation)
+    public func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation)
     {
         lastLocation=newLocation
         PbLog.debug(logPre+"locationManager:最新定位:"+"经度("+newLocation.coordinate.longitude.description+"),纬度("+newLocation.coordinate.latitude.description+")")
