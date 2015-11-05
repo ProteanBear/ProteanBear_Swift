@@ -44,24 +44,24 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //pbSupport:设置网格控制器类型
-    override func pbSupportActivityIndicator() -> PbUIActivityIndicator?{return nil}
-    override func pbSupportHeaderRefresh() -> Bool{return false}
-    override func pbSupportFooterLoad() -> Bool{return false}
+    override public func pbSupportActivityIndicator() -> PbUIActivityIndicator?{return nil}
+    override public func pbSupportHeaderRefresh() -> Bool{return false}
+    override public func pbSupportFooterLoad() -> Bool{return false}
     
     //pbCellClassForCollectionView:注册单元各类
-    override func pbCellClassForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> AnyClass?
+    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> AnyClass?
     {
         return PbUICollectionViewCellForImage.self
     }
     
     //pbIdentifierForCollectionView:设置单元格复用标识
-    override func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> String
+    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> String
     {
         return "PbWidgetLaunchHelpView"
     }
     
     //pbSetDataForCollectionView:设置单元格显示
-    override func pbSetDataForCollectionView(cell: AnyObject, data: NSDictionary?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
+    override public func pbSetDataForCollectionView(cell: AnyObject, data: NSDictionary?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
     {
         let cell=cell as! PbUICollectionViewCellForImage
         
