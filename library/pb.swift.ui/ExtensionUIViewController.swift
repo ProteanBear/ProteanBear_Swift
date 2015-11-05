@@ -12,7 +12,7 @@ import UIKit
 extension UIViewController
 {
     //pbLoadData:获取数据
-    func pbLoadData(updateMode:PbDataUpdateMode,controller:PbUIViewControllerProtocol?)
+    public func pbLoadData(updateMode:PbDataUpdateMode,controller:PbUIViewControllerProtocol?)
     {
         PbDataAdapter(delegate:controller).loadData(updateMode)
     }

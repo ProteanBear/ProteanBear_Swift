@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class  PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
+public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
 {
     //indicator:指示器
     let indicator=PbUIRingSpinnerView(frame: CGRectZero)
@@ -22,31 +22,31 @@ class  PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     }
     
     //init:初始化
-    required init(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
     }
     
     //tintColorDidChange:颜色改变时处理
-    override func tintColorDidChange()
+    override public func tintColorDidChange()
     {
         super.tintColorDidChange()
         
         self.indicator.tintColor=self.tintColor
     }
     
-    //startAnimating:开始载入动画
-    func startAnimating()
+    //startAnimating:开始载入动画public 
+    public func startAnimating()
     {
         self.hidden=false
         self.indicator.startAnimating()
     }
     
     //startAnimating:关闭载入动画
-    func stopAnimating()
+    public func stopAnimating()
     {
-        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: [], animations: { () -> Void in
             
             self.layer.opacity=0
             

@@ -19,7 +19,7 @@ enum PbUIViewType:Int
     case none,system,pull,auto
 }
 
-protocol PbUIActivityIndicator
+public protocol PbUIActivityIndicator
 {
     func startAnimating()
     func stopAnimating()
@@ -204,7 +204,7 @@ class PbDataAdapter
             //增加页码参数
             params?.setObject(toPage,forKey:self.delegate!.pbPageKeyForDataLoad())
             //回执附带属性
-            var property=self.delegate!.pbPropertyForDataLoad(updateMode)
+            let property=self.delegate!.pbPropertyForDataLoad(updateMode)
             
             //载入数据
             self.delegate!.pbWillRequestForDataLoad(updateMode)
@@ -222,8 +222,8 @@ class PbDataAdapter
                 
                 //解析控制器返回结果
                 var conRes=data.objectForKey(PbDataAppController.KEY_RESPONSE) as! Dictionary<String,String>
-                var netStatus=conRes[PbDataAppController.KEY_NETWORK]!
-                var netSuccess=NSString(string:conRes[PbDataAppController.KEY_SUCCESS]!).boolValue
+                let netStatus=conRes[PbDataAppController.KEY_NETWORK]!
+                let netSuccess=NSString(string:conRes[PbDataAppController.KEY_SUCCESS]!).boolValue
                 
                 //检查结果
                 if(!netSuccess)
@@ -241,7 +241,7 @@ class PbDataAdapter
                 }
                 
                 //处理数据
-                var response: AnyObject?=self.delegate!.pbResolveFromResponse(data)
+                let response: AnyObject?=self.delegate!.pbResolveFromResponse(data)
                 //非增量获取数据处理
                 if(updateMode != PbDataUpdateMode.NextPage)
                 {

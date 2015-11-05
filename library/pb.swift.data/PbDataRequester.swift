@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PbDataRequester
+public protocol PbDataRequester
 {
     //request:发送请求，并返回数据
     mutating func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)

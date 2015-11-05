@@ -1,0 +1,10 @@
+PODS:
+  - ReachabilitySwift (2.0)
+
+DEPENDENCIES:
+  - ReachabilitySwift
+
+SPEC CHECKSUMS:
+  ReachabilitySwift: 227b98ae7ec99e1c01148b17fb22357aa91a5675
+
+COCOAPODS: 0.39.0

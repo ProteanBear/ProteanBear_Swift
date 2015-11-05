@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbDataCacheFile
+public class PbDataCacheFile
 {
     //fileManager:文件管理器
     let fileManager:NSFileManager=NSFileManager.defaultManager()
@@ -30,13 +30,16 @@ class PbDataCacheFile
     {
         //获取用户缓存目录
         let paths:Array=NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask,true) as Array
-        rootPath=paths[0] as! String
+        rootPath=paths[0] 
         
         //指定的缓存目录不存在则创建目录
-        self.cachePath=rootPath.stringByAppendingPathComponent(cachePathName)
+        self.cachePath=NSString(string:rootPath).stringByAppendingPathComponent(cachePathName)
         if(!fileManager.fileExistsAtPath(cachePath))
         {
-            fileManager.createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+            do {
+                try fileManager.createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: nil)
+            } catch _ {
+            }
         }
     }
     
@@ -45,10 +48,13 @@ class PbDataCacheFile
      */
     func createSubCachePath(subCacheName:String)
     {
-        var subCache=cachePath.stringByAppendingPathComponent(subCacheName)
+        let subCache=NSString(string:cachePath).stringByAppendingPathComponent(subCacheName)
         if(!fileManager.fileExistsAtPath(subCache))
         {
-            fileManager.createDirectoryAtPath(subCache, withIntermediateDirectories: false, attributes: nil, error: nil)
+            do {
+                try fileManager.createDirectoryAtPath(subCache, withIntermediateDirectories: false, attributes: nil)
+            } catch _ {
+            }
         }
     }
     
@@ -57,14 +63,14 @@ class PbDataCacheFile
      */
     func dataForKey(key:String,subPath:String) -> NSData?
     {
-        var path=cachePath.stringByAppendingPathComponent(subPath)
-        path=path.stringByAppendingPathComponent(key)
+        var path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
+        path=NSString(string:path).stringByAppendingPathComponent(key)
         var result:NSData?=nil
         
         if(fileManager.fileExistsAtPath(path))
         {
-            var attrs:NSDictionary=fileManager.attributesOfItemAtPath(path, error: nil)!
-            var date:NSDate=attrs.objectForKey(NSFileModificationDate) as! NSDate
+            let attrs:NSDictionary=try! fileManager.attributesOfItemAtPath(path)
+            let date:NSDate=attrs.objectForKey(NSFileModificationDate) as! NSDate
             
             if(expireTime==0 || date.timeIntervalSinceNow<expireTime)
             {
@@ -72,7 +78,10 @@ class PbDataCacheFile
             }
             else
             {
-                fileManager.removeItemAtPath(path, error: nil)
+                do {
+                    try fileManager.removeItemAtPath(path)
+                } catch _ {
+                }
             }
         }
         
@@ -84,7 +93,7 @@ class PbDataCacheFile
      */
     func setData(data:NSData,key:String,subPath:String)
     {
-        var path=self.removeDataForKey(key, subPath: subPath)
+        let path=self.removeDataForKey(key, subPath: subPath)
         data.writeToFile(path, atomically: true)
     }
     
@@ -93,12 +102,15 @@ class PbDataCacheFile
      */
     func removeDataForKey(key:String,subPath:String) -> String
     {
-        var path=cachePath.stringByAppendingPathComponent(subPath)
-        path=path.stringByAppendingPathComponent(key)
+        var path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
+        path=NSString(string:path).stringByAppendingPathComponent(key)
         
         if(fileManager.fileExistsAtPath(path))
         {
-            fileManager.removeItemAtPath(path, error: nil)
+            do {
+                try fileManager.removeItemAtPath(path)
+            } catch _ {
+            }
         }
         
         return path
@@ -109,9 +121,15 @@ class PbDataCacheFile
      */
     func clearDataForSubPath(subPath:String)
     {
-        var path=cachePath.stringByAppendingPathComponent(subPath)
-        fileManager.removeItemAtPath(path, error: nil)
-        fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil, error: nil)
+        let path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
+        do {
+            try fileManager.removeItemAtPath(path)
+        } catch _ {
+        }
+        do {
+            try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
+        } catch _ {
+        }
     }
     
     /*sizeOfSubPath:
@@ -120,15 +138,15 @@ class PbDataCacheFile
     func sizeOfSubPath(subPath:String) -> UInt64
     {
         var result:UInt64=0
-        var path=cachePath.stringByAppendingPathComponent(subPath)
+        let path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
         
-        var fileArray:NSArray?=fileManager.contentsOfDirectoryAtPath(path, error: nil)
+        let fileArray:NSArray?=try? fileManager.contentsOfDirectoryAtPath(path)
         if((fileArray) != nil)
         {
             var filePath=""
             for(var i=0;i<fileArray!.count;i++)
             {
-                filePath=path.stringByAppendingPathComponent(fileArray!.objectAtIndex(i) as! String)
+                filePath=NSString(string:path).stringByAppendingPathComponent(fileArray!.objectAtIndex(i) as! String)
                 
                 var isDict:ObjCBool=false
                 if(fileManager.fileExistsAtPath(filePath,isDirectory:&isDict)&&isDict)
@@ -137,7 +155,7 @@ class PbDataCacheFile
                 }
                 else
                 {
-                    let attrs:NSDictionary=fileManager.attributesOfItemAtPath(path, error: nil)!
+                    let attrs:NSDictionary=try! fileManager.attributesOfItemAtPath(path)
                     result+=attrs.fileSize()
                 }
             }

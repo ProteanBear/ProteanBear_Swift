@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PbObjectFile:AnyObject
+public class PbObjectFile:AnyObject
 {
     let name: String!
     let url: NSURL!

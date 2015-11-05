@@ -10,19 +10,19 @@ import Foundation
 import UIKit
 
 //PbUIRefreshState:刷新状态
-enum PbUIRefreshState:Int
+public enum PbUIRefreshState:Int
 {
     case Pulling,Normal,Refreshing,WillRefreshing
 }
 
 //PbUIRefreshPosition:刷新位置
-enum PbUIRefreshPosition:Int
+public enum PbUIRefreshPosition:Int
 {
     case Header,Footer
 }
 
 //PbUIRefreshConfigProtocol:对刷新控件进行配置
-protocol PbUIRefreshConfigProtocol
+public protocol PbUIRefreshConfigProtocol
 {
     func pbUIRefreshViewBackgroudColor() -> UIColor
     func pbUIRefreshLabelFontSize() -> CGFloat
@@ -33,7 +33,7 @@ protocol PbUIRefreshConfigProtocol
 }
 
 //PbUIArrowView:箭头视图
-class PbUIArrowView:UIView
+public class PbUIArrowView:UIView
 {
     //init:初始化
     override init(frame: CGRect)
@@ -41,14 +41,14 @@ class PbUIArrowView:UIView
         super.init(frame: frame)
         self.backgroundColor=UIColor.clearColor()
     }
-    required init(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         self.backgroundColor=UIColor.clearColor()
     }
     
     //绘制内容
-    override func drawRect(rect: CGRect)
+    override public func drawRect(rect: CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
         let offset:CGFloat=4
@@ -70,7 +70,7 @@ class PbUIArrowView:UIView
 }
 
 //PbUIRefreshBaseView:刷新基本视图
-class PbUIRefreshBaseView:UIView
+public class PbUIRefreshBaseView:UIView
 {
     //默认颜色
     let textColor=UIColor.darkGrayColor()
@@ -108,7 +108,7 @@ class PbUIRefreshBaseView:UIView
         setup()
     }
 
-    required init(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
@@ -127,7 +127,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //layoutSubviews:设置内部布局
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         //箭头
@@ -139,7 +139,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //willMoveToSuperview:设置父控件
-    override func willMoveToSuperview(newSuperview: UIView?)
+    override public func willMoveToSuperview(newSuperview: UIView?)
     {
         if (self.superview != nil)
         {
@@ -161,7 +161,7 @@ class PbUIRefreshBaseView:UIView
     }
     
     //drawRect:显示到屏幕上
-    override func drawRect(rect: CGRect)
+    override public func drawRect(rect: CGRect)
     {
         super.drawRect(rect)
         if(self.state == PbUIRefreshState.WillRefreshing)
@@ -189,7 +189,7 @@ class PbUIRefreshBaseView:UIView
     func endRefreshing()
     {
         let delayInSeconds:Double = 0.3
-        var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds))
+        let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds))
         
         dispatch_after(popTime, dispatch_get_main_queue(), {
             self.state = PbUIRefreshState.Normal;
@@ -271,7 +271,7 @@ class PbUIRefreshBaseView:UIView
 }
 
 //PbUIRefreshHeaderView:顶部刷新视图
-class PbUIRefreshHeaderView:PbUIRefreshBaseView
+public class PbUIRefreshHeaderView:PbUIRefreshBaseView
 {
     //lastUpdateTime:记录最后更新时间
     var lastUpdateTime=NSDate(){willSet{}didSet{}}
@@ -328,7 +328,7 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
                 
                 UIView.animateWithDuration(0.3, animations:
                 {
-                    var top:CGFloat = self.scrollViewOriginalInset.top + self.frame.size.height
+                    let top:CGFloat = self.scrollViewOriginalInset.top + self.frame.size.height
                     var inset:UIEdgeInsets = self.scrollView.contentInset
                     inset.top = top
                     self.scrollView.contentInset = inset
@@ -357,35 +357,35 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
         super.init(frame: frame, config: config)
     }
     
-    required init(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
     }
     
     //layoutSubviews:设置内部布局
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         
-        var statusX:CGFloat = 0
-        var statusY:CGFloat = 6
-        var statusHeight:CGFloat = self.frame.size.height * 0.5
-        var statusWidth:CGFloat = self.frame.size.width
+        let statusX:CGFloat = 0
+        let statusY:CGFloat = 6
+        let statusHeight:CGFloat = self.frame.size.height * 0.5
+        let statusWidth:CGFloat = self.frame.size.width
         
         //状态标签
         self.statusLabel.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight)
         
         //时间标签
-        var lastUpdateY:CGFloat = statusHeight-statusY
-        var lastUpdateX:CGFloat = 0
-        var lastUpdateHeight:CGFloat = statusHeight
-        var lastUpdateWidth:CGFloat = statusWidth
+        let lastUpdateY:CGFloat = statusHeight-statusY
+        let lastUpdateX:CGFloat = 0
+        let lastUpdateHeight:CGFloat = statusHeight
+        let lastUpdateWidth:CGFloat = statusWidth
         self.updateTimeLabel!.frame = CGRectMake(lastUpdateX, lastUpdateY, lastUpdateWidth, lastUpdateHeight);
     }
     
     //willMoveToSuperview:设置自己的位置和尺寸
-    override func willMoveToSuperview(newSuperview: UIView!) {
+    override public func willMoveToSuperview(newSuperview: UIView!) {
         super.willMoveToSuperview(newSuperview)
         
         var rect:CGRect = self.frame
@@ -394,12 +394,12 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //observeValueForKeyPath:监听UIScrollView的contentOffset属性
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>)
+    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
         if (!self.userInteractionEnabled || self.hidden){return}
         if (self.state == PbUIRefreshState.Refreshing){return}
         
-        if "contentOffset".isEqualToString(keyPath)
+        if "contentOffset".isEqualToString(keyPath!)
         {
             self.adjustStateWithContentOffset()
         }
@@ -408,14 +408,14 @@ class PbUIRefreshHeaderView:PbUIRefreshBaseView
     //adjustStateWithContentOffset:调整状态
     func adjustStateWithContentOffset()
     {
-        var currentOffsetY:CGFloat = self.scrollView.contentOffset.y
-        var happenOffsetY:CGFloat = -self.scrollViewOriginalInset.top
+        let currentOffsetY:CGFloat = self.scrollView.contentOffset.y
+        let happenOffsetY:CGFloat = -self.scrollViewOriginalInset.top
         
         if (currentOffsetY >= happenOffsetY){return}
         
         if self.scrollView.dragging
         {
-            var normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
+            let normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
             if(self.state == PbUIRefreshState.Normal && currentOffsetY < normal2pullingOffsetY)
             {
                 self.state = PbUIRefreshState.Pulling

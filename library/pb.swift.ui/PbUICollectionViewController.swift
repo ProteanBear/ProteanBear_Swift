@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbUICollectionViewController:UICollectionViewController,PbUICollectionViewControllerProtocol,PbUIRefreshConfigProtocol
+public class PbUICollectionViewController:UICollectionViewController,PbUICollectionViewControllerProtocol,PbUIRefreshConfigProtocol
 {
     //loadCellIdentifier
     let loadCellIdentifier="PbUICollectionViewLoadCell"
@@ -28,25 +28,25 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     /*-----------------------开始：公共方法*/
     
     //pbLoadData:获取数据
-    func pbLoadData(updateMode:PbDataUpdateMode)
+    public func pbLoadData(updateMode:PbDataUpdateMode)
     {
         if(self.dataAdapter == nil){self.dataAdapter=PbDataAdapter(delegate: self)}
         self.dataAdapter?.loadData(updateMode)
     }
     
     //pbPhotoKeyInIndexPath:返回单元格中的网络图片标识（不设置则无网络图片下载任务）
-    func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
+    public func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
     {
         return nil
     }
     
     //pbSetQueueForDisplayRow:设置下载图片的序列，只下载显示区域内的图片
-    func pbSetQueueForDisplayRow()
+    public func pbSetQueueForDisplayRow()
     {
         if let pathArray = self.collectionView?.indexPathsForVisibleItems()
         {
             //创建一个包含所有等待任务的集合
-            let allPendingOperations = NSMutableSet(array:self.photoManager.downloadsInProgress.keys.array)
+            let allPendingOperations = NSMutableSet(array:Array(self.photoManager.downloadsInProgress.keys))
             
             //构建一个需要撤销的任务的集合，从所有任务中除掉可见行的index path
             let toBeCancelled=allPendingOperations.mutableCopy() as! NSMutableSet
@@ -81,7 +81,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -94,13 +94,13 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
                     
                 })
             default:
-                let temp=0
+                _=0
             }
         }
     }
     
     //pbFullUrlForDataLoad:根据给定的路径获取全路径
-    func pbFullUrlForDataLoad(url:String?) -> String?
+    public func pbFullUrlForDataLoad(url:String?) -> String?
     {
         var result=url
         
@@ -120,7 +120,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     }
     
     //pbIsLoadCellForDataLoad:是否是显示载入单元格
-    func pbIsLoadCellForDataLoad(indexPath:NSIndexPath) -> Bool
+    public func pbIsLoadCellForDataLoad(indexPath:NSIndexPath) -> Bool
     {
         return self.pbSupportFooterLoad() && indexPath.row == self.collectionData?.count
     }
@@ -238,19 +238,19 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             self.collectionData?.addObjectsFromArray(newData as! [AnyObject])
             
             //设置表格动态增加索引
-            var insertPaths=NSMutableArray(capacity:newData!.count)
+            let insertPaths=NSMutableArray(capacity:newData!.count)
             //获取增量对应的节点
-            var targetSection=self.pbSectionForInsertData()
+            let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
             for (var i=0; i<newData!.count; i++)
             {
-                var newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
+                let newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
             }
             
             //增量增加表格数据
-            self.collectionView?.insertItemsAtIndexPaths(insertPaths as [AnyObject])
+            self.collectionView?.insertItemsAtIndexPaths((insertPaths as [AnyObject]) as! [NSIndexPath])
         }
         else
         {
@@ -259,7 +259,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             
             if(self.pbSupportFooterLoad())
             {
-                self.collectionView?.deleteItemsAtIndexPaths([self.collectionView!.indexPathForCell(self.loadCollectionCell!) as! AnyObject])
+                self.collectionView?.deleteItemsAtIndexPaths([self.collectionView!.indexPathForCell(self.loadCollectionCell!)!])
             }
         }
     }
@@ -378,7 +378,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     /*-----------------------开始：实现UICollectionViewDataSource*/
     
     //collectionView:numberOfItemsInSection:返回每节网格内的网格数
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    override public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         var result=0
         
@@ -392,7 +392,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     }
     
     //collectionView:cellForItemAtIndexPath:返回每节每个网格的单元样式
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+    override public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         var result:UICollectionViewCell?
         
@@ -402,7 +402,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
             {
                 self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
-                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath) as? UICollectionViewCell
+                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
                 
                 self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
                 if let color = self.pbSupportFooterLoadColor()
@@ -441,12 +441,12 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             }
             if let cellClass: AnyClass=self.pbCellClassForCollectionView(indexPath, data: data)
             {
-                self.collectionView?.registerClass(cellClass, forCellWithReuseIdentifier:loadCellIdentifier)
+                self.collectionView?.registerClass(cellClass, forCellWithReuseIdentifier:self.pbIdentifierForCollectionView(indexPath, data: data))
             }
             
             //获取未使用的单元对象
-            var identifier=self.pbIdentifierForCollectionView(indexPath, data: data)
-            result=(self.collectionView?.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath)) as? UICollectionViewCell
+            let identifier=self.pbIdentifierForCollectionView(indexPath, data: data)
+            result=(self.collectionView?.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath))
             
             //创建表格单元对象
             if(result == nil)
@@ -476,14 +476,14 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     /*-----------------------开始：实现UIScrollViewDelegate*/
     
     //scrollViewWillBeginDragging:滚动视图开始拖动
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView)
+    override public func scrollViewWillBeginDragging(scrollView: UIScrollView)
     {
         //挂起全部图片载入任务
         self.photoManager.downloadPauseAll()
     }
     
     //scrollViewDidEndDragging:滚动视图结束拖动
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
         //self.pbSetQueueForDisplayRow()
@@ -492,7 +492,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
         self.pbSetQueueForDisplayRow()
@@ -506,7 +506,7 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
             {
                 for indexPath in pathArray
                 {
-                    let indexPath:NSIndexPath=indexPath as! NSIndexPath
+                    let indexPath:NSIndexPath=indexPath 
                     if(indexPath == NSIndexPath(forRow:self.collectionData!.count, inSection:indexPath.section)&&(!self.dataAdapter!.nextIsNull)&&(!self.dataAdapter!.isInitLoad)&&(!self.dataAdapter!.isDataLoading))
                     {
                         //显示翻页载入指示器
@@ -524,12 +524,12 @@ class PbUICollectionViewController:UICollectionViewController,PbUICollectionView
     
     /*-----------------------开始：实现PbUIRefreshConfigProtocol*/
     
-    func pbUIRefreshViewBackgroudColor() -> UIColor{return UIColor.clearColor()}
-    func pbUIRefreshLabelFontSize() -> CGFloat{return 12}
-    func pbUIRefreshLabelTextColor() -> UIColor{return UIColor.darkGrayColor()}
-    func pbUIRefreshActivityView() -> PbUIActivityIndicator?{return nil}
-    func pbUIRefreshActivityDefaultSize() -> CGSize{return CGSizeMake(32,32)}
-    func pbUIRefreshActivityDefaultColor() -> UIColor{return UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)}
+    public func pbUIRefreshViewBackgroudColor() -> UIColor{return UIColor.clearColor()}
+    public func pbUIRefreshLabelFontSize() -> CGFloat{return 12}
+    public func pbUIRefreshLabelTextColor() -> UIColor{return UIColor.darkGrayColor()}
+    public func pbUIRefreshActivityView() -> PbUIActivityIndicator?{return nil}
+    public func pbUIRefreshActivityDefaultSize() -> CGSize{return CGSizeMake(32,32)}
+    public func pbUIRefreshActivityDefaultColor() -> UIColor{return UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)}
     
     /*-----------------------结束：实现PbUIRefreshConfigProtocol*/
 }

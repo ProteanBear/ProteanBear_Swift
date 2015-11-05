@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PbSystem
+public class PbSystem
 {
     //字体设置
     static let fontMedium="STHeitiSC-Medium"
@@ -25,7 +25,6 @@ class PbSystem
     static let sizeTopStatusBarHeight=20
     static let sizeTopTitleBarHeight=44
     static let sizeTopMenuBarHeight=34
-    static let sizeTopDecorationHeight=20
     static let sizeiPhone4Width=320
     static let sizeiPhone4Height=480
     static let sizeiPhone5Width=320
@@ -86,6 +85,12 @@ class PbSystem
         return osVersion()>8.0&&osVersion()<9.0
     }
     
+    //当前系统是否为9.0以上、10.0以下
+    class func os9() -> Bool
+    {
+        return osVersion()>9.0&&osVersion()<10.0
+    }
+    
     //当前系统是否为8.0以上版本
     class func osUp8() -> Bool
     {
@@ -95,14 +100,14 @@ class PbSystem
     //获取当前屏幕的宽度
     class func screenWidth() -> CGFloat
     {
-        var width=UIScreen.mainScreen().applicationFrame.size.width
+        let width=UIScreen.mainScreen().bounds.size.width
         return ( os7() && (width == CGFloat(sizeiPhone5Width)-CGFloat(sizeTopStatusBarHeight)||(width==CGFloat(sizeiPadHeight)-CGFloat(sizeTopStatusBarHeight))) ) ? (width+CGFloat(sizeTopStatusBarHeight)) : width
     }
     
     //获取当前屏幕的高度
     class func screenHeight() -> CGFloat
     {
-        var height=UIScreen.mainScreen().applicationFrame.size.height
+        let height=UIScreen.mainScreen().bounds.size.height
         return ( os7() && (height == CGFloat(sizeiPhone5Height)-CGFloat(sizeTopStatusBarHeight)||(height==CGFloat(sizeiPadWidth)-CGFloat(sizeTopStatusBarHeight))) ) ? (height+CGFloat(sizeTopStatusBarHeight)) : height
     }
     
@@ -130,6 +135,44 @@ class PbSystem
         return CGSizeMake(screenCurrentWidth(),screenCurrentHeight())
     }
     
+    //获取当前屏幕的宽度
+    class func screenWidth(full:Bool) -> CGFloat
+    {
+        let width=UIScreen.mainScreen().bounds.size.width
+        return full ? width : self.screenWidth()
+    }
+    
+    //获取当前屏幕的高度
+    class func screenHeight(full:Bool) -> CGFloat
+    {
+        let height=UIScreen.mainScreen().bounds.size.height
+        return full ? height+(os8() ? 20:0) : self.screenHeight()
+    }
+    
+    //获取当前屏幕的尺寸
+    class func screenSize(full:Bool) -> CGSize
+    {
+        return CGSizeMake(screenWidth(full),screenHeight(full))
+    }
+    
+    //获取当前翻转模式下屏幕的宽度
+    class func screenCurrentWidth(full:Bool) -> CGFloat
+    {
+        return UIDevice.currentDevice().orientation.isLandscape ? screenHeight(full) : screenWidth(full)
+    }
+    
+    //获取当前翻转模式下屏幕的高度
+    class func screenCurrentHeight(full:Bool) -> CGFloat
+    {
+        return UIDevice.currentDevice().orientation.isLandscape ? screenWidth(full) : screenHeight(full)
+    }
+    
+    //获取当前翻转模式下屏幕的尺寸
+    class func screenCurrentSize(full:Bool) -> CGSize
+    {
+        return CGSizeMake(screenCurrentWidth(full),screenCurrentHeight(full))
+    }
+    
     //度数转化为弧度
     class func toRadians(degrees:Double) -> Double
     {
@@ -145,7 +188,7 @@ class PbSystem
     //获取整数颜色值对应的颜色设置值
     class func toColor(color:Float) -> Float
     {
-        return color/255.00
+        return color/0xff
     }
     
     //获取指定日期类型的时间描述
@@ -203,7 +246,7 @@ class PbSystem
     }
     class func stringFromDate(timestamp:Int64,format:String) -> String
     {
-        var formatter=NSDateFormatter()
+        let formatter=NSDateFormatter()
         formatter.dateFormat=format
         return formatter.stringFromDate(NSDate(timeIntervalSince1970: NSTimeInterval(timestamp)))
     }

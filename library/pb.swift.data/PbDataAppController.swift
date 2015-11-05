@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 
 import CoreLocation
-
 import ReachabilitySwift
 
 /*PbDataUpdateMode:
 *  枚举类型，数据更新模式
 */
-enum PbDataUpdateMode:Int
+public enum PbDataUpdateMode:Int
 {
     case First,Update,NextPage
 }
@@ -101,7 +100,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*网络情况记录*/
     //reachability:网络连接测试对象
-    let reachability = Reachability.reachabilityForInternetConnection()
+    var reachability:Reachability!
     //networkStatus:网络连接状态
     var networkStatus=Reachability.NetworkStatus.NotReachable{didSet{PbLog.debug(logPre+"NetworkStatus:网络状态:"+self.networkStatus.description)}}
     
@@ -172,10 +171,10 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     private func loadPlist(plistName:String)
     {
         //调试信息前缀
-        var logPre=self.logPre+"loadPlist:"
+        let logPre=self.logPre+"loadPlist:"
         
         /*读取Plist*/
-        var path:String?=NSBundle.mainBundle().pathForResource(plistName,ofType:"plist")
+        let path:String?=NSBundle.mainBundle().pathForResource(plistName,ofType:"plist")
         if((path) != nil)
         {
             PbLog.debug(logPre+"开始读取Plist资源（Path:"+path!+"）")
@@ -190,16 +189,16 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     private func readConfig()
     {
         //调试信息前缀
-        var logPre=self.logPre+"readConfig:"
+        let logPre=self.logPre+"readConfig:"
         
         /*读取配置信息*/
         PbLog.debug(logPre+"开始读取配置信息")
-        var keys:NSArray=self.config.allKeys
-        var count:Int=self.config.count
+        let keys:NSArray=self.config.allKeys
+        let count:Int=self.config.count
         for(var i=0;i<count;i++)
         {
-            var key:String=keys.objectAtIndex(i) as! String
-            var value:AnyObject=self.config.objectForKey(key)!;
+            let key:String=keys.objectAtIndex(i) as! String
+            let value:AnyObject=self.config.objectForKey(key)!;
             
             //服务地址(server)
             if(key=="server")
@@ -223,7 +222,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
             //通讯协议(communication)
             if(key=="communication")
             {
-                var communication:NSDictionary=value as! NSDictionary
+                let communication:NSDictionary=value as! NSDictionary
                 //访问协议(netProtocol)
                 netProtocol=communication.objectForKey("protocol") as! String
                 PbLog.debug(logPre+"访问协议:"+netProtocol)
@@ -242,7 +241,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
             //文件缓存(localCache)
             if(key=="localCache")
             {
-                var localCache:NSDictionary=value as! NSDictionary
+                let localCache:NSDictionary=value as! NSDictionary
                 //是否激活(isActiveLocalCache)
                 isActiveLocalCache=localCache.objectForKey("isActive") as! Bool
                 PbLog.debug(logPre+"文件缓存:是否激活:"+isActiveLocalCache.description)
@@ -283,9 +282,22 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
      */
     func loadNetworkStatus()
     {
-        self.networkStatus=reachability.currentReachabilityStatus
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
-        reachability.startNotifier()
+        //调试信息前缀
+        let logPre=self.logPre+"loadNetworkStatus:"
+        
+        do
+        {
+            self.reachability = try Reachability.reachabilityForInternetConnection()
+            self.networkStatus=reachability.currentReachabilityStatus
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
+            try reachability.startNotifier()
+        }
+        catch
+        {
+            PbLog.error(logPre+"创建Reachability或启动监听（startNotifier）失败！")
+            self.networkStatus=Reachability.NetworkStatus.NotReachable
+        }
+        
     }
     
     /*doWhenNetworkStatusChange:
@@ -340,9 +352,9 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     func loadDeviceInfo()
     {
         //获取当前设备
-        var device=(UIDevice.currentDevice())
+        let device=(UIDevice.currentDevice())
         //获取当前屏幕
-        var screen=(UIScreen.mainScreen())
+        let screen=(UIScreen.mainScreen())
         
         //设置设备参数
         self.deviceParams["deviceName"]=device.model
@@ -350,7 +362,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
         self.deviceParams["deviceVersion"]=device.systemVersion
         self.deviceParams["deviceWidth"]=(NSString(string:screen.applicationFrame.width.description).intValue).description
         self.deviceParams["deviceHeight"]=(NSString(string:screen.applicationFrame.height.description).intValue).description
-        self.deviceParams["deviceUuid"]=device.identifierForVendor.UUIDString.md5()
+        self.deviceParams["deviceUuid"]=device.identifierForVendor!.UUIDString.md5()
         self.deviceParams["appVersion"]=(((NSBundle.mainBundle().infoDictionary)! as NSDictionary).objectForKey(kCFBundleVersionKey))?.description
         
         //输出当前设备信息
@@ -502,31 +514,30 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     func requestWithKey(key:String,params:NSDictionary,callback:(data:NSDictionary!,error:NSError?,property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,useAlterServer:Bool,dataType:Bool)
     {
         //调试信息前缀
-        var curLogPre=logPre+"requestWithKey:"
+        let curLogPre=logPre+"requestWithKey:"
         
         //根据指定的接口标示获取接口信息
-        var attributes=interface?.objectForKey(key) as! NSDictionary
+        let attributes=interface?.objectForKey(key) as! NSDictionary
         
         //获取远程接口链接地址
-        var url:String=((!alterServer.isEmpty&&useAlterServer) ?alterServer:server)+attributes.objectForKey("url")!.description
+        let url:String=((!alterServer.isEmpty&&useAlterServer) ?alterServer:server)+attributes.objectForKey("url")!.description
         PbLog.debug(curLogPre+"请求地址:"+url)
         
         //获取请求参数
-        var configParams=attributes.objectForKey("params") as! NSDictionary
-        var sendParams=NSMutableDictionary(dictionary: configParams)
-        sendParams.setValuesForKeysWithDictionary(params as [NSObject : AnyObject])
-        sendParams.setValuesForKeysWithDictionary(global! as [NSObject : AnyObject])
+        let configParams=attributes.objectForKey("params") as! NSDictionary
+        let sendParams=NSMutableDictionary(dictionary: configParams)
+        sendParams.setValuesForKeysWithDictionary(params as! [String : AnyObject])
+        sendParams.setValuesForKeysWithDictionary(global as! [String : AnyObject])
         PbLog.debug(curLogPre+"请求参数:"+requester!.paramString(sendParams))
         
         //记录本地资源是否存在
         var isExist=false
         //记录返回数据信息
-        var resCount:Int=((property) == nil) ?1:(property!.count+1)
-        var response=NSMutableDictionary(capacity:resCount)
+        //let resCount:Int=((property) == nil) ?1:(property!.count+1)
         //记录返回数据
         var resData:NSData?=nil
         //记录文件缓存对应的文件名
-        var fileKey=String(url+"?"+requester!.paramString(sendParams)).md5()
+        let fileKey=String(url+"?"+requester!.paramString(sendParams)).md5()
         
         //非纯网络模式，先读取本地缓存数据
         if(getMode != PbDataGetMode.FromNet && isActiveLocalCache)
@@ -589,7 +600,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     private func handleResponse(data:NSData?,callback:(data:NSDictionary!,error:NSError?,property:NSDictionary?) -> Void,error:NSError?,property:NSDictionary?)
     {
         var response:NSMutableDictionary? = parser?.dictionaryByData(data)
-        var success=(response != nil)
+        let success=(response != nil)
         response=(response == nil) ? NSMutableDictionary():response
         
         //为结果数据添加控制器相关回复值
@@ -604,7 +615,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
      */
     func imageInLocalCache(imageUrl:String) -> UIImage?
     {
-        var data=cacheManager?.dataForKey(imageUrl.md5(),subPath:resourceSubPath)
+        let data=cacheManager?.dataForKey(imageUrl.md5(),subPath:resourceSubPath)
         return (data == nil) ? nil : UIImage(data:data!)
     }
     
@@ -629,7 +640,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
         //计算缓存文件夹的大小
         size+=cacheManager!.sizeOfSubPath(dataSubPath)
         size+=cacheManager!.sizeOfSubPath(resourceSubPath)
-        var sizef:Float64=Float64(size)
+        let sizef:Float64=Float64(size)
         
         //转换为文字描述
         var result=""
@@ -669,7 +680,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     /*locationManager:didUpdateToLocation:fromLocation:
      *  更新到最新的位置
      */
-    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!)
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation)
     {
         lastLocation=newLocation
         PbLog.debug(logPre+"locationManager:最新定位:"+"经度("+newLocation.coordinate.longitude.description+"),纬度("+newLocation.coordinate.latitude.description+")")

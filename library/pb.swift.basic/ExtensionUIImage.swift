@@ -12,30 +12,43 @@ import UIKit
 extension UIImage
 {
     //resizeToNewImage:将指定图片剪裁为指定的大小
-    class func resizeToNewImage(image:UIImage,newSize:CGSize) -> UIImage!
+    public class func resizeToNewImage(image:UIImage,newSize:CGSize) -> UIImage!
     {
         if newSize.width > image.size.width || newSize.height > image.size.height
         {
             return image
         }
         
-        var hRatio = newSize.width / image.size.width
-        var vRatio = newSize.height / image.size.height
-        var ratio = hRatio > vRatio ? hRatio : vRatio
-        var scaledSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
+        let hRatio = newSize.width / image.size.width
+        let vRatio = newSize.height / image.size.height
+        let ratio = hRatio > vRatio ? hRatio : vRatio
+        let scaledSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
         
-        var newWidth = Int(scaledSize.width)
-        var newHeight = Int(scaledSize.height)
-        var bitsPerComponent = CGImageGetBitsPerComponent(image.CGImage)
-        var space = CGImageGetColorSpace(image.CGImage)
-        var bitmapInfo = CGImageGetBitmapInfo(image.CGImage)
-        var context = CGBitmapContextCreate(nil, newWidth, newHeight, bitsPerComponent, 0, space, bitmapInfo)
+        let newWidth = Int(scaledSize.width)
+        let newHeight = Int(scaledSize.height)
+        let bitsPerComponent = CGImageGetBitsPerComponent(image.CGImage)
+        let space = CGImageGetColorSpace(image.CGImage)
+        let bitmapInfo = CGImageGetBitmapInfo(image.CGImage)
+        let context = CGBitmapContextCreate(nil, newWidth, newHeight, bitsPerComponent, 0, space, bitmapInfo.rawValue)
         
-        var rect = CGRect(origin: CGPointZero, size: scaledSize)
+        let rect = CGRect(origin: CGPointZero, size: scaledSize)
         CGContextDrawImage(context, rect, image.CGImage)
-        var newImageRef = CGBitmapContextCreateImage(context)
-        var newImage = UIImage(CGImage: newImageRef)
+        let newImageRef = CGBitmapContextCreateImage(context)
+        let newImage = UIImage(CGImage: newImageRef!)
         
         return newImage
+    }
+    
+    //imageWithColor:根据颜色生成图片
+    public class func imageWithColor(color:UIColor,size:CGSize) -> UIImage
+    {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, color.CGColor)
+        CGContextFillRect(context, rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }

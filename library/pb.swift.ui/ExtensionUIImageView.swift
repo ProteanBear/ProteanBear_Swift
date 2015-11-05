@@ -12,22 +12,22 @@ import UIKit
 extension UIImageView
 {
     //loadWithUrl:异步载入网络图片
-    func loadWithUrl(urlString:String)
+    public func loadWithUrl(urlString:String)
     {
         self.loadWithUrl(urlString,scale:nil)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    func loadWithUrl(urlString:String,scale:Float?)
+    public func loadWithUrl(urlString:String,scale:Float?)
     {
         self.loadWithUrl(urlString, scale: scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //读取本地图片
-        var image=PbDataAppController.getInstance.imageInLocalCache(urlString)
+        let image=PbDataAppController.getInstance.imageInLocalCache(urlString)
         
         //本地图片存在，显示图片
         if(image != nil)
@@ -55,38 +55,38 @@ extension UIImageView
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    func autoSetContentMode(scale:Float?)
+    public func autoSetContentMode(scale:Float?)
     {
         self.autoSetContentMode(scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    func autoSetContentMode(scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func autoSetContentMode(scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(self.image == nil || scale == nil){return}
         
-        var width=CGImageGetWidth(self.image?.CGImage)
-        var height=CGImageGetHeight(self.image?.CGImage)
+        let width=CGImageGetWidth(self.image?.CGImage)
+        let height=CGImageGetHeight(self.image?.CGImage)
         
-        var isFill=(scale > Float(width/height))
+        let isFill=(scale > Float(width/height))
         
         self.contentMode=isFill ? lowMode : overMode
     }
     
     //setImage:指定设置比例并动画显示图片
-    func setImage(image:UIImage,scale:Float?)
+    public func setImage(image:UIImage,scale:Float?)
     {
         self.displayAnimation(image, scale:scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
     }
     
     //setImage:指定设置比例并动画显示图片
-    func setImage(image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func setImage(image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         self.displayAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
     }
     
     //displayAnimation:动画显示图片
-    func displayAnimation(image:UIImage?)
+    public func displayAnimation(image:UIImage?)
     {
         if(image != nil)
         {
@@ -94,7 +94,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 
@@ -117,7 +117,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 
