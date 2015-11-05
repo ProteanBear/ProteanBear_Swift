@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A4BFE430D485B0E872D12CBC /* Pods_PbSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9196F77C64E8D59ADD02B8A /* Pods_PbSwiftDemo.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D38932B01BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */; settings = {ASSET_TAGS = (); }; };
-		D38932B21BB143EE007B9860 /* ExtensionUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932B11BB143EE007B9860 /* ExtensionUITextField.swift */; settings = {ASSET_TAGS = (); }; };
+		A4BFE430D485B0E872D12CBC /* Pods_PbSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9196F77C64E8D59ADD02B8A /* Pods_PbSwiftDemo.framework */; };
+		D38932B01BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */; };
+		D38932B21BB143EE007B9860 /* ExtensionUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38932B11BB143EE007B9860 /* ExtensionUITextField.swift */; };
 		D38964ED1B8D7A5500F89C3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38964EC1B8D7A5500F89C3E /* CoreLocation.framework */; };
 		D389650B1B8D7B0300F89C3E /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38964F01B8D7B0300F89C3E /* ExtensionString.swift */; };
 		D389650C1B8D7B0300F89C3E /* ExtensionUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38964F11B8D7B0300F89C3E /* ExtensionUIColor.swift */; };
@@ -44,10 +44,11 @@
 		D38965351B8D7B1500F89C3E /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = D389652C1B8D7B1500F89C3E /* UserData.plist */; };
 		D38965361B8D7B1500F89C3E /* PbTestUICollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389652E1B8D7B1500F89C3E /* PbTestUICollectionCell.swift */; };
 		D38965371B8D7B1500F89C3E /* PbTestUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389652F1B8D7B1500F89C3E /* PbTestUITableCell.swift */; };
-		D3929A7F1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */; settings = {ASSET_TAGS = (); }; };
+		D3929A7F1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */; };
 		D398B6011B91FED000BFD116 /* PbUIAnimatedPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */; };
 		D398B6031B92101400BFD116 /* ExtensionCALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398B6021B92101400BFD116 /* ExtensionCALayer.swift */; };
 		D3AC7C731BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */; };
+		D3E55BD41BE731BA00A09672 /* PbTestForTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E55BD31BE731BA00A09672 /* PbTestForTabViewController.swift */; };
 		D3E837B41B8D550F00FEF50F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E837B31B8D550F00FEF50F /* AppDelegate.swift */; };
 		D3E837B91B8D550F00FEF50F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3E837B71B8D550F00FEF50F /* Main.storyboard */; };
 		D3E837BE1B8D550F00FEF50F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3E837BC1B8D550F00FEF50F /* LaunchScreen.xib */; };
@@ -111,6 +112,7 @@
 		D398B6001B91FED000BFD116 /* PbUIAnimatedPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUIAnimatedPageControl.swift; sourceTree = "<group>"; };
 		D398B6021B92101400BFD116 /* ExtensionCALayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionCALayer.swift; sourceTree = "<group>"; };
 		D3AC7C721BA0173700A26DDD /* PbTestForLaunchHelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForLaunchHelpViewController.swift; sourceTree = "<group>"; };
+		D3E55BD31BE731BA00A09672 /* PbTestForTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbTestForTabViewController.swift; sourceTree = "<group>"; };
 		D3E837AE1B8D550F00FEF50F /* PbSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PbSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E837B21B8D550F00FEF50F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3E837B31B8D550F00FEF50F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				D3F6E42A1BA1647E00CB35C7 /* PbTestForBasicExtensionUIColor.swift */,
 				D38932AF1BB140AD007B9860 /* PbTestForBasicExtensionStringCode.swift */,
 				D3929A7E1BB24F29007BD3C4 /* PbTestForBasicPbSystem.swift */,
+				D3E55BD31BE731BA00A09672 /* PbTestForTabViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E55BD41BE731BA00A09672 /* PbTestForTabViewController.swift in Sources */,
 				D38932B21BB143EE007B9860 /* ExtensionUITextField.swift in Sources */,
 				D38965181B8D7B0300F89C3E /* PbDataRequesterHttp.swift in Sources */,
 				D38965161B8D7B0300F89C3E /* PbDataPhotoManager.swift in Sources */,

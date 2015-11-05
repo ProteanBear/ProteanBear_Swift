@@ -251,13 +251,13 @@ class PbUITabViewController:PbUITableViewController
     //numberOfSectionsInTableView:返回当前表格的节数量
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 2
+        return (self.tableData == nil) ? 0 : 2
     }
     
     //tableView:numberOfRowsInSection:返回列表数据的数据量
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 1
+        return (self.tableData == nil) ? 0 : 1
     }
     
     //tableView:cellForRowAtIndexPath:返回指定索引对应的列表项

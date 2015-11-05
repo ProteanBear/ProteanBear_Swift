@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 import CoreLocation
-
 import ReachabilitySwift
 
 /*PbDataUpdateMode:
@@ -101,7 +100,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*网络情况记录*/
     //reachability:网络连接测试对象
-    let reachability = Reachability.reachabilityForInternetConnection()
+    var reachability:Reachability!
     //networkStatus:网络连接状态
     var networkStatus=Reachability.NetworkStatus.NotReachable{didSet{PbLog.debug(logPre+"NetworkStatus:网络状态:"+self.networkStatus.description)}}
     
@@ -283,9 +282,22 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
      */
     func loadNetworkStatus()
     {
-        self.networkStatus=reachability!.currentReachabilityStatus
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
-        reachability!.startNotifier()
+        //调试信息前缀
+        let logPre=self.logPre+"loadNetworkStatus:"
+        
+        do
+        {
+            self.reachability = try Reachability.reachabilityForInternetConnection()
+            self.networkStatus=reachability.currentReachabilityStatus
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
+            try reachability.startNotifier()
+        }
+        catch
+        {
+            PbLog.error(logPre+"创建Reachability或启动监听（startNotifier）失败！")
+            self.networkStatus=Reachability.NetworkStatus.NotReachable
+        }
+        
     }
     
     /*doWhenNetworkStatusChange:
@@ -293,7 +305,7 @@ class PbDataAppController:NSObject,CLLocationManagerDelegate
      */
     func doWhenNetworkStatusChange(note:NSNotification)
     {
-        self.networkStatus=reachability!.currentReachabilityStatus
+        self.networkStatus=reachability.currentReachabilityStatus
     }
     
     /*createProcessObjects:
