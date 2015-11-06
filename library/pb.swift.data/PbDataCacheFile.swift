@@ -26,7 +26,7 @@ public class PbDataCacheFile
     /*init:
      *初始化
      */
-    init(cachePathName:String)
+    public init(cachePathName:String)
     {
         //获取用户缓存目录
         let paths:Array=NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask,true) as Array
@@ -46,7 +46,7 @@ public class PbDataCacheFile
     /*createSubCachePath:
      *  创建缓存子目录
      */
-    func createSubCachePath(subCacheName:String)
+    public func createSubCachePath(subCacheName:String)
     {
         let subCache=NSString(string:cachePath).stringByAppendingPathComponent(subCacheName)
         if(!fileManager.fileExistsAtPath(subCache))
@@ -61,7 +61,7 @@ public class PbDataCacheFile
     /*dataForKey:
      *  获取指定标示对应的本地数据
      */
-    func dataForKey(key:String,subPath:String) -> NSData?
+    public func dataForKey(key:String,subPath:String) -> NSData?
     {
         var path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
         path=NSString(string:path).stringByAppendingPathComponent(key)
@@ -91,7 +91,7 @@ public class PbDataCacheFile
     /*setData:
      *  存入本地数据
      */
-    func setData(data:NSData,key:String,subPath:String)
+    public func setData(data:NSData,key:String,subPath:String)
     {
         let path=self.removeDataForKey(key, subPath: subPath)
         data.writeToFile(path, atomically: true)
@@ -100,7 +100,7 @@ public class PbDataCacheFile
     /*removeDataForKey:
      *  删除本地数据
      */
-    func removeDataForKey(key:String,subPath:String) -> String
+    public func removeDataForKey(key:String,subPath:String) -> String
     {
         var path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
         path=NSString(string:path).stringByAppendingPathComponent(key)
@@ -119,7 +119,7 @@ public class PbDataCacheFile
     /*clearDataForSubPath:
      *  清除子目录数据
      */
-    func clearDataForSubPath(subPath:String)
+    public func clearDataForSubPath(subPath:String)
     {
         let path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)
         do {
@@ -135,7 +135,7 @@ public class PbDataCacheFile
     /*sizeOfSubPath:
      *  获取子目录的数据大小
      */
-    func sizeOfSubPath(subPath:String) -> UInt64
+    public func sizeOfSubPath(subPath:String) -> UInt64
     {
         var result:UInt64=0
         let path=NSString(string:cachePath).stringByAppendingPathComponent(subPath)

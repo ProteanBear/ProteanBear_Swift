@@ -12,7 +12,7 @@ public class PbLog
 {
     static let isDebug=true
     
-    class func debug(infor:String)
+    public class func debug(infor:String)
     {
         if(isDebug)
         {
@@ -20,7 +20,7 @@ public class PbLog
         }
     }
     
-    class func error(error:String)
+    public class func error(error:String)
     {
         print("[ERROR]"+error)
     }

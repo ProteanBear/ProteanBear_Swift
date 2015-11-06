@@ -44,11 +44,11 @@ public class PbUIAnimatedPageControlIndicator:CALayer
     var scrollDirection=PbUIAnimatedPageControlScrollDirection.None
     
     //animateIndicator:
-    func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
+    public func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
     //restoreAnimation:
-    func restoreAnimation(distince:Float) -> Void{}
+    public func restoreAnimation(distince:Float) -> Void{}
     //restoreAnimation:
-    func restoreAnimation(distince:Float,after:NSTimeInterval) -> Void
+    public func restoreAnimation(distince:Float,after:NSTimeInterval) -> Void
     {
         UIView.animateWithDuration(after, animations: { () -> Void in
             }) { (isFinish) -> Void in
@@ -510,7 +510,7 @@ public class PbUIAnimatedPageControl: UIView
     private var lastIndex=1
     
     //重构构造方法
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         
@@ -542,7 +542,7 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //animateToIndex:Animate to index
-    func animationToIndex(index:Int)
+    public func animationToIndex(index:Int)
     {
         let a=abs(self.line!.selectedLineLength-Double(index)*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))
         let b=((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
@@ -559,7 +559,7 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //tapAction:
-    func tapAction(recognizer:UITapGestureRecognizer)
+    public func tapAction(recognizer:UITapGestureRecognizer)
     {
         if(self.bindScrollView != nil)
         {
@@ -595,7 +595,7 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //panAction:
-    func panAction(recognizer:UIPanGestureRecognizer)
+    public func panAction(recognizer:UIPanGestureRecognizer)
     {
         if (!self.swipeEnable)
         {

@@ -23,7 +23,7 @@ public class PbDataPhotoRecord
     var image = UIImage(named: "default_placeholder")
     var indexPath=NSIndexPath(index: 1)
     
-    init(urlString:String,index:NSIndexPath)
+    public init(urlString:String,index:NSIndexPath)
     {
         self.url = urlString
         self.indexPath=index
@@ -35,7 +35,7 @@ public class PbDataPhotoDownloadOperate:NSOperation
 {
     let photoRecord:PbDataPhotoRecord
     
-    init(photoRecord:PbDataPhotoRecord)
+    public init(photoRecord:PbDataPhotoRecord)
     {
         self.photoRecord=photoRecord
     }
@@ -80,7 +80,7 @@ public class PbDataPhotoFilterOperate:NSOperation
 {
     let photoRecord:PbDataPhotoRecord
     
-    init(photoRecord:PbDataPhotoRecord)
+    public init(photoRecord:PbDataPhotoRecord)
     {
         self.photoRecord=photoRecord
     }
@@ -97,7 +97,7 @@ public class PbDataPhotoFilterOperate:NSOperation
         }
     }
     
-    func applySepiaFilter(image:UIImage) -> UIImage? {return nil}
+    public func applySepiaFilter(image:UIImage) -> UIImage? {return nil}
 }
 
 //PbDataPhotoManager:图片下载队列管理器
@@ -117,27 +117,27 @@ public class PbDataPhotoManager
     //filterMaxCount:滤镜线程最大并发量
     lazy var filterMaxCount=0
     
-    init()
+    public init()
     {
         self.downloadQueue.name="PbDataPhotoManager:Download"
         self.filterQueue.name="PbDataPhotoManager:Filter"
     }
     
-    convenience init(downloadMaxCount:Int)
+    public convenience init(downloadMaxCount:Int)
     {
         self.init()
         
         if(downloadMaxCount>0){self.downloadQueue.maxConcurrentOperationCount=downloadMaxCount}
     }
     
-    convenience init(filterMaxCount:Int)
+    public convenience init(filterMaxCount:Int)
     {
         self.init()
         
         if(filterMaxCount>0){self.filterQueue.maxConcurrentOperationCount=filterMaxCount}
     }
     
-    convenience init(downloadMaxCount:Int,filterMaxCount:Int)
+    public convenience init(downloadMaxCount:Int,filterMaxCount:Int)
     {
         self.init()
         
@@ -146,7 +146,7 @@ public class PbDataPhotoManager
     }
     
     //download:下载给定的图片数组
-    func download(photos:Array<PbDataPhotoRecord>,callback:(photoRecord:PbDataPhotoRecord) -> Void)
+    public func download(photos:Array<PbDataPhotoRecord>,callback:(photoRecord:PbDataPhotoRecord) -> Void)
     {
         for photo:PbDataPhotoRecord in photos
         {
@@ -155,7 +155,7 @@ public class PbDataPhotoManager
     }
     
     //download:下载给定的图片
-    func download(photo:PbDataPhotoRecord,callback:(photoRecord:PbDataPhotoRecord) -> Void)
+    public func download(photo:PbDataPhotoRecord,callback:(photoRecord:PbDataPhotoRecord) -> Void)
     {
         //已在进行的进程
         if let _ = downloadsInProgress[photo.indexPath]{return}
@@ -181,7 +181,7 @@ public class PbDataPhotoManager
     }
     
     //downloadCancel:取消全部图片下载任务
-    func downloadCancel()
+    public func downloadCancel()
     {
         for indexPath:NSIndexPath in downloadsInProgress.keys
         {
@@ -192,7 +192,7 @@ public class PbDataPhotoManager
     }
     
     //downloadCancel:取消指定的图片下载任务
-    func downloadCancel(indexPath:NSIndexPath)
+    public func downloadCancel(indexPath:NSIndexPath)
     {
         let operation=downloadsInProgress[indexPath]
         operation?.cancel()
@@ -200,13 +200,13 @@ public class PbDataPhotoManager
     }
     
     //downloadCancel:取消指定的图片下载任务
-    func downloadCancel(photo:PbDataPhotoRecord)
+    public func downloadCancel(photo:PbDataPhotoRecord)
     {
         self.downloadCancel(photo.indexPath)
     }
     
     //downloadCancel:取消指定的图片下载任务
-    func downloadCancel(urlString:String)
+    public func downloadCancel(urlString:String)
     {
         for indexPath:NSIndexPath in downloadsInProgress.keys
         {
@@ -220,13 +220,13 @@ public class PbDataPhotoManager
     }
     
     //downloadPauseAll:暂停全部下载任务
-    func downloadPauseAll()
+    public func downloadPauseAll()
     {
         self.downloadQueue.suspended=true
     }
     
     //downloadResumeAll:继续全部下载任务
-    func downloadResumeAll()
+    public func downloadResumeAll()
     {
         self.downloadQueue.suspended=false
     }

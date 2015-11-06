@@ -18,10 +18,10 @@ public class PbDataRequesterHttp:PbDataRequester
     var isGet:Bool=true
     
     //init:初始化
-    init(){}
+    public init(){}
     
     //init:初始化
-    init(isGet:Bool)
+    public init(isGet:Bool)
     {
         self.isGet=isGet
     }

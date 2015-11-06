@@ -346,13 +346,13 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //初始化方法
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         setup()
     }
     
-    override init(frame: CGRect, config: PbUIRefreshConfigProtocol)
+    override public init(frame: CGRect, config: PbUIRefreshConfigProtocol)
     {
         super.init(frame: frame, config: config)
     }

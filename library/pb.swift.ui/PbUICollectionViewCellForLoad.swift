@@ -15,19 +15,19 @@ public class PbUICollectionViewCellForLoad: UICollectionViewCell
     private var indicator=UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     //startLoadAnimating:开始载入动画
-    func startLoadAnimating()
+    public func startLoadAnimating()
     {
         self.indicator.startAnimating()
     }
     
     //stopLoadAnimating:开始载入动画
-    func stopLoadAnimating()
+    public func stopLoadAnimating()
     {
         self.indicator.stopAnimating()
     }
     
     //setIndicatorTiniColor:设置指示器主题颜色
-    func setIndicatorTiniColor(tiniColor:UIColor)
+    public func setIndicatorTiniColor(tiniColor:UIColor)
     {
         self.indicator.tintColor=tiniColor
     }
@@ -39,7 +39,7 @@ public class PbUICollectionViewCellForLoad: UICollectionViewCell
         self.setup()
     }
     
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         self.setup()

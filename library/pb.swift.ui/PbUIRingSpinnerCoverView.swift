@@ -15,7 +15,7 @@ public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     let indicator=PbUIRingSpinnerView(frame: CGRectZero)
     
     //init:初始化
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         setup()
