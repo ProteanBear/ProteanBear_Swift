@@ -12,7 +12,7 @@ public class PbObjectFile:AnyObject
 {
     let name: String!
     let url: NSURL!
-    init(name: String, url: NSURL)
+    public init(name: String, url: NSURL)
     {
         self.name = name
         self.url = url

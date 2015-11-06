@@ -21,7 +21,7 @@ public class PbUICollectionViewCellForImage:UICollectionViewCell
         super.init(coder:aDecoder)
         self.setup()
     }
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         self.setup()

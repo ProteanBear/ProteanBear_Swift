@@ -28,38 +28,38 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     /*-----------------------开始：公共方法*/
     
     //pbLoadData:获取数据
-    func pbLoadData(updateMode:PbDataUpdateMode)
+    public func pbLoadData(updateMode:PbDataUpdateMode)
     {
         if(self.dataAdapter == nil){self.dataAdapter=PbDataAdapter(delegate: self)}
         self.dataAdapter?.loadData(updateMode)
     }
     
     //pbDoForHeaderRefreshEvent:顶部更新时处理
-    func pbDoForHeaderRefreshEvent()
+    public func pbDoForHeaderRefreshEvent()
     {
         self.pbLoadData(PbDataUpdateMode.Update)
     }
     
     //pbNormalHeightForRowAtIndexPath:返回正常单元格的高度
-    func pbNormalHeightForRowAtIndexPath(tableView: UITableView,indexPath: NSIndexPath) -> CGFloat
+    public func pbNormalHeightForRowAtIndexPath(tableView: UITableView,indexPath: NSIndexPath) -> CGFloat
     {
         return 44
     }
     
     //pbLoadHeightForRowAtIndexPath:返回载入单元格的高度
-    func pbLoadHeightForRowAtIndexPath(tableView: UITableView,indexPath: NSIndexPath) -> CGFloat
+    public func pbLoadHeightForRowAtIndexPath(tableView: UITableView,indexPath: NSIndexPath) -> CGFloat
     {
         return 34
     }
     
     //pbPhotoKeyInIndexPath:返回单元格中的网络图片标识（不设置则无网络图片下载任务）
-    func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
+    public func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
     {
         return nil
     }
     
     //pbSetQueueForDisplayRow:设置下载图片的序列，只下载显示区域内的图片
-    func pbSetQueueForDisplayRow()
+    public func pbSetQueueForDisplayRow()
     {
         if let pathArray = self.tableView.indexPathsForVisibleRows
         {
@@ -99,7 +99,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -118,7 +118,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbFullUrlForDataLoad:根据给定的路径获取全路径
-    func pbFullUrlForDataLoad(url:String?) -> String?
+    public func pbFullUrlForDataLoad(url:String?) -> String?
     {
         var result=url
         
@@ -138,7 +138,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbIsLoadCellForDataLoad:是否是显示载入单元格
-    func pbIsLoadCellForDataLoad(indexPath:NSIndexPath) -> Bool
+    public func pbIsLoadCellForDataLoad(indexPath:NSIndexPath) -> Bool
     {
         return self.pbSupportFooterLoad() && indexPath.row == self.tableData?.count
     }

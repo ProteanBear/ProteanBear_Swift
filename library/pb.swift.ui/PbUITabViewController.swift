@@ -18,19 +18,19 @@ public class PbUITabMenuData
     var collectionCellClass:AnyClass?
     var targetController:AnyClass?
     
-    init(index:String,displayName:String)
+    public init(index:String,displayName:String)
     {
         self.index=index
         self.displayName=displayName
         self.collectionCellClass=PbUITabMenuViewCell.self
     }
-    init(indexId:Int,displayName:String)
+    public init(indexId:Int,displayName:String)
     {
         self.indexId=indexId
         self.displayName=displayName
         self.collectionCellClass=PbUITabMenuViewCell.self
     }
-    init(index:String,indexId:Int,displayName:String,targetController:AnyClass?)
+    public init(index:String,indexId:Int,displayName:String,targetController:AnyClass?)
     {
         self.index=index
         self.indexId=indexId
@@ -38,7 +38,7 @@ public class PbUITabMenuData
         self.collectionCellClass=PbUITabMenuViewCell.self
         self.targetController=targetController
     }
-    init(index:String,indexId:Int,displayName:String,collectionCellClass:AnyClass?,targetController:AnyClass?)
+    public init(index:String,indexId:Int,displayName:String,collectionCellClass:AnyClass?,targetController:AnyClass?)
     {
         self.index=index
         self.indexId=indexId
@@ -49,7 +49,7 @@ public class PbUITabMenuData
 }
 
 //PbUITabMenuViewCell:Tab栏使用的菜单栏单个菜单视图
-class PbUITabMenuViewCell:UICollectionViewCell
+public class PbUITabMenuViewCell:UICollectionViewCell
 {
     //titleLabel:文字标签
     let titleLabel=UILabel()
@@ -63,19 +63,19 @@ class PbUITabMenuViewCell:UICollectionViewCell
     }
     
     //初始化方法
-    override init(frame: CGRect)
+    override public init(frame: CGRect)
     {
         super.init(frame: frame)
         setup()
     }
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
         setup()
     }
     
     //布局完成后设置
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         
@@ -94,7 +94,7 @@ class PbUITabMenuViewCell:UICollectionViewCell
 }
 
 //PbUITabMenuView:Tab栏使用的菜单栏视图
-class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
+public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
 {
     //collectionView:使用网格视图
     var collectionView:UICollectionView!
@@ -108,19 +108,19 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
     }
     
     //初始化方法
-    required init?(coder aDecoder: NSCoder)
+    required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
         setup()
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?)
+    override public init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
     
     //布局完成后设置
-    override func layoutSubviews()
+    override public func layoutSubviews()
     {
         super.layoutSubviews()
         
@@ -145,12 +145,12 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
     
     /*-----------------------开始：实现UICollectionViewDataSource*/
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return (self.menuData != nil) ? (self.menuData!.count) : 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         var result:UICollectionViewCell?
         
@@ -177,10 +177,10 @@ class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
 }
 
 //PbUITabViewController:基础Tab视图控制器
-class PbUITabViewController:PbUITableViewController
+public class PbUITabViewController:PbUITableViewController
 {
     //pbNormalHeightForRowAtIndexPath:返回正常单元格的高度
-    override func pbNormalHeightForRowAtIndexPath(tableView: UITableView, indexPath: NSIndexPath) -> CGFloat
+    override public func pbNormalHeightForRowAtIndexPath(tableView: UITableView, indexPath: NSIndexPath) -> CGFloat
     {
         var result:CGFloat=0;
         //菜单栏
@@ -193,53 +193,53 @@ class PbUITabViewController:PbUITableViewController
     /*-----------------------开始：实现PbUITableViewControllerProtocol*/
     
     //pbResolveFromResponse:解析处理返回的数据
-    override func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
+    override public func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
     {
         return nil
     }
     
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
-    override func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    override public func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
     //pbDoInsertForDataLoad:执行增量类相关返回后的处理
-    override func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    override public func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
     //pbAutoUpdateAfterFirstLoad:初次载入后是否立即更新
-    override func pbAutoUpdateAfterFirstLoad() -> Bool
+    override public func pbAutoUpdateAfterFirstLoad() -> Bool
     {
         return false
     }
     
     //pbSupportHeaderRefresh:是否支持表格顶部刷新
-    override func pbSupportHeaderRefresh() -> Bool
+    override public func pbSupportHeaderRefresh() -> Bool
     {
         return false
     }
     
     //pbSupportFooterLoad:是否支持表格底部载入
-    override func pbSupportFooterLoad() -> Bool
+    override public func pbSupportFooterLoad() -> Bool
     {
         return false
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    override func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    override public func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
     {
         return (indexPath.section==0) ? "PbUITabMenuView" : "PbUITabContentView"
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    override func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    override public func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    override func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    override public func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }
@@ -249,19 +249,19 @@ class PbUITabViewController:PbUITableViewController
     /*-----------------------开始：实现UITableViewDataSource*/
     
     //numberOfSectionsInTableView:返回当前表格的节数量
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override public func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return (self.tableData == nil) ? 0 : 2
     }
     
     //tableView:numberOfRowsInSection:返回列表数据的数据量
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return (self.tableData == nil) ? 0 : 1
     }
     
     //tableView:cellForRowAtIndexPath:返回指定索引对应的列表项
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var result:UITableViewCell?
         

@@ -15,19 +15,19 @@ public class PbUITableViewCellForLoad:UITableViewCell
     private var indicator=UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     //startLoadAnimating:开始载入动画
-    func startLoadAnimating()
+    public func startLoadAnimating()
     {
         self.indicator.startAnimating()
     }
     
     //stopLoadAnimating:开始载入动画
-    func stopLoadAnimating()
+    public func stopLoadAnimating()
     {
         self.indicator.stopAnimating()
     }
     
     //setIndicatorTiniColor:设置指示器主题颜色
-    func setIndicatorTiniColor(tiniColor:UIColor)
+    public func setIndicatorTiniColor(tiniColor:UIColor)
     {
         self.indicator.tintColor=tiniColor
     }
@@ -38,7 +38,7 @@ public class PbUITableViewCellForLoad:UITableViewCell
         super.init(coder:aDecoder)
         self.setup()
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?)
+    override public init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style:style, reuseIdentifier:reuseIdentifier)
         self.setup()

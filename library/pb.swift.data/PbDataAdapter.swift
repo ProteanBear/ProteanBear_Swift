@@ -145,7 +145,7 @@ public class PbDataAdapter
     lazy var isDataLoading=false
     
     //init:初始化方法
-    init(delegate:PbUIViewControllerProtocol?)
+    public init(delegate:PbUIViewControllerProtocol?)
     {
         self.delegate=delegate
         self.delegate?.pbDoInitForDataLoad(delegate)
@@ -155,7 +155,7 @@ public class PbDataAdapter
     }
     
     //loadData:加载网络数据
-    func loadData(updateMode:PbDataUpdateMode)
+    public func loadData(updateMode:PbDataUpdateMode)
     {
         if(self.delegate == nil){return}
         
