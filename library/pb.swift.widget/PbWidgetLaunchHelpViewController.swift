@@ -49,19 +49,19 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     override public func pbSupportFooterLoad() -> Bool{return false}
     
     //pbCellClassForCollectionView:注册单元各类
-    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> AnyClass?
+    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> AnyClass?
     {
         return PbUICollectionViewCellForImage.self
     }
     
     //pbIdentifierForCollectionView:设置单元格复用标识
-    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> String
+    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> String
     {
         return "PbWidgetLaunchHelpView"
     }
     
     //pbSetDataForCollectionView:设置单元格显示
-    override public func pbSetDataForCollectionView(cell: AnyObject, data: NSDictionary?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
+    override public func pbSetDataForCollectionView(cell: AnyObject, data: AnyObject?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
     {
         let cell=cell as! PbUICollectionViewCellForImage
         

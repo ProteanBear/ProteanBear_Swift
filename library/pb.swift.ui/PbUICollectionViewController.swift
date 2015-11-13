@@ -81,7 +81,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:AnyObject?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -344,31 +344,37 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     }
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     {
         return nil
     }
     
     //pbIdentifierForCollectionView:返回指定位置的单元格标识
-    public func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    public func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
         return "PbUICollectionViewDataCell"
     }
     
     //pbNibNameForCollectionView:返回指定位置单元格使用的资源文件
-    public func pbNibNameForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    public func pbNibNameForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     {
         return nil
     }
     
     //pbCellClassForCollectionView:返回指定位置单元格的类
-    public func pbCellClassForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyClass?
+    public func pbCellClassForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> AnyClass?
     {
         return nil
     }
     
     //pbSetDataForCollectionView:设置表格数据显示
-    public func pbSetDataForCollectionView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    public func pbSetDataForCollectionView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    {
+        return cell
+    }
+    
+    //pbSetDataForCollectionView:设置表格数据显示
+    public func pbSetDataForCollectionView(cell:AnyObject,dictData:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }
@@ -417,7 +423,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
             var data=self.pbResolveDataInIndexPath(indexPath)
             if(data == nil)
             {
-                data=(self.collectionData?.objectAtIndex(indexPath.row)) as? NSDictionary
+                data=self.collectionData?.objectAtIndex(indexPath.row)
             }
             
             //获取并记录单元数据中的网络图片

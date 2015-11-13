@@ -227,19 +227,19 @@ public class PbUITabViewController:PbUITableViewController
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    override public func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    override public func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
         return (indexPath.section==0) ? "PbUITabMenuView" : "PbUITabContentView"
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    override public func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    override public func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    override public func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    override public func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }

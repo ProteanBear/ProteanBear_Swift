@@ -15,15 +15,15 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     let loadCellIdentifier="PbUITableViewLoadCell"
     
     //tableData:记录当前的表格使用数据
-    var tableData:NSMutableArray?
+    public var tableData:NSMutableArray?
     //dataAdapter:当前使用的数据适配器
-    var dataAdapter:PbDataAdapter?
+    public var dataAdapter:PbDataAdapter?
     //loadTableCell:底部载入单元格
-    var loadTableCell:PbUITableViewCellForLoad?
+    public var loadTableCell:PbUITableViewCellForLoad?
     //photoData:记录表格对应的列表
-    var photoData=[NSIndexPath:PbDataPhotoRecord]()
+    public var photoData=[NSIndexPath:PbDataPhotoRecord]()
     //photoManager:图片载入管理器对象
-    lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
+    public lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
     
     /*-----------------------开始：公共方法*/
     
@@ -99,7 +99,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:AnyObject?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -421,37 +421,37 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     {
         return nil
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    public func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    public func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
         return "PbUITableViewDataCell"
     }
     
     //pbNibNameForTableView:返回指定位置单元格使用的资源文件
-    public func pbNibNameForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    public func pbNibNameForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     {
         return nil
     }
     
     //pbNibIndexForTableView:返回指定位置单元格使用的资源文件
-    public func pbNibIndexForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> Int
+    public func pbNibIndexForTableView(indexPath:NSIndexPath,data:AnyObject?) -> Int
     {
         return 0
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    public func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    public func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    public func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    public func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }
@@ -505,7 +505,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             var data=self.pbResolveDataInIndexPath(indexPath)
             if(data == nil)
             {
-                data=(self.tableData?.objectAtIndex(indexPath.row)) as? NSDictionary
+                data=self.tableData?.objectAtIndex(indexPath.row)
             }
             
             //获取并记录单元数据中的网络图片
