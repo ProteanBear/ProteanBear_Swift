@@ -304,7 +304,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
     /*doWhenNetworkStatusChange:
      *  网络状态变化时记录当前的状态
      */
-    private func doWhenNetworkStatusChange(note:NSNotification)
+    func doWhenNetworkStatusChange(note:NSNotification)
     {
         self.networkStatus=reachability.currentReachabilityStatus
     }

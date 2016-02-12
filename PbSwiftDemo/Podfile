@@ -2,4 +2,5 @@ platform:ios,"8.4"
 use_frameworks!
 target 'PbSwiftDemo' do
    pod 'ReachabilitySwift'
+   pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
 end

@@ -12,11 +12,11 @@ import UIKit
 //PbUITabMenuData:Tab栏使用的菜单栏数据记录
 public class PbUITabMenuData
 {
-    var index:String?
-    var indexId:Int=0
-    var displayName:String=""
-    var collectionCellClass:AnyClass?
-    var targetController:AnyClass?
+    public var index:String?
+    public var indexId:Int=0
+    public var displayName:String=""
+    public var collectionCellClass:AnyClass?
+    public var targetController:AnyClass?
     
     public init(index:String,displayName:String)
     {
@@ -61,6 +61,12 @@ public class PbUITabMenuViewCell:UICollectionViewCell
             titleLabel.text=menuData?.displayName
         }
     }
+    //selected:选中状态
+    override public var selected: Bool{
+        didSet{
+            self.titleLabel.textColor=(self.selected) ? UIColor.darkGrayColor():UIColor.lightGrayColor()
+        }
+    }
     
     //初始化方法
     override public init(frame: CGRect)
@@ -87,23 +93,32 @@ public class PbUITabMenuViewCell:UICollectionViewCell
     private func setup()
     {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font=UIFont.systemFontOfSize(13)
+        titleLabel.font=UIFont.systemFontOfSize(16)
+        titleLabel.textColor=UIColor.lightGrayColor()
         titleLabel.textAlignment=NSTextAlignment.Center
         self.addSubview(titleLabel)
     }
 }
 
 //PbUITabMenuView:Tab栏使用的菜单栏视图
-public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
+public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate
 {
+    //maxNumPer:最多一屏显示数量
+    public var maxNumPer=4
     //collectionView:使用网格视图
     var collectionView:UICollectionView!
+    //click:点击选项卡处理
+    public var click:((data:PbUITabMenuData) -> Void)?
     //menuData:指定菜单数据
-    var menuData:Array<PbUITabMenuData>?
+    public var menuData:Array<PbUITabMenuData>?
     {
         didSet
         {
+            //根据菜单数量进行设置
+            self.collectionView.setCollectionViewLayout(self.collectionViewLayout(), animated: true)
+            
             collectionView.reloadData()
+            self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.Right)
         }
     }
     
@@ -128,28 +143,66 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: ["collectionView":collectionView]))
     }
     
+    //绘制单元格底部的线
+    public override func drawRect(rect: CGRect)
+    {
+        let context = UIGraphicsGetCurrentContext()
+        
+        CGContextSetLineWidth(context,0.1)
+        CGContextSetStrokeColorWithColor(context,UIColor.blackColor().CGColor)
+        
+        CGContextMoveToPoint(context,0,self.frame.size.height-1)
+        CGContextAddLineToPoint(context,self.frame.size.width,self.frame.size.height-1)
+        
+        CGContextStrokePath(context)
+    }
+    
+    //选择指定的Tab栏
+    public func selectMenu(index:Int)
+    {
+        self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.Right)
+    }
+    
     //初始化网格视图
     private func setup()
     {
-        let layout=UICollectionViewFlowLayout()
-        layout.scrollDirection=UICollectionViewScrollDirection.Horizontal
+        self.backgroundColor=UIColor.clearColor()
         
-        collectionView=UICollectionView(frame:CGRectZero, collectionViewLayout: layout)
-        collectionView.dataSource=self;
+        collectionView=UICollectionView(frame:CGRectZero, collectionViewLayout: self.collectionViewLayout())
+        collectionView.dataSource=self
+        collectionView.delegate=self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor=UIColor.pbAlmondWhiteColor()
+        collectionView.backgroundColor=UIColor.clearColor()
         collectionView.showsHorizontalScrollIndicator=false
         collectionView.showsVerticalScrollIndicator=false
         self.addSubview(collectionView)
     }
     
-    /*-----------------------开始：实现UICollectionViewDataSource*/
+    //获取布局设置
+    private func collectionViewLayout() -> UICollectionViewFlowLayout
+    {
+        let layout=UICollectionViewFlowLayout()
+        layout.scrollDirection=UICollectionViewScrollDirection.Horizontal
+        layout.sectionInset=UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumInteritemSpacing=0
+        layout.minimumLineSpacing=0
+        
+        if(self.menuData != nil)
+        {
+            layout.itemSize=CGSize(width:PbSystem.screenCurrentWidth()/CGFloat(min(self.maxNumPer,self.menuData!.count)),height:CGFloat(PbSystem.sizeTopMenuBarHeight))
+        }
+        
+        return layout
+    }
     
+    /*-----------------------开始：实现UICollectionViewDataSource*/
+    //单元格数量
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return (self.menuData != nil) ? (self.menuData!.count) : 0
     }
     
+    //单元格对象
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         var result:UICollectionViewCell?
@@ -172,8 +225,18 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource
         
         return result!
     }
-    
     /*-----------------------结束：实现UICollectionViewDataSource*/
+    
+    /*-----------------------开始：实现UICollectionViewDelegate*/
+    //选中单元格时处理
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        if(self.click != nil)
+        {
+            self.click!(data: self.menuData![indexPath.row])
+        }
+    }
+    /*-----------------------结束：实现UICollectionViewDelegate*/
 }
 
 //PbUITabViewController:基础Tab视图控制器
