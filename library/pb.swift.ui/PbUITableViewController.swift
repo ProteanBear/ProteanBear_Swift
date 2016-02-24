@@ -373,7 +373,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRectMake(0, 0, 2000, 2000))
         indicator.center=self.view.center
-        indicator.tintColor=UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)
+        indicator.tintColor=self.pbUIRefreshActivityDefaultColor()
         indicator.backgroundColor=UIColor.whiteColor()
         indicator.stopAnimating()
         self.view.addSubview(indicator)
@@ -481,7 +481,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
         if(self.tableData != nil)
         {
             result=self.tableData!.count
-            result=((self.pbSupportFooterLoad()) && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
+            result=((self.pbSupportFooterLoad()) && self.dataAdapter != nil && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
         }
         
         return result
@@ -514,10 +514,13 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             {
                 if let photoKey = self.pbPhotoKeyInIndexPath(indexPath)
                 {
-                    if let photoUrl: AnyObject = data!.objectForKey(photoKey)
+                    if let photoUrl: String? = data!.objectForKey(photoKey) as? String
                     {
-                        imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl as? String)!, index: indexPath)
-                        self.photoData[indexPath]=imageRecord
+                        if(photoUrl != "")
+                        {
+                            imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl)!, index: indexPath)
+                            self.photoData[indexPath]=imageRecord
+                        }
                     }
                 }
             }

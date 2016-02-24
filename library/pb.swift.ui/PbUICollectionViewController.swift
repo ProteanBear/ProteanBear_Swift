@@ -15,15 +15,15 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     let loadCellIdentifier="PbUICollectionViewLoadCell"
     
     //collectionData:记录当前的网格使用数据
-    var collectionData:NSMutableArray?
+    public var collectionData:NSMutableArray?
     //dataAdapter:当前使用的数据适配器
-    var dataAdapter:PbDataAdapter?
+    public var dataAdapter:PbDataAdapter?
     //loadCollectionCell:底部载入单元格
-    var loadCollectionCell:PbUICollectionViewCellForLoad?
+    public var loadCollectionCell:PbUICollectionViewCellForLoad?
     //photoData:记录表格对应的列表
-    var photoData=[NSIndexPath:PbDataPhotoRecord]()
+    public var photoData=[NSIndexPath:PbDataPhotoRecord]()
     //photoManager:图片载入管理器对象
-    lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
+    public lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
     
     /*-----------------------开始：公共方法*/
     
@@ -36,6 +36,12 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     
     //pbPhotoKeyInIndexPath:返回单元格中的网络图片标识（不设置则无网络图片下载任务）
     public func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
+    {
+        return nil
+    }
+    
+    //pbPhotoUrlInIndexPath:返回单元格中的网络图片链接（不设置则无网络图片下载任务）
+    public func pbPhotoUrlInIndexPath(indexPath:NSIndexPath, data: AnyObject?) -> String?
     {
         return nil
     }
@@ -302,7 +308,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRectMake(0, 0, 2000, 2000))
         indicator.center=self.view.center
-        indicator.tintColor=UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)
+        indicator.tintColor=self.pbUIRefreshActivityDefaultColor()
         indicator.backgroundColor=UIColor.whiteColor()
         indicator.stopAnimating()
         self.view.addSubview(indicator)
@@ -373,12 +379,6 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         return cell
     }
     
-    //pbSetDataForCollectionView:设置表格数据显示
-    public func pbSetDataForCollectionView(cell:AnyObject,dictData:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
-    {
-        return cell
-    }
-    
     /*-----------------------结束：实现PbUICollectionViewControllerProtocol*/
     
     /*-----------------------开始：实现UICollectionViewDataSource*/
@@ -391,7 +391,11 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         if(self.collectionData != nil)
         {
             result=self.collectionData!.count
-            result=((self.pbSupportFooterLoad()) && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
+            result=((self.pbSupportFooterLoad())
+                && self.dataAdapter != nil
+                && (!self.dataAdapter!.nextIsNull))
+                    ?(result+1)
+                    :result
         }
         
         return result
@@ -437,6 +441,11 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
                         imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl as? String)!, index: indexPath)
                         self.photoData[indexPath]=imageRecord
                     }
+                }
+                if let photoUrl = self.pbPhotoUrlInIndexPath(indexPath,data:data)
+                {
+                    imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl)!, index: indexPath)
+                    self.photoData[indexPath]=imageRecord
                 }
             }
             
@@ -492,18 +501,18 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
-        //self.pbSetQueueForDisplayRow()
+        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        //self.photoManager.downloadResumeAll()
+        self.photoManager.downloadResumeAll()
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
     override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
-        self.pbSetQueueForDisplayRow()
+//        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        self.photoManager.downloadResumeAll()
+//        self.photoManager.downloadResumeAll()
         
         //到达尾部时载入下页
         if(self.pbSupportFooterLoad())

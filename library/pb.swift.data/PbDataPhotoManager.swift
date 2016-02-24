@@ -18,10 +18,10 @@ public enum PbDataPhotoState
 //PbDataPhotoRecord:记录当前图片处理的相关信息
 public class PbDataPhotoRecord
 {
-    let url:String
-    var state = PbDataPhotoState.New
-    var image = UIImage(named: "default_placeholder")
-    var indexPath=NSIndexPath(index: 1)
+    public let url:String
+    public var state = PbDataPhotoState.New
+    public var image = UIImage(named: "default_placeholder")
+    public var indexPath=NSIndexPath(index: 1)
     
     public init(urlString:String,index:NSIndexPath)
     {

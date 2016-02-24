@@ -148,11 +148,12 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
     {
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetLineWidth(context,0.1)
+        let width:CGFloat=0.1
+        CGContextSetLineWidth(context,width)
         CGContextSetStrokeColorWithColor(context,UIColor.blackColor().CGColor)
         
-        CGContextMoveToPoint(context,0,self.frame.size.height-1)
-        CGContextAddLineToPoint(context,self.frame.size.width,self.frame.size.height-1)
+        CGContextMoveToPoint(context,0,self.frame.size.height-width)
+        CGContextAddLineToPoint(context,self.frame.size.width,self.frame.size.height-width)
         
         CGContextStrokePath(context)
     }
