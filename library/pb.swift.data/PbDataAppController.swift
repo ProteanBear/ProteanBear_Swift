@@ -14,8 +14,8 @@ import ReachabilitySwift
 import CryptoSwift
 
 /*PbDataUpdateMode:
-*  枚举类型，数据更新模式
-*/
+ *  枚举类型，数据更新模式
+ */
 public enum PbDataUpdateMode:Int
 {
     case First,Update,NextPage
@@ -549,7 +549,9 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
         
         //非纯本地模式，并本地数据不存在，请求网络
-        if(!isExist && getMode != PbDataGetMode.FromLocal && self.isNetworkConnected())
+        if(self.isNetworkConnected()
+            && (!isExist
+                || (isExist && getMode == PbDataGetMode.FromNet)))
         {
             //添加设备信息参数
             sendParams.setValuesForKeysWithDictionary(deviceParams)
@@ -653,6 +655,14 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         cacheManager?.clearDataForSubPath(dataSubPath)
         cacheManager?.clearDataForSubPath(resourceSubPath)
         return self.sizeOfCacheDataInLocal()
+    }
+    
+    /*fullUrl:
+     *  获取完整路径
+     */
+    public func fullUrl(url:String) -> String
+    {
+        return url.hasPrefix("http:") ? url:(self.server+url)
     }
     /*-----------------------结束：业务处理相关方法*/
     
