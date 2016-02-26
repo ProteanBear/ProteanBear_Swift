@@ -419,7 +419,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
                 {
                     self.loadCollectionCell?.setIndicatorTiniColor(color)
                 }
-                self.loadCollectionCell?.startLoadAnimating()
+//                self.loadCollectionCell?.startLoadAnimating()
                 return result!
             }
             

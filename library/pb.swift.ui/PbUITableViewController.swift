@@ -497,7 +497,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             //使用底部载入单元格
             if(self.pbSupportFooterLoad()&&indexPath.row==self.tableData?.count)
             {
-                self.loadTableCell?.startLoadAnimating()
+//                self.loadTableCell?.startLoadAnimating()
                 return self.loadTableCell!
             }
             
@@ -587,18 +587,18 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
-        //self.pbSetQueueForDisplayRow()
+        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        //self.photoManager.downloadResumeAll()
+        self.photoManager.downloadResumeAll()
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
     override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
-        self.pbSetQueueForDisplayRow()
+//        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        self.photoManager.downloadResumeAll()
+//        self.photoManager.downloadResumeAll()
         
         //到达尾部时载入下页
         if(self.pbSupportFooterLoad())
