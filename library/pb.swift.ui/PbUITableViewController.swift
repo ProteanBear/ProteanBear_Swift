@@ -23,7 +23,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     //photoData:记录表格对应的列表
     public var photoData=[NSIndexPath:PbDataPhotoRecord]()
     //photoManager:图片载入管理器对象
-    public lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
+    public lazy var photoManager=PbDataPhotoManager()
     
     /*-----------------------开始：公共方法*/
     
@@ -110,11 +110,33 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
                         
                         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                         
+                        },imageFilter:{ (image:UIImage)->UIImage? in
+                            
+                            return self.pbImageFilterForCell(image, indexPath: indexPath, data: data)
                     })
                 default:
                     _=0
             }
         }
+    }
+    
+    //pbGetPhotoImageSize:获取指定位置的图片尺寸
+    public func pbGetPhotoImageSize(indexPath:NSIndexPath,data:AnyObject?) -> CGSize?
+    {
+        return nil
+    }
+    
+    //pbImageFilterForCell:设置图片载入滤镜处理
+    public func pbImageFilterForCell(image:UIImage,indexPath:NSIndexPath,data:AnyObject?) -> UIImage?
+    {
+        if let size=self.pbGetPhotoImageSize(indexPath, data: data)
+        {
+            //滤镜处理：缩放图片
+            let isLand=(image.size.width>image.size.height)
+            let scale=isLand ? (size.height/image.size.height):(size.width/image.size.width)
+            return UIImage.scaleImage(image,toScale:scale)
+        }
+        return nil
     }
     
     //pbFullUrlForDataLoad:根据给定的路径获取全路径

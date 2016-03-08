@@ -11,6 +11,26 @@ import UIKit
 
 extension UIImage
 {
+    //scaleImage:缩放指定的图片,等比例缩放
+    public class func scaleImage(image:UIImage,toScale:CGFloat) -> UIImage!
+    {
+        UIGraphicsBeginImageContext(CGSizeMake(image.size.width * toScale,image.size.height * toScale))
+        image.drawInRect(CGRectMake(0, 0, image.size.width * toScale, image.size.height * toScale))
+        let result=UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+    
+    //scaleImage:缩放指定的图片,指定尺寸
+    public class func scaleImage(image:UIImage,toSize:CGSize) -> UIImage!
+    {
+        UIGraphicsBeginImageContext(CGSizeMake(toSize.width,toSize.height))
+        image.drawInRect(CGRectMake(0, 0,toSize.width,toSize.height))
+        let result=UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+    
     //resizeToNewImage:将指定图片剪裁为指定的大小
     public class func resizeToNewImage(image:UIImage,newSize:CGSize) -> UIImage!
     {

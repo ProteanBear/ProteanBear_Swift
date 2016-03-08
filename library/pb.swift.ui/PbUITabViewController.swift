@@ -156,6 +156,8 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
         CGContextAddLineToPoint(context,self.frame.size.width,self.frame.size.height-width)
         
         CGContextStrokePath(context)
+        
+        self.collectionView.setCollectionViewLayout(self.collectionViewLayout(), animated: true)
     }
     
     //选择指定的Tab栏
@@ -190,7 +192,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
         
         if(self.menuData != nil)
         {
-            layout.itemSize=CGSize(width:PbSystem.screenCurrentWidth()/CGFloat(min(self.maxNumPer,self.menuData!.count)),height:CGFloat(PbSystem.sizeTopMenuBarHeight))
+            layout.itemSize=CGSize(width:PbSystem.screenWidth(true)/CGFloat(min(self.maxNumPer,self.menuData!.count)),height:CGFloat(PbSystem.sizeTopMenuBarHeight))
         }
         
         return layout

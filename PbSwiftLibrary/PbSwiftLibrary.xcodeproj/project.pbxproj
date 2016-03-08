@@ -42,6 +42,7 @@
 		D356C3F21C7C0BB400C9F22A /* PbDataUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D356C3F11C7C0BB400C9F22A /* PbDataUserController.swift */; };
 		D356C3F51C7C216000C9F22A /* DataConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = D356C3F31C7C216000C9F22A /* DataConfig.plist */; };
 		D356C3F61C7C216000C9F22A /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = D356C3F41C7C216000C9F22A /* UserData.plist */; };
+		D35F7C301C8E6D06003B4571 /* PbUIAnimationTranstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F7C2F1C8E6D06003B4571 /* PbUIAnimationTranstion.swift */; };
 		D38BD3171B8D54A400F4E904 /* PbSwiftLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D38BD3161B8D54A400F4E904 /* PbSwiftLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D38BD31D1B8D54A400F4E904 /* PbSwiftLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D38BD3111B8D54A400F4E904 /* PbSwiftLibrary.framework */; };
 		D38BD3241B8D54A400F4E904 /* PbSwiftLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38BD3231B8D54A400F4E904 /* PbSwiftLibraryTests.swift */; };
@@ -97,6 +98,7 @@
 		D356C3F11C7C0BB400C9F22A /* PbDataUserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbDataUserController.swift; sourceTree = "<group>"; };
 		D356C3F31C7C216000C9F22A /* DataConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DataConfig.plist; sourceTree = "<group>"; };
 		D356C3F41C7C216000C9F22A /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
+		D35F7C2F1C8E6D06003B4571 /* PbUIAnimationTranstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PbUIAnimationTranstion.swift; sourceTree = "<group>"; };
 		D38BD3111B8D54A400F4E904 /* PbSwiftLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PbSwiftLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38BD3151B8D54A400F4E904 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D38BD3161B8D54A400F4E904 /* PbSwiftLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PbSwiftLibrary.h; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				D34218E81BEB0A3F008C852E /* PbUITableViewCellForLoad.swift */,
 				D34218E91BEB0A3F008C852E /* PbUITableViewController.swift */,
 				D34218EA1BEB0A3F008C852E /* PbUITabViewController.swift */,
+				D35F7C2F1C8E6D06003B4571 /* PbUIAnimationTranstion.swift */,
 			);
 			name = pb.swift.ui;
 			path = ../../library/pb.swift.ui;
@@ -424,6 +427,7 @@
 				D34219001BEB0A3F008C852E /* ExtensionUIViewController.swift in Sources */,
 				D34218F21BEB0A3F008C852E /* PbLog.swift in Sources */,
 				D34219041BEB0A3F008C852E /* PbUICollectionViewController.swift in Sources */,
+				D35F7C301C8E6D06003B4571 /* PbUIAnimationTranstion.swift in Sources */,
 				D34218EF1BEB0A3F008C852E /* ExtensionString.swift in Sources */,
 				D356C3F21C7C0BB400C9F22A /* PbDataUserController.swift in Sources */,
 				D342190A1BEB0A3F008C852E /* PbUITabViewController.swift in Sources */,
