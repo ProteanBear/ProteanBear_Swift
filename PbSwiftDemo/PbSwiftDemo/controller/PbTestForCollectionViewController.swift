@@ -70,12 +70,12 @@ class PbTestForCollectionViewController:PbUICollectionViewController
         return dataList
     }
     
-    override func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> String
+    override func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> String
     {
         return "PbUICellTestCollectionView"
     }
     
-    override func pbSetDataForCollectionView(cell: AnyObject, data: NSDictionary?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
+    override func pbSetDataForCollectionView(cell: AnyObject, data: AnyObject?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
     {
         let cell=cell as! PbTestUICollectionCell
         

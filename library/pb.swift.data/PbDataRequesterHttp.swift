@@ -89,7 +89,7 @@ public class PbDataRequesterHttp:PbDataRequester
         var result:String=""
         let keys:NSArray=params!.allKeys
         
-        for(var i=0;i<keys.count;i++)
+        for i in 0 ..< keys.count
         {
             let key: AnyObject=keys.objectAtIndex(i)
             let value: AnyObject?=params?.objectForKey(key)
@@ -99,7 +99,7 @@ public class PbDataRequesterHttp:PbDataRequester
             if(value!.isKindOfClass(NSArray))
             {
                 let array:NSArray=value as! NSArray
-                for(var j=0;j<array.count;j++)
+                for j in 0 ..< array.count 
                 {
                     result+=("&"+key.description+"="+array.objectAtIndex(j).description)
                 }
@@ -204,7 +204,7 @@ public class PbDataRequesterHttp:PbDataRequester
         let bodyData = NSMutableData()
         let keys:NSArray=data.allKeys
         
-        for(var i=0;i<keys.count;i++)
+        for i in 0 ..< keys.count
         {
             let key: AnyObject=keys.objectAtIndex(i)
             let value: AnyObject?=data.objectForKey(key)

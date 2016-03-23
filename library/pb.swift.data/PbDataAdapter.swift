@@ -78,22 +78,22 @@ public protocol PbUITableViewControllerProtocol:PbUIViewControllerProtocol
     func pbSupportFooterLoadColor() -> UIColor?
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
     
     //pbNibNameForTableView:返回指定位置单元格使用的资源文件
-    func pbNibNameForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    func pbNibNameForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     
     //pbNibIndexForTableView:返回指定位置单元格使用的资源文件
-    func pbNibIndexForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> Int
+    func pbNibIndexForTableView(indexPath:NSIndexPath,data:AnyObject?) -> Int
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
     
     //pbSetDataForTableView:设置表格数据显示
-    func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
 }
 
 public protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
@@ -114,19 +114,19 @@ public protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
     func pbSupportFooterLoadColor() -> UIColor?
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     
     //pbIdentifierForCollectionView:返回指定位置的单元格标识
-    func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String
     
     //pbNibNameForCollectionView:返回指定位置单元格使用的资源文件
-    func pbNibNameForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    func pbNibNameForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     
     //pbCellClassForCollectionView:返回指定位置单元格的类
-    func pbCellClassForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyClass?
+    func pbCellClassForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> AnyClass?
     
     //pbSetDataForCollectionView:设置网格数据显示
-    func pbSetDataForCollectionView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    func pbSetDataForCollectionView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
 }
 
 public class PbDataAdapter
@@ -138,7 +138,7 @@ public class PbDataAdapter
     //pageNum:记录当前的列表访问页码
     lazy var pageNum=1
     //nextIsNull:下一页是否为空
-    lazy var nextIsNull=false
+    public lazy var nextIsNull=false
     //isInitLoad:是否初始化载入
     lazy var isInitLoad=true
     //isDataLoading:是否在数据载入中
@@ -177,7 +177,7 @@ public class PbDataAdapter
         }
         else if(updateMode == PbDataUpdateMode.NextPage)
         {
-            toPage++
+            toPage += 1
             getMode=PbDataGetMode.FromLocalOrNet
         }
         else
@@ -252,7 +252,7 @@ public class PbDataAdapter
                 else
                 {
                     self.delegate!.pbDoInsertForDataLoad(response,updateMode:updateMode,property:property)
-                    self.pageNum++
+                    self.pageNum+=1
                 }
                 
                 //调用视图刷新方法
