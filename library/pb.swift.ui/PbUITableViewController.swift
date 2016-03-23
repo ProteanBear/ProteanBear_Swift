@@ -15,15 +15,15 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     let loadCellIdentifier="PbUITableViewLoadCell"
     
     //tableData:记录当前的表格使用数据
-    var tableData:NSMutableArray?
+    public var tableData:NSMutableArray?
     //dataAdapter:当前使用的数据适配器
-    var dataAdapter:PbDataAdapter?
+    public var dataAdapter:PbDataAdapter?
     //loadTableCell:底部载入单元格
-    var loadTableCell:PbUITableViewCellForLoad?
+    public var loadTableCell:PbUITableViewCellForLoad?
     //photoData:记录表格对应的列表
-    var photoData=[NSIndexPath:PbDataPhotoRecord]()
+    public var photoData=[NSIndexPath:PbDataPhotoRecord]()
     //photoManager:图片载入管理器对象
-    lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
+    public lazy var photoManager=PbDataPhotoManager()
     
     /*-----------------------开始：公共方法*/
     
@@ -99,7 +99,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:AnyObject?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -110,11 +110,33 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
                         
                         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                         
+                        },imageFilter:{ (image:UIImage)->UIImage? in
+                            
+                            return self.pbImageFilterForCell(image, indexPath: indexPath, data: data)
                     })
                 default:
                     _=0
             }
         }
+    }
+    
+    //pbGetPhotoImageSize:获取指定位置的图片尺寸
+    public func pbGetPhotoImageSize(indexPath:NSIndexPath,data:AnyObject?) -> CGSize?
+    {
+        return nil
+    }
+    
+    //pbImageFilterForCell:设置图片载入滤镜处理
+    public func pbImageFilterForCell(image:UIImage,indexPath:NSIndexPath,data:AnyObject?) -> UIImage?
+    {
+        if let size=self.pbGetPhotoImageSize(indexPath, data: data)
+        {
+            //滤镜处理：缩放图片
+            let isLand=(image.size.width>image.size.height)
+            let scale=isLand ? (size.height/image.size.height):(size.width/image.size.width)
+            return UIImage.scaleImage(image,toScale:scale)
+        }
+        return nil
     }
     
     //pbFullUrlForDataLoad:根据给定的路径获取全路径
@@ -162,7 +184,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
                     {
                         self.refreshControl?.tintColor=color
                     }
-                    self.refreshControl?.addTarget(self, action: "pbDoForHeaderRefreshEvent", forControlEvents: UIControlEvents.ValueChanged)
+                    self.refreshControl?.addTarget(self, action: #selector(PbUITableViewController.pbDoForHeaderRefreshEvent), forControlEvents: UIControlEvents.ValueChanged)
                     
                     break
                 
@@ -301,7 +323,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
-            for (var i=0; i<newData!.count; i++)
+            for i in 0 ..< newData!.count
             {
                 let newPath=NSIndexPath(forRow:(self.tableData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
@@ -373,7 +395,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRectMake(0, 0, 2000, 2000))
         indicator.center=self.view.center
-        indicator.tintColor=UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)
+        indicator.tintColor=self.pbUIRefreshActivityDefaultColor()
         indicator.backgroundColor=UIColor.whiteColor()
         indicator.stopAnimating()
         self.view.addSubview(indicator)
@@ -421,37 +443,37 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     }
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     {
         return nil
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    public func pbIdentifierForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    public func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
         return "PbUITableViewDataCell"
     }
     
     //pbNibNameForTableView:返回指定位置单元格使用的资源文件
-    public func pbNibNameForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    public func pbNibNameForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     {
         return nil
     }
     
     //pbNibIndexForTableView:返回指定位置单元格使用的资源文件
-    public func pbNibIndexForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> Int
+    public func pbNibIndexForTableView(indexPath:NSIndexPath,data:AnyObject?) -> Int
     {
         return 0
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    public func pbInitCellForTableView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyObject?
+    public func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    public func pbSetDataForTableView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    public func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }
@@ -481,7 +503,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
         if(self.tableData != nil)
         {
             result=self.tableData!.count
-            result=((self.pbSupportFooterLoad()) && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
+            result=((self.pbSupportFooterLoad()) && self.dataAdapter != nil && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
         }
         
         return result
@@ -497,7 +519,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             //使用底部载入单元格
             if(self.pbSupportFooterLoad()&&indexPath.row==self.tableData?.count)
             {
-                self.loadTableCell?.startLoadAnimating()
+//                self.loadTableCell?.startLoadAnimating()
                 return self.loadTableCell!
             }
             
@@ -505,7 +527,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             var data=self.pbResolveDataInIndexPath(indexPath)
             if(data == nil)
             {
-                data=(self.tableData?.objectAtIndex(indexPath.row)) as? NSDictionary
+                data=self.tableData?.objectAtIndex(indexPath.row)
             }
             
             //获取并记录单元数据中的网络图片
@@ -514,10 +536,13 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             {
                 if let photoKey = self.pbPhotoKeyInIndexPath(indexPath)
                 {
-                    if let photoUrl: AnyObject = data!.objectForKey(photoKey)
+                    if let photoUrl: String? = data!.objectForKey(photoKey) as? String
                     {
-                        imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl as? String)!, index: indexPath)
-                        self.photoData[indexPath]=imageRecord
+                        if(photoUrl != "")
+                        {
+                            imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl)!, index: indexPath)
+                            self.photoData[indexPath]=imageRecord
+                        }
                     }
                 }
             }
@@ -584,18 +609,18 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
-        //self.pbSetQueueForDisplayRow()
+        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        //self.photoManager.downloadResumeAll()
+        self.photoManager.downloadResumeAll()
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
     override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
-        self.pbSetQueueForDisplayRow()
+//        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        self.photoManager.downloadResumeAll()
+//        self.photoManager.downloadResumeAll()
         
         //到达尾部时载入下页
         if(self.pbSupportFooterLoad())

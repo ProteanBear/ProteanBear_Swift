@@ -11,7 +11,7 @@ import Foundation
 public class PbDataParserJson: PbDataParser
 {
     //dictionaryByData:通过数据获取数据字典对象
-    public func dictionaryByData(data:NSData?) -> NSMutableDictionary
+    public func dictionaryByData(data:NSData?) -> NSMutableDictionary?
     {
         //调试信息前缀
         let logPrex:String="PbDataParserJson:dictionaryByData:"
@@ -33,6 +33,7 @@ public class PbDataParserJson: PbDataParser
         else
         {
             PbLog.debug(logPrex+"返回数据为空")
+            return nil
         }
         
         return result;

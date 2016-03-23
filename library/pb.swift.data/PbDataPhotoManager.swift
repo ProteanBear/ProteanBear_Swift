@@ -18,10 +18,10 @@ public enum PbDataPhotoState
 //PbDataPhotoRecord:记录当前图片处理的相关信息
 public class PbDataPhotoRecord
 {
-    let url:String
-    var state = PbDataPhotoState.New
-    var image = UIImage(named: "default_placeholder")
-    var indexPath=NSIndexPath(index: 1)
+    public let url:String
+    public var state = PbDataPhotoState.New
+    public var image = UIImage(named: "default_placeholder")
+    public var indexPath=NSIndexPath(index: 1)
     
     public init(urlString:String,index:NSIndexPath)
     {
@@ -79,10 +79,13 @@ public class PbDataPhotoDownloadOperate:NSOperation
 public class PbDataPhotoFilterOperate:NSOperation
 {
     let photoRecord:PbDataPhotoRecord
+    //自定义图片处理
+    var specialFilter:((image:UIImage)->UIImage?)?
     
-    public init(photoRecord:PbDataPhotoRecord)
+    public init(photoRecord:PbDataPhotoRecord,specialFilter:((image:UIImage)->UIImage?)?)
     {
         self.photoRecord=photoRecord
+        self.specialFilter=specialFilter
     }
     
     override public func main()
@@ -97,7 +100,14 @@ public class PbDataPhotoFilterOperate:NSOperation
         }
     }
     
-    public func applySepiaFilter(image:UIImage) -> UIImage? {return nil}
+    public func applySepiaFilter(image:UIImage) -> UIImage?
+    {
+        if(self.specialFilter != nil)
+        {
+            return self.specialFilter!(image:image)
+        }
+        return nil
+    }
 }
 
 //PbDataPhotoManager:图片下载队列管理器
@@ -148,14 +158,26 @@ public class PbDataPhotoManager
     //download:下载给定的图片数组
     public func download(photos:Array<PbDataPhotoRecord>,callback:(photoRecord:PbDataPhotoRecord) -> Void)
     {
-        for photo:PbDataPhotoRecord in photos
-        {
-            self.download(photo,callback:callback)
-        }
+        self.download(photos, callback: callback, imageFilter: nil)
     }
     
     //download:下载给定的图片
     public func download(photo:PbDataPhotoRecord,callback:(photoRecord:PbDataPhotoRecord) -> Void)
+    {
+        self.download(photo, callback: callback, imageFilter: nil)
+    }
+    
+    //download:下载给定的图片数组
+    public func download(photos:Array<PbDataPhotoRecord>,callback:(photoRecord:PbDataPhotoRecord) -> Void,imageFilter:((image:UIImage)->UIImage?)?)
+    {
+        for photo:PbDataPhotoRecord in photos
+        {
+            self.download(photo,callback:callback,imageFilter:imageFilter)
+        }
+    }
+    
+    //download:下载给定的图片
+    public func download(photo:PbDataPhotoRecord,callback:(photoRecord:PbDataPhotoRecord) -> Void,imageFilter:((image:UIImage)->UIImage?)?)
     {
         //已在进行的进程
         if let _ = downloadsInProgress[photo.indexPath]{return}
@@ -166,18 +188,44 @@ public class PbDataPhotoManager
             
             if(downloadOperate.cancelled){return}
             
-            dispatch_async(dispatch_get_main_queue(), {
+            if(imageFilter != nil)
+            {
+                //增加滤镜任务
+                let filterOperate=PbDataPhotoFilterOperate(photoRecord:photo,specialFilter:imageFilter)
+                filterOperate.completionBlock={
+                    if(filterOperate.cancelled){return}
+                    
+                    //移除下载任务
+                    let operate=downloadOperate as PbDataPhotoDownloadOperate
+                    self.downloadsInProgress.removeValueForKey(operate.photoRecord.indexPath)
+                    
+                    //移除滤镜任务
+                    self.filterInProgress.removeValueForKey(operate.photoRecord.indexPath)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        callback(photoRecord: operate.photoRecord)
+                    })
+                }
                 
+                //添加任务到队列中
+                self.filterInProgress[photo.indexPath]=filterOperate
+                self.filterQueue.addOperation(filterOperate)
+            }
+            else
+            {
+                //移除下载任务
                 let operate=downloadOperate as PbDataPhotoDownloadOperate
-                
                 self.downloadsInProgress.removeValueForKey(operate.photoRecord.indexPath)
-                callback(photoRecord: operate.photoRecord)
-            })
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    callback(photoRecord: operate.photoRecord)
+                })
+            }
         }
         
         //添加任务到队列中
         self.downloadsInProgress[photo.indexPath]=downloadOperate
-        downloadQueue.addOperation(downloadOperate)
+        self.downloadQueue.addOperation(downloadOperate)
     }
     
     //downloadCancel:取消全部图片下载任务
@@ -229,5 +277,56 @@ public class PbDataPhotoManager
     public func downloadResumeAll()
     {
         self.downloadQueue.suspended=false
+    }
+    
+    //filterCancel:取消全部图片下载任务
+    public func filterCancel()
+    {
+        for indexPath:NSIndexPath in filterInProgress.keys
+        {
+            let operation=filterInProgress[indexPath]
+            operation?.cancel()
+        }
+        filterInProgress.removeAll(keepCapacity:false)
+    }
+    
+    //filterCancel:取消指定的图片下载任务
+    public func filterCancel(indexPath:NSIndexPath)
+    {
+        let operation=filterInProgress[indexPath]
+        operation?.cancel()
+        filterInProgress.removeValueForKey(indexPath)
+    }
+    
+    //filterCancel:取消指定的图片滤镜任务
+    public func filterCancel(photo:PbDataPhotoRecord)
+    {
+        self.filterCancel(photo.indexPath)
+    }
+    
+    //filterCancel:取消指定的图片滤镜任务
+    public func filterCancel(urlString:String)
+    {
+        for indexPath:NSIndexPath in filterInProgress.keys
+        {
+            let operation=filterInProgress[indexPath]
+            if(urlString == (operation as! PbDataPhotoFilterOperate).photoRecord.url)
+            {
+                self.filterCancel(indexPath)
+                break
+            }
+        }
+    }
+    
+    //filterPauseAll:暂停全部滤镜任务
+    public func filterPauseAll()
+    {
+        self.filterQueue.suspended=true
+    }
+    
+    //filterResumeAll:继续全部滤镜任务
+    public func filterResumeAll()
+    {
+        self.filterQueue.suspended=false
     }
 }

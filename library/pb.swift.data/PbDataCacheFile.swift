@@ -144,7 +144,7 @@ public class PbDataCacheFile
         if((fileArray) != nil)
         {
             var filePath=""
-            for(var i=0;i<fileArray!.count;i++)
+            for i in 0 ..< fileArray!.count
             {
                 filePath=NSString(string:path).stringByAppendingPathComponent(fileArray!.objectAtIndex(i) as! String)
                 

@@ -60,12 +60,12 @@ class PbTestForTableViewController:PbUITableViewController
         return dataList
     }
     
-    override func pbIdentifierForTableView(indexPath: NSIndexPath, data: NSDictionary?) -> String
+    override func pbIdentifierForTableView(indexPath: NSIndexPath, data: AnyObject?) -> String
     {
         return "PbUICellTestTableView"
     }
     
-    override func pbSetDataForTableView(cell: AnyObject, data: NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath: NSIndexPath) -> AnyObject
+    override func pbSetDataForTableView(cell: AnyObject, data: AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath: NSIndexPath) -> AnyObject
     {
         let cell=cell as! PbTestUITableCell
         

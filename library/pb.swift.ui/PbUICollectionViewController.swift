@@ -12,18 +12,18 @@ import UIKit
 public class PbUICollectionViewController:UICollectionViewController,PbUICollectionViewControllerProtocol,PbUIRefreshConfigProtocol
 {
     //loadCellIdentifier
-    let loadCellIdentifier="PbUICollectionViewLoadCell"
+    public let loadCellIdentifier="PbUICollectionViewLoadCell"
     
     //collectionData:记录当前的网格使用数据
-    var collectionData:NSMutableArray?
+    public var collectionData:NSMutableArray?
     //dataAdapter:当前使用的数据适配器
-    var dataAdapter:PbDataAdapter?
+    public var dataAdapter:PbDataAdapter?
     //loadCollectionCell:底部载入单元格
-    var loadCollectionCell:PbUICollectionViewCellForLoad?
+    public var loadCollectionCell:PbUICollectionViewCellForLoad?
     //photoData:记录表格对应的列表
-    var photoData=[NSIndexPath:PbDataPhotoRecord]()
+    public var photoData=[NSIndexPath:PbDataPhotoRecord]()
     //photoManager:图片载入管理器对象
-    lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
+    public lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
     
     /*-----------------------开始：公共方法*/
     
@@ -36,6 +36,12 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     
     //pbPhotoKeyInIndexPath:返回单元格中的网络图片标识（不设置则无网络图片下载任务）
     public func pbPhotoKeyInIndexPath(indexPath:NSIndexPath) -> String?
+    {
+        return nil
+    }
+    
+    //pbPhotoUrlInIndexPath:返回单元格中的网络图片链接（不设置则无网络图片下载任务）
+    public func pbPhotoUrlInIndexPath(indexPath:NSIndexPath, data: AnyObject?) -> String?
     {
         return nil
     }
@@ -81,7 +87,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     }
     
     //pbAddPhotoTaskToQueue:添加图片下载任务到队列
-    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:NSDictionary?)
+    public func pbAddPhotoTaskToQueue(indexPath:NSIndexPath,data:AnyObject?)
     {
         if let record=self.photoData[indexPath]
         {
@@ -92,11 +98,33 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
                     
                     self.collectionView?.reloadItemsAtIndexPaths([indexPath])
                     
+                    },imageFilter:{ (image:UIImage)->UIImage? in
+                        
+                        return self.pbImageFilterForCell(image, indexPath: indexPath, data: data)
                 })
             default:
                 _=0
             }
         }
+    }
+    
+    //pbGetPhotoImageSize:获取指定位置的图片尺寸
+    public func pbGetPhotoImageSize(indexPath:NSIndexPath,data:AnyObject?) -> CGSize?
+    {
+        return nil
+    }
+    
+    //pbImageFilterForCell:设置图片载入滤镜处理
+    public func pbImageFilterForCell(image:UIImage,indexPath:NSIndexPath,data:AnyObject?) -> UIImage?
+    {
+        if let size=self.pbGetPhotoImageSize(indexPath, data: data)
+        {
+            //滤镜处理：缩放图片
+            let isLand=(image.size.width>image.size.height)
+            let scale=isLand ? (size.height/image.size.height):(size.width/image.size.width)
+            return UIImage.scaleImage(image,toScale:scale)
+        }
+        return nil
     }
     
     //pbFullUrlForDataLoad:根据给定的路径获取全路径
@@ -243,7 +271,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
             let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
-            for (var i=0; i<newData!.count; i++)
+            for i in 0 ..< newData!.count
             {
                 let newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
@@ -302,7 +330,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRectMake(0, 0, 2000, 2000))
         indicator.center=self.view.center
-        indicator.tintColor=UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)
+        indicator.tintColor=self.pbUIRefreshActivityDefaultColor()
         indicator.backgroundColor=UIColor.whiteColor()
         indicator.stopAnimating()
         self.view.addSubview(indicator)
@@ -344,31 +372,53 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     }
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> NSDictionary?
+    public func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
     {
         return nil
     }
     
+    //pbLoadCellInIndexPath:获取指定的载入指示器
+    public func pbLoadCellInIndexPath(indexPath:NSIndexPath) -> UICollectionViewCell?
+    {
+        var result:UICollectionViewCell?
+        
+        if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
+        {
+            self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
+            result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
+            
+            self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
+            if let color = self.pbSupportFooterLoadColor()
+            {
+                self.loadCollectionCell?.setIndicatorTiniColor(color)
+            }
+            //                self.loadCollectionCell?.startLoadAnimating()
+            return result
+        }
+        
+        return nil
+    }
+    
     //pbIdentifierForCollectionView:返回指定位置的单元格标识
-    public func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String
+    public func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
         return "PbUICollectionViewDataCell"
     }
     
     //pbNibNameForCollectionView:返回指定位置单元格使用的资源文件
-    public func pbNibNameForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> String?
+    public func pbNibNameForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String?
     {
         return nil
     }
     
     //pbCellClassForCollectionView:返回指定位置单元格的类
-    public func pbCellClassForCollectionView(indexPath:NSIndexPath,data:NSDictionary?) -> AnyClass?
+    public func pbCellClassForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> AnyClass?
     {
         return nil
     }
     
     //pbSetDataForCollectionView:设置表格数据显示
-    public func pbSetDataForCollectionView(cell:AnyObject,data:NSDictionary?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    public func pbSetDataForCollectionView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
     {
         return cell
     }
@@ -385,7 +435,11 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         if(self.collectionData != nil)
         {
             result=self.collectionData!.count
-            result=((self.pbSupportFooterLoad()) && (!self.dataAdapter!.nextIsNull)) ?(result+1):result
+            result=((self.pbSupportFooterLoad())
+                && self.dataAdapter != nil
+                && (!self.dataAdapter!.nextIsNull))
+                    ?(result+1)
+                    :result
         }
         
         return result
@@ -399,25 +453,16 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         if(self.collectionData != nil)
         {
             //使用底部载入单元格
-            if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
+            if let result=self.pbLoadCellInIndexPath(indexPath)
             {
-                self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
-                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
-                
-                self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
-                if let color = self.pbSupportFooterLoadColor()
-                {
-                    self.loadCollectionCell?.setIndicatorTiniColor(color)
-                }
-                self.loadCollectionCell?.startLoadAnimating()
-                return result!
+                return result
             }
             
             //获取单元对应数据
             var data=self.pbResolveDataInIndexPath(indexPath)
             if(data == nil)
             {
-                data=(self.collectionData?.objectAtIndex(indexPath.row)) as? NSDictionary
+                data=self.collectionData?.objectAtIndex(indexPath.row)
             }
             
             //获取并记录单元数据中的网络图片
@@ -431,6 +476,11 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
                         imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl as? String)!, index: indexPath)
                         self.photoData[indexPath]=imageRecord
                     }
+                }
+                if let photoUrl = self.pbPhotoUrlInIndexPath(indexPath,data:data)
+                {
+                    imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl)!, index: indexPath)
+                    self.photoData[indexPath]=imageRecord
                 }
             }
             
@@ -486,18 +536,18 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
     override public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
-        //self.pbSetQueueForDisplayRow()
+        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        //self.photoManager.downloadResumeAll()
+        self.photoManager.downloadResumeAll()
     }
     
     //scrollViewDidEndDecelerating:滚动视图结束减速
     override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         //只载入显示区域内的图片
-        self.pbSetQueueForDisplayRow()
+//        self.pbSetQueueForDisplayRow()
         //继续载入任务
-        self.photoManager.downloadResumeAll()
+//        self.photoManager.downloadResumeAll()
         
         //到达尾部时载入下页
         if(self.pbSupportFooterLoad())

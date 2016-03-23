@@ -290,6 +290,15 @@ extension UIColor
     {
         return PbUIColorLevel(rawValue: levelRaw)!.description
     }
+    //pbUIColor:自定义颜色（直接使用16进制值）
+    public class func pbUIColor(color:UInt32) -> UIColor
+    {
+        return pbUIColor(color, alpha: 1)
+    }
+    public class func pbUIColor(color:UInt32,alpha:CGFloat) -> UIColor
+    {
+        return UIColor(red: UIColor.pbUInt32ToFloatRed(color), green: UIColor.pbUInt32ToFloatGreen(color), blue: UIColor.pbUInt32ToFloatBlue(color), alpha:alpha)
+    }
     
     //红色Red
     public class func pbRedColor(levelRaw:Int) -> UIColor

@@ -14,8 +14,8 @@ import ReachabilitySwift
 import CryptoSwift
 
 /*PbDataUpdateMode:
-*  枚举类型，数据更新模式
-*/
+ *  枚举类型，数据更新模式
+ */
 public enum PbDataUpdateMode:Int
 {
     case First,Update,NextPage
@@ -196,7 +196,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         PbLog.debug(logPre+"开始读取配置信息")
         let keys:NSArray=self.config.allKeys
         let count:Int=self.config.count
-        for(var i=0;i<count;i++)
+        for i in 0 ..< count 
         {
             let key:String=keys.objectAtIndex(i) as! String
             let value:AnyObject=self.config.objectForKey(key)!;
@@ -290,7 +290,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         {
             self.reachability = try Reachability.reachabilityForInternetConnection()
             self.networkStatus=reachability.currentReachabilityStatus
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PbDataAppController.doWhenNetworkStatusChange(_:)), name: ReachabilityChangedNotification, object: reachability)
             try reachability.startNotifier()
         }
         catch
@@ -304,7 +304,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
     /*doWhenNetworkStatusChange:
      *  网络状态变化时记录当前的状态
      */
-    private func doWhenNetworkStatusChange(note:NSNotification)
+    func doWhenNetworkStatusChange(note:NSNotification)
     {
         self.networkStatus=reachability.currentReachabilityStatus
     }
@@ -549,7 +549,9 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
         
         //非纯本地模式，并本地数据不存在，请求网络
-        if(!isExist && getMode != PbDataGetMode.FromLocal && self.isNetworkConnected())
+        if(self.isNetworkConnected()
+            && (!isExist
+                || (isExist && getMode == PbDataGetMode.FromNet)))
         {
             //添加设备信息参数
             sendParams.setValuesForKeysWithDictionary(deviceParams)
@@ -653,6 +655,14 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         cacheManager?.clearDataForSubPath(dataSubPath)
         cacheManager?.clearDataForSubPath(resourceSubPath)
         return self.sizeOfCacheDataInLocal()
+    }
+    
+    /*fullUrl:
+     *  获取完整路径
+     */
+    public func fullUrl(url:String) -> String
+    {
+        return url.hasPrefix("http:") ? url:(self.server+url)
     }
     /*-----------------------结束：业务处理相关方法*/
     

@@ -389,7 +389,7 @@ class PbUIAnimatedPageControlLine:CALayer
         CGPathAddRoundedRect(linePath, nil, CGRectMake(CGFloat(self.ballDiameter/2), self.frame.size.height/2 - CGFloat(self.lineHeight/2), self.frame.size.width - CGFloat(self.ballDiameter),CGFloat(self.lineHeight)), 0, 0)
         
         //画pageCount个小圆
-        for (var i = 0;i<self.pageCount;i++)
+        for i in 0 ..< self.pageCount
         {
             let circleRect = CGRectMake(CGFloat(Double(i)*self.distince()), self.frame.size.height/2 - CGFloat(self.ballDiameter/2),CGFloat(self.ballDiameter),CGFloat(self.ballDiameter))
             CGPathAddEllipseInRect(linePath, nil, circleRect)
@@ -408,7 +408,7 @@ class PbUIAnimatedPageControlLine:CALayer
             CGPathAddRoundedRect(linePath,nil,CGRectMake(CGFloat(self.ballDiameter/2),self.frame.size.height/2-CGFloat(self.lineHeight/2),CGFloat(self.selectedLineLength),CGFloat(self.lineHeight)), 0, 0)
             
             //画pageCount个有色小圆
-            for (var i = 0;i<self.pageCount;i++)
+            for i in 0 ..< self.pageCount 
             {
                 
                 if (Double(i)*self.distince() <= self.selectedLineLength+0.1)
@@ -514,10 +514,10 @@ public class PbUIAnimatedPageControl: UIView
     {
         super.init(frame: frame)
         
-        let tap=UITapGestureRecognizer(target: self, action: Selector("tapAction:"))
+        let tap=UITapGestureRecognizer(target: self, action: #selector(PbUIAnimatedPageControl.tapAction(_:)))
         self.addGestureRecognizer(tap)
         
-        let pan=UIPanGestureRecognizer(target: self, action: Selector("panAction:"))
+        let pan=UIPanGestureRecognizer(target: self, action: #selector(PbUIAnimatedPageControl.panAction(_:)))
         self.addGestureRecognizer(pan)
         
         self.layer.masksToBounds = false

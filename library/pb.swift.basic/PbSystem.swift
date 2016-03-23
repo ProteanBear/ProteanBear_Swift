@@ -241,6 +241,11 @@ public class PbSystem
                 result=formatter.stringFromDate(date)
             }
         }
+        else
+        {
+            formatter.dateFormat=format
+            result=formatter.stringFromDate(date)
+        }
         
         return result
     }

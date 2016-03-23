@@ -109,7 +109,7 @@ extension UIImageView
     }
     
     //displayAnimation:动画显示图片载入完成
-    private func displayAnimation(image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func displayAnimation(image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(image != nil)
         {

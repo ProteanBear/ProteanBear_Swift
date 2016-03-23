@@ -26,7 +26,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         if(array != nil)
         {
             self.collectionData=NSMutableArray(capacity:array!.count)
-            for(var i=0;i<array!.count;i++)
+            for i in 0 ..< array!.count 
             {
                 self.collectionData?.addObject(["image":array![i]])
             }
@@ -49,19 +49,19 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     override public func pbSupportFooterLoad() -> Bool{return false}
     
     //pbCellClassForCollectionView:注册单元各类
-    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> AnyClass?
+    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> AnyClass?
     {
         return PbUICollectionViewCellForImage.self
     }
     
     //pbIdentifierForCollectionView:设置单元格复用标识
-    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: NSDictionary?) -> String
+    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> String
     {
         return "PbWidgetLaunchHelpView"
     }
     
     //pbSetDataForCollectionView:设置单元格显示
-    override public func pbSetDataForCollectionView(cell: AnyObject, data: NSDictionary?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
+    override public func pbSetDataForCollectionView(cell: AnyObject, data: AnyObject?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
     {
         let cell=cell as! PbUICollectionViewCellForImage
         
@@ -95,7 +95,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true
         self.startButton.layer.opacity=0
-        self.startButton.addTarget(self, action: Selector("startButtonAction:"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.startButton.addTarget(self, action: #selector(PbWidgetLaunchHelpViewController.startButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         //collectionView
         self.collectionView?.backgroundColor=UIColor.whiteColor()
