@@ -12,7 +12,7 @@ import UIKit
 public class PbUICollectionViewController:UICollectionViewController,PbUICollectionViewControllerProtocol,PbUIRefreshConfigProtocol
 {
     //loadCellIdentifier
-    let loadCellIdentifier="PbUICollectionViewLoadCell"
+    public let loadCellIdentifier="PbUICollectionViewLoadCell"
     
     //collectionData:记录当前的网格使用数据
     public var collectionData:NSMutableArray?
@@ -271,7 +271,7 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
             let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
-            for (var i=0; i<newData!.count; i++)
+            for i in 0 ..< newData!.count
             {
                 let newPath=NSIndexPath(forRow:(self.collectionData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)
@@ -377,6 +377,28 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         return nil
     }
     
+    //pbLoadCellInIndexPath:获取指定的载入指示器
+    public func pbLoadCellInIndexPath(indexPath:NSIndexPath) -> UICollectionViewCell?
+    {
+        var result:UICollectionViewCell?
+        
+        if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
+        {
+            self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
+            result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
+            
+            self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
+            if let color = self.pbSupportFooterLoadColor()
+            {
+                self.loadCollectionCell?.setIndicatorTiniColor(color)
+            }
+            //                self.loadCollectionCell?.startLoadAnimating()
+            return result
+        }
+        
+        return nil
+    }
+    
     //pbIdentifierForCollectionView:返回指定位置的单元格标识
     public func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String
     {
@@ -431,18 +453,9 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         if(self.collectionData != nil)
         {
             //使用底部载入单元格
-            if(self.pbSupportFooterLoad()&&indexPath.row==self.collectionData?.count)
+            if let result=self.pbLoadCellInIndexPath(indexPath)
             {
-                self.collectionView?.registerClass(PbUICollectionViewCellForLoad.self, forCellWithReuseIdentifier:loadCellIdentifier)
-                result=self.collectionView?.dequeueReusableCellWithReuseIdentifier(loadCellIdentifier, forIndexPath: indexPath)
-                
-                self.loadCollectionCell=result as? PbUICollectionViewCellForLoad
-                if let color = self.pbSupportFooterLoadColor()
-                {
-                    self.loadCollectionCell?.setIndicatorTiniColor(color)
-                }
-//                self.loadCollectionCell?.startLoadAnimating()
-                return result!
+                return result
             }
             
             //获取单元对应数据

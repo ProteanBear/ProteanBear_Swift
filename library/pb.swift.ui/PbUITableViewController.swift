@@ -184,7 +184,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
                     {
                         self.refreshControl?.tintColor=color
                     }
-                    self.refreshControl?.addTarget(self, action: "pbDoForHeaderRefreshEvent", forControlEvents: UIControlEvents.ValueChanged)
+                    self.refreshControl?.addTarget(self, action: #selector(PbUITableViewController.pbDoForHeaderRefreshEvent), forControlEvents: UIControlEvents.ValueChanged)
                     
                     break
                 
@@ -323,7 +323,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
             let targetSection=self.pbSectionForInsertData()
             
             //设置增量数据配置数组
-            for (var i=0; i<newData!.count; i++)
+            for i in 0 ..< newData!.count
             {
                 let newPath=NSIndexPath(forRow:(self.tableData?.indexOfObject(newData!.objectAtIndex(i)))!, inSection: targetSection)
                 insertPaths.addObject(newPath)

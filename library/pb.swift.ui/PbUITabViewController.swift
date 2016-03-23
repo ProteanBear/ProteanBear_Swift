@@ -105,8 +105,10 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
 {
     //maxNumPer:最多一屏显示数量
     public var maxNumPer=4
+    //textFont:字体设置
+    public var textFont=UIFont.systemFontOfSize(16)
     //collectionView:使用网格视图
-    var collectionView:UICollectionView!
+    public var collectionView:UICollectionView!
     //click:点击选项卡处理
     public var click:((data:PbUITabMenuData) -> Void)?
     //menuData:指定菜单数据
@@ -182,7 +184,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
     }
     
     //获取布局设置
-    private func collectionViewLayout() -> UICollectionViewFlowLayout
+    public func collectionViewLayout() -> UICollectionViewFlowLayout
     {
         let layout=UICollectionViewFlowLayout()
         layout.scrollDirection=UICollectionViewScrollDirection.Horizontal
@@ -217,6 +219,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
             {
                 self.collectionView.registerClass(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
                 result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath)
+                (result as! PbUITabMenuViewCell).titleLabel.font=self.textFont
                 (result as! PbUITabMenuViewCell).menuData=menu
             }
         }

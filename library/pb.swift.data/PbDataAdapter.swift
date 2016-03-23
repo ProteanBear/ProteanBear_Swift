@@ -138,7 +138,7 @@ public class PbDataAdapter
     //pageNum:记录当前的列表访问页码
     lazy var pageNum=1
     //nextIsNull:下一页是否为空
-    lazy var nextIsNull=false
+    public lazy var nextIsNull=false
     //isInitLoad:是否初始化载入
     lazy var isInitLoad=true
     //isDataLoading:是否在数据载入中
@@ -177,7 +177,7 @@ public class PbDataAdapter
         }
         else if(updateMode == PbDataUpdateMode.NextPage)
         {
-            toPage++
+            toPage += 1
             getMode=PbDataGetMode.FromLocalOrNet
         }
         else
@@ -252,7 +252,7 @@ public class PbDataAdapter
                 else
                 {
                     self.delegate!.pbDoInsertForDataLoad(response,updateMode:updateMode,property:property)
-                    self.pageNum++
+                    self.pageNum+=1
                 }
                 
                 //调用视图刷新方法

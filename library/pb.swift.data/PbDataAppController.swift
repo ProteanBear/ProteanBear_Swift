@@ -196,7 +196,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         PbLog.debug(logPre+"开始读取配置信息")
         let keys:NSArray=self.config.allKeys
         let count:Int=self.config.count
-        for(var i=0;i<count;i++)
+        for i in 0 ..< count 
         {
             let key:String=keys.objectAtIndex(i) as! String
             let value:AnyObject=self.config.objectForKey(key)!;
@@ -290,7 +290,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         {
             self.reachability = try Reachability.reachabilityForInternetConnection()
             self.networkStatus=reachability.currentReachabilityStatus
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "doWhenNetworkStatusChange:", name: ReachabilityChangedNotification, object: reachability)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PbDataAppController.doWhenNetworkStatusChange(_:)), name: ReachabilityChangedNotification, object: reachability)
             try reachability.startNotifier()
         }
         catch

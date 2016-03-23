@@ -26,7 +26,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         if(array != nil)
         {
             self.collectionData=NSMutableArray(capacity:array!.count)
-            for(var i=0;i<array!.count;i++)
+            for i in 0 ..< array!.count 
             {
                 self.collectionData?.addObject(["image":array![i]])
             }
@@ -95,7 +95,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true
         self.startButton.layer.opacity=0
-        self.startButton.addTarget(self, action: Selector("startButtonAction:"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.startButton.addTarget(self, action: #selector(PbWidgetLaunchHelpViewController.startButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         //collectionView
         self.collectionView?.backgroundColor=UIColor.whiteColor()

@@ -38,14 +38,14 @@ extension CALayer
         //60个关键帧
         let numOfPoints:Int=Int(duration * 60)
         let values=NSMutableArray(capacity:numOfPoints)
-        for(var i=0;i<numOfPoints;i++)
+        for _ in 0 ..< numOfPoints
         {
             values.addObject(CGFloat(0))
         }
         
         //差值
         let dValue:Float=toValue-fromValue
-        for(var point=0;point<numOfPoints;point++)
+        for point in 0 ..< numOfPoints
         {
             let x=Double(point)/Double(numOfPoints)
             let value=Double(toValue)-Double(dValue)*pow(M_E,Double(-Double(damping)*x))*Double(cos(Double(velocity)*x))
