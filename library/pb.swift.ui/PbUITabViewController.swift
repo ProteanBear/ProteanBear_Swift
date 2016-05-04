@@ -64,7 +64,13 @@ public class PbUITabMenuViewCell:UICollectionViewCell
     //selected:选中状态
     override public var selected: Bool{
         didSet{
-            self.titleLabel.textColor=(self.selected) ? UIColor.darkGrayColor():UIColor.lightGrayColor()
+            self.titleLabel.textColor=(self.selected) ? self.tintColor:UIColor.lightGrayColor()
+        }
+    }
+    //选中颜色
+    override public var tintColor: UIColor!{
+        didSet{
+            self.titleLabel.textColor=(self.selected) ? self.tintColor:UIColor.lightGrayColor()
         }
     }
     
@@ -219,6 +225,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
             {
                 self.collectionView.registerClass(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
                 result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath)
+                (result as! PbUITabMenuViewCell).tintColor=UIColor.darkGrayColor()
                 (result as! PbUITabMenuViewCell).titleLabel.font=self.textFont
                 (result as! PbUITabMenuViewCell).menuData=menu
             }
