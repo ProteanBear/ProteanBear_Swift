@@ -144,6 +144,11 @@ public class PbDataUserController:NSObject
             self.userData?.setValue(self.userPass, forKey: "userPass")
         }
     }
+    public var userHead:String?{
+        didSet{
+            self.userData?.setValue(self.userHead, forKey: "userHead")
+        }
+    }
     public var userFontSize:Int?{
         didSet{
             self.userData?.setValue(self.userFontSize, forKey: "userFontSize")
@@ -229,6 +234,10 @@ public class PbDataUserController:NSObject
         let userPass=self.userData?.objectForKey("userPass")?.description
         self.userPass=(userPass==nil || userPass=="") ? "":userPass
         PbLog.debug(logPre+"userPass:"+self.userPass!)
+        //用户头像
+        let userHead=self.userData?.objectForKey("userHead")?.description
+        self.userHead=(userHead==nil || userHead=="") ? "":userHead
+        PbLog.debug(logPre+"userHead:"+self.userHead!)
         
         //显示字体
         let userFontSize=self.userData?.objectForKey("userFontSize")?.integerValue

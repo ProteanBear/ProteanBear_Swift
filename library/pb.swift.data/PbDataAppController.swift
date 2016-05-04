@@ -42,11 +42,11 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
 {
     /*-----------------------开始：静态常量*/
     //KEY_RESPONSE:控制器返回内容
-    static let KEY_RESPONSE="PbDataResponse"
+    public static let KEY_RESPONSE="PbDataResponse"
     //KEY_NETWORK:控制器返回内容-网络状态
-    static let KEY_NETWORK="network"
+    public static let KEY_NETWORK="network"
     //KEY_SUCCESS:控制器返回内容-请求状态
-    static let KEY_SUCCESS="success"
+    public static let KEY_SUCCESS="success"
     /*-----------------------结束：静态常量*/
     
     /*-----------------------开始：静态方法，实现单例模式*/
@@ -364,7 +364,8 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         self.deviceParams["deviceWidth"]=(NSString(string:screen.applicationFrame.width.description).intValue).description
         self.deviceParams["deviceHeight"]=(NSString(string:screen.applicationFrame.height.description).intValue).description
         self.deviceParams["deviceUuid"]=device.identifierForVendor!.UUIDString.md5()
-        self.deviceParams["appVersion"]=(((NSBundle.mainBundle().infoDictionary)! as NSDictionary).objectForKey(kCFBundleVersionKey))?.description
+        
+        self.deviceParams["appVersion"]=NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String]!.description
         
         //输出当前设备信息
         PbLog.debug(logPre+"loadDeviceInfo:设备名称:"+self.deviceParams["deviceName"]!)

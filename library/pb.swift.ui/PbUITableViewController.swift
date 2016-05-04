@@ -58,6 +58,12 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
         return nil
     }
     
+    //pbPhotoUrlInIndexPath:返回单元格中的网络图片链接（不设置则无网络图片下载任务）
+    public func pbPhotoUrlInIndexPath(indexPath:NSIndexPath, data: AnyObject?) -> String?
+    {
+        return nil
+    }
+    
     //pbSetQueueForDisplayRow:设置下载图片的序列，只下载显示区域内的图片
     public func pbSetQueueForDisplayRow()
     {
@@ -205,6 +211,7 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
         if(self.pbSupportFooterLoad())
         {
             self.loadTableCell=PbUITableViewCellForLoad(style: UITableViewCellStyle.Default, reuseIdentifier:loadCellIdentifier)
+            self.loadTableCell?.backgroundColor=UIColor.clearColor()
             if let color = self.pbSupportFooterLoadColor()
             {
                 self.loadTableCell?.setIndicatorTiniColor(color)
@@ -485,11 +492,18 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
     //tableView:heightForRowAtIndexPath:返回列表单元格的高度
     override public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        var result:CGFloat=self.pbNormalHeightForRowAtIndexPath(tableView, indexPath: indexPath)
+        var result:CGFloat=0
         
-        if(self.tableData != nil && self.tableData?.count>0 && self.pbIsLoadCellForDataLoad(indexPath))
+        if(self.tableData != nil && self.tableData?.count>0)
         {
-            result=((self.dataAdapter!.nextIsNull) || (self.dataAdapter!.isInitLoad) ? 0 : self.pbLoadHeightForRowAtIndexPath(tableView, indexPath: indexPath))
+            if(self.pbIsLoadCellForDataLoad(indexPath))
+            {
+                result=((self.dataAdapter!.nextIsNull) || (self.dataAdapter!.isInitLoad) ? 0 : self.pbLoadHeightForRowAtIndexPath(tableView, indexPath: indexPath))
+            }
+            else
+            {
+                result=self.pbNormalHeightForRowAtIndexPath(tableView, indexPath: indexPath)
+            }
         }
         
         return result
@@ -544,6 +558,11 @@ public class PbUITableViewController:UITableViewController,PbUITableViewControll
                             self.photoData[indexPath]=imageRecord
                         }
                     }
+                }
+                if let photoUrl = self.pbPhotoUrlInIndexPath(indexPath,data:data)
+                {
+                    imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl)!, index: indexPath)
+                    self.photoData[indexPath]=imageRecord
                 }
             }
             
