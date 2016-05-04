@@ -183,11 +183,24 @@ public class PbDataRequesterHttp:PbDataRequester
     // HTTP 头 开始 Content-Type: multipart/form-data; boundary=PitayaUGl0YXlh 
     // HTTP 头 结束 
     /* HTTP Body 开始
-        --PitayaUGl0YXlh Content-Disposition: form-data; name="field1" John Lui 
-    
-        --PitayaUGl0YXlh Content-Disposition: form-data; name="text"; filename="file1.txt" ···[file1.txt 的数据]··· 
-    
-        --PitayaUGl0YXlh--
+     格式示例：
+     Content-type: multipart/form-data, boundary=AaB03x
+     
+     --AaB03x
+     
+     content-disposition: form-data; name="field1"
+     
+     Hello Boris!
+     
+     --AaB03x
+     
+     content-disposition: form-data; name="pic"; filename="boris.png"
+     
+     Content-Type: image/png
+     
+     ... contents of boris.png ...
+     
+     --AaB03x--
     // HTTP Body 结束*/
     private func upload(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
     {
@@ -203,12 +216,39 @@ public class PbDataRequesterHttp:PbDataRequester
         //设置传输的内容体
         let bodyData = NSMutableData()
         let keys:NSArray=data.allKeys
-        
+        let dictionary = NSMutableDictionary()
+        //增加普通参数
         for i in 0 ..< keys.count
         {
             let key: AnyObject=keys.objectAtIndex(i)
             let value: AnyObject?=data.objectForKey(key)
             if(value == nil){continue}
+            
+            //图片类型数据
+            if(value!.isKindOfClass(UIImage))
+            {
+                let image:UIImage=value as! UIImage
+                dictionary.setObject(image, forKey: key.description)
+            }
+            //文件类型数据
+            else if(value!.isKindOfClass(PbObjectFile))
+            {
+                let file:PbObjectFile=value as! PbObjectFile
+                dictionary.setObject(file, forKey: key.description)
+            }
+            //普通参数
+            else
+            {
+                bodyData.appendData("--\(self.boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+                bodyData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+                PbLog.debug("test:"+value!.description)
+                bodyData.appendData("\(value!.description)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+            }
+        }
+        //增加数据参数
+        for key in dictionary.keyEnumerator()
+        {
+            let value=dictionary.objectForKey(key)
             
             //图片类型数据
             if(value!.isKindOfClass(UIImage))
@@ -232,14 +272,9 @@ public class PbDataRequesterHttp:PbDataRequester
                     bodyData.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
                 }
             }
-            //普通参数
-            else
-            {
-                bodyData.appendData("--\(self.boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-                bodyData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-                bodyData.appendData("\(value)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-            }
         }
+        bodyData.appendData("--\(self.boundary)--".dataUsingEncoding(NSUTF8StringEncoding)!)
+        request.addValue(bodyData.length.description, forHTTPHeaderField: "Content-Length")
         request.HTTPBody = bodyData
         
         //异步请求
