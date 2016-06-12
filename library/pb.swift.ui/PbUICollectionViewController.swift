@@ -231,6 +231,12 @@ public class PbUICollectionViewController:UICollectionViewController,PbUICollect
         return nil
     }
     
+    //pbResolveFromResponse:解析处理返回的数据
+    public func pbResolveFromResponse(response:NSDictionary,updateMode:PbDataUpdateMode) -> AnyObject?
+    {
+        return nil
+    }
+    
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
     public func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
