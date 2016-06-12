@@ -43,6 +43,8 @@ public protocol PbUIViewControllerProtocol
     func pbErrorForDataLoad(type:PbUIViewControllerErrorType,error:String)
     //pbResolveFromResponse:解析处理返回的数据
     func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
+    //pbResolveFromResponse:解析处理返回的数据
+    func pbResolveFromResponse(response:NSDictionary,updateMode:PbDataUpdateMode) -> AnyObject?
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
     func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     //pbDoInsertForDataLoad:执行增量类相关返回后的处理
@@ -140,9 +142,9 @@ public class PbDataAdapter
     //nextIsNull:下一页是否为空
     public lazy var nextIsNull=false
     //isInitLoad:是否初始化载入
-    lazy var isInitLoad=true
+    public lazy var isInitLoad=true
     //isDataLoading:是否在数据载入中
-    lazy var isDataLoading=false
+    public lazy var isDataLoading=false
     
     //init:初始化方法
     public init(delegate:PbUIViewControllerProtocol?)
@@ -241,7 +243,16 @@ public class PbDataAdapter
                 }
                 
                 //处理数据
-                let response: AnyObject?=self.delegate!.pbResolveFromResponse(data)
+                var response: AnyObject?=self.delegate!.pbResolveFromResponse(data)
+                if(response == nil)
+                {
+                    response=self.delegate?.pbResolveFromResponse(data, updateMode: updateMode)
+                }
+                if(response == nil)
+                {
+                    PbLog.error(logPre+"返回数据为空")
+                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.NetFailed, error:"返回数据为空")
+                }
                 //非增量获取数据处理
                 if(updateMode != PbDataUpdateMode.NextPage)
                 {

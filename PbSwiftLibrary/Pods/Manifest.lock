@@ -1,6 +1,6 @@
 PODS:
-  - CryptoSwift (0.1.1)
-  - ReachabilitySwift (2.1)
+  - CryptoSwift (0.5)
+  - ReachabilitySwift (2.3.3)
 
 DEPENDENCIES:
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
@@ -15,14 +15,16 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CryptoSwift:
-    :commit: f23720f6b398169d7407ca8b2c4a590238128686
+    :commit: 1778735b5ae8ac9c2b334ba446ea7e9c259c2b82
     :git: https://github.com/krzyzanowskim/CryptoSwift
   ReachabilitySwift:
-    :commit: 89b2431fe262bc5915972472e36d04c067f686bc
+    :commit: 99bf4c6ef9a4ec39dccd1bf4640716713b3dc0f6
     :git: https://github.com/ashleymills/Reachability.swift
 
 SPEC CHECKSUMS:
-  CryptoSwift: 80b014431f6ef249acb6004efc93a8f65f5f7781
-  ReachabilitySwift: 99bb7acceebb90b2048b4a8fd6539be96454dcb2
+  CryptoSwift: b89d89caad9e5bc417b054078635eeb22bcddf54
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: a34241a2ce4565e7d5667ef778d5f2154523ea79
+
+COCOAPODS: 1.0.0
