@@ -26,6 +26,14 @@ extension UIImageView
     //loadWithUrl:异步载入网络图片(指定显示的比例)
     public func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
+        //网络格式错误
+        if(!urlString.hasPrefix("http:"))
+        {
+            let image=UIImage(named: urlString)
+            self.displayAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
+            return
+        }
+        
         //读取本地图片
         let image=PbDataAppController.getInstance.imageInLocalCache(urlString)
         
