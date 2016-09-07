@@ -52,7 +52,7 @@ public class PbUITabMenuData
 public class PbUITabMenuViewCell:UICollectionViewCell
 {
     //titleLabel:文字标签
-    let titleLabel=UILabel()
+    public let titleLabel=UILabel()
     //menuData:菜单对应的数据
     var menuData:PbUITabMenuData?
     {
@@ -110,7 +110,9 @@ public class PbUITabMenuViewCell:UICollectionViewCell
 public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate
 {
     //maxNumPer:最多一屏显示数量
-    public var maxNumPer=4
+    public var maxNumPer=5
+    //textColorSelected:选中时的颜色
+    public var textColorSelected=UIColor.darkGrayColor()
     //textFont:字体设置
     public var textFont=UIFont.systemFontOfSize(16)
     //collectionView:使用网格视图
@@ -225,7 +227,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
             {
                 self.collectionView.registerClass(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
                 result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath)
-                (result as! PbUITabMenuViewCell).tintColor=UIColor.darkGrayColor()
+                (result as! PbUITabMenuViewCell).tintColor=self.textColorSelected
                 (result as! PbUITabMenuViewCell).titleLabel.font=self.textFont
                 (result as! PbUITabMenuViewCell).menuData=menu
             }
