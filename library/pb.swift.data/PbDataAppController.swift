@@ -365,7 +365,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         self.deviceParams["deviceHeight"]=(NSString(string:screen.applicationFrame.height.description).intValue).description
         self.deviceParams["deviceUuid"]=device.identifierForVendor!.UUIDString.md5()
         
-        self.deviceParams["appVersion"]=NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String]!.description
+//        self.deviceParams["appVersion"]=NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String]!.description
         
         //输出当前设备信息
         PbLog.debug(logPre+"loadDeviceInfo:设备名称:"+self.deviceParams["deviceName"]!)
@@ -374,7 +374,7 @@ public class PbDataAppController:NSObject,CLLocationManagerDelegate
         PbLog.debug(logPre+"loadDeviceInfo:屏幕宽度:"+self.deviceParams["deviceWidth"]!)
         PbLog.debug(logPre+"loadDeviceInfo:屏幕高度:"+self.deviceParams["deviceHeight"]!)
         PbLog.debug(logPre+"loadDeviceInfo:唯一标识:"+self.deviceParams["deviceUuid"]!)
-        PbLog.debug(logPre+"loadDeviceInfo:应用版本:"+self.deviceParams["appVersion"]!)
+//        PbLog.debug(logPre+"loadDeviceInfo:应用版本:"+self.deviceParams["appVersion"]!)
     }
     
     /*createLocationManager
