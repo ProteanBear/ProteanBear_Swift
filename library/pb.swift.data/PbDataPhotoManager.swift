@@ -279,6 +279,17 @@ public class PbDataPhotoManager
         self.downloadQueue.suspended=false
     }
     
+    //downloadCancel:清除全部
+    public func downloadCancelAll()
+    {
+        for indexPath:NSIndexPath in downloadsInProgress.keys
+        {
+            let operation=downloadsInProgress[indexPath]
+            operation?.cancel()
+        }
+        downloadsInProgress.removeAll()
+    }
+    
     //filterCancel:取消全部图片下载任务
     public func filterCancel()
     {
