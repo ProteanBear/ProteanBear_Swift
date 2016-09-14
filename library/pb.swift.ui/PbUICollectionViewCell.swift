@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 //PbUICollectionViewCellForImage:图片单元格
-public class PbUICollectionViewCellForImage:UICollectionViewCell
+open class PbUICollectionViewCellForImage:UICollectionViewCell
 {
     //imageView:图片
-    let imageView=UIImageView(frame:CGRectZero)
+    let imageView=UIImageView(frame:CGRect.zero)
     
     //重载构造方法
     required public init?(coder aDecoder: NSCoder)
@@ -31,10 +31,10 @@ public class PbUICollectionViewCellForImage:UICollectionViewCell
     func setup()
     {
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
-        self.imageView.contentMode=UIViewContentMode.ScaleAspectFill
+        self.imageView.contentMode=UIViewContentMode.scaleAspectFill
         self.addSubview(self.imageView)
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
     }
 }

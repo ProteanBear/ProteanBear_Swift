@@ -14,17 +14,17 @@ import QuartzCore
 //PbUIAnimatedPageControlIndicatorStyle:指示器类型
 public enum PbUIAnimatedPageControlIndicatorStyle:Int
 {
-    case GooeyCircle,RotateRect
+    case gooeyCircle,rotateRect
 }
 
 //PbUIAnimatedPageControlScrollDirection:滚动方向
 public enum PbUIAnimatedPageControlScrollDirection:Int
 {
-    case None,Right,Left,Up,Down,Crazy
+    case none,right,left,up,down,crazy
 }
 
 //PbUIAnimatedPageControlIndicator:指示器基类
-public class PbUIAnimatedPageControlIndicator:CALayer
+open class PbUIAnimatedPageControlIndicator:CALayer
 {
     //indicatorSize:
     var indicatorSize:CGFloat!{
@@ -41,22 +41,22 @@ public class PbUIAnimatedPageControlIndicator:CALayer
     //lastContentOffset:
     var lastContentOffset:CGFloat=0
     //scrollDirection:
-    var scrollDirection=PbUIAnimatedPageControlScrollDirection.None
+    var scrollDirection=PbUIAnimatedPageControlScrollDirection.none
     
     //animateIndicator:
-    public func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
+    open func animateIndicator(_ scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
     //restoreAnimation:
-    public func restoreAnimation(distince:Float) -> Void{}
+    open func restoreAnimation(_ distince:Float) -> Void{}
     //restoreAnimation:
-    public func restoreAnimation(distince:Float,after:NSTimeInterval) -> Void
+    open func restoreAnimation(_ distince:Float,after:TimeInterval) -> Void
     {
-        UIView.animateWithDuration(after, animations: { () -> Void in
-            }) { (isFinish) -> Void in
+        UIView.animate(withDuration: after, animations: { () -> Void in
+            }, completion: { (isFinish) -> Void in
                 if(isFinish)
                 {
                     self.restoreAnimation(distince)
                 }
-        }
+        }) 
     }
 }
 
@@ -64,14 +64,14 @@ public class PbUIAnimatedPageControlIndicator:CALayer
 class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicator
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String) -> Bool
+    override class func needsDisplay(forKey key: String) -> Bool
     {
         if("factor" == key)
         {
             return true
         }
         
-        return super.needsDisplayForKey(key)
+        return super.needsDisplay(forKey: key)
     }
     
     //beginGooeyAnim:
@@ -84,7 +84,7 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
     {
         super.init()
     }
-    override init(layer: AnyObject)
+    override init(layer: Any)
     {
         super.init(layer:layer)
         
@@ -102,53 +102,53 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext)
+    override func draw(in ctx: CGContext)
     {
         //设置3.6 出来的弧度最像圆形
         let offset=self.currentRect.size.width/3.6
-        let rectCenter=CGPointMake(self.currentRect.origin.x + self.currentRect.size.width/2 , self.currentRect.origin.y + self.currentRect.size.height/2)
+        let rectCenter=CGPoint(x: self.currentRect.origin.x + self.currentRect.size.width/2 , y: self.currentRect.origin.y + self.currentRect.size.height/2)
         
         //8个控制点实际的偏移距离。 The real distance of 8 control points.
         let extra = (self.currentRect.size.width * 2 / 5) * self.factor
         
-        let pointA = CGPointMake(rectCenter.x,self.currentRect.origin.y + extra)
-        let pointB = CGPointMake(self.scrollDirection == PbUIAnimatedPageControlScrollDirection.Left ? rectCenter.x + self.currentRect.size.width/2 : rectCenter.x + self.currentRect.size.width/2 + extra*2 ,rectCenter.y)
-        let pointC = CGPointMake(rectCenter.x ,rectCenter.y + self.currentRect.size.height/2 - extra)
-        let pointD = CGPointMake(self.scrollDirection == PbUIAnimatedPageControlScrollDirection.Left ? self.currentRect.origin.x - extra*2 : self.currentRect.origin.x, rectCenter.y)
+        let pointA = CGPoint(x: rectCenter.x,y: self.currentRect.origin.y + extra)
+        let pointB = CGPoint(x: self.scrollDirection == PbUIAnimatedPageControlScrollDirection.left ? rectCenter.x + self.currentRect.size.width/2 : rectCenter.x + self.currentRect.size.width/2 + extra*2 ,y: rectCenter.y)
+        let pointC = CGPoint(x: rectCenter.x ,y: rectCenter.y + self.currentRect.size.height/2 - extra)
+        let pointD = CGPoint(x: self.scrollDirection == PbUIAnimatedPageControlScrollDirection.left ? self.currentRect.origin.x - extra*2 : self.currentRect.origin.x, y: rectCenter.y)
         
-        let c1 = CGPointMake(pointA.x + offset, pointA.y)
-        let c2 = CGPointMake(pointB.x, pointB.y - offset)
-        let c3 = CGPointMake(pointB.x, pointB.y + offset)
-        let c4 = CGPointMake(pointC.x + offset, pointC.y)
-        let c5 = CGPointMake(pointC.x - offset, pointC.y)
-        let c6 = CGPointMake(pointD.x, pointD.y + offset)
-        let c7 = CGPointMake(pointD.x, pointD.y - offset)
-        let c8 = CGPointMake(pointA.x - offset, pointA.y)
+        let c1 = CGPoint(x: pointA.x + offset, y: pointA.y)
+        let c2 = CGPoint(x: pointB.x, y: pointB.y - offset)
+        let c3 = CGPoint(x: pointB.x, y: pointB.y + offset)
+        let c4 = CGPoint(x: pointC.x + offset, y: pointC.y)
+        let c5 = CGPoint(x: pointC.x - offset, y: pointC.y)
+        let c6 = CGPoint(x: pointD.x, y: pointD.y + offset)
+        let c7 = CGPoint(x: pointD.x, y: pointD.y - offset)
+        let c8 = CGPoint(x: pointA.x - offset, y: pointA.y)
         
         // 更新界面
         let ovalPath = UIBezierPath()
-        ovalPath.moveToPoint(pointA)
-        ovalPath.addCurveToPoint(pointB, controlPoint1: c1, controlPoint2: c2)
-        ovalPath.addCurveToPoint(pointC, controlPoint1: c3, controlPoint2: c4)
-        ovalPath.addCurveToPoint(pointD, controlPoint1: c5, controlPoint2: c6)
-        ovalPath.addCurveToPoint(pointA, controlPoint1: c7, controlPoint2: c8)
-        ovalPath.closePath()
+        ovalPath.move(to: pointA)
+        ovalPath.addCurve(to: pointB, controlPoint1: c1, controlPoint2: c2)
+        ovalPath.addCurve(to: pointC, controlPoint1: c3, controlPoint2: c4)
+        ovalPath.addCurve(to: pointD, controlPoint1: c5, controlPoint2: c6)
+        ovalPath.addCurve(to: pointA, controlPoint1: c7, controlPoint2: c8)
+        ovalPath.close()
         
-        CGContextAddPath(ctx, ovalPath.CGPath) 
-        CGContextSetFillColorWithColor(ctx, self.indicatorColor.CGColor) 
-        CGContextFillPath(ctx) 
+        ctx.addPath(ovalPath.cgPath) 
+        ctx.setFillColor(self.indicatorColor.cgColor) 
+        ctx.fillPath() 
     }
     
     //animateIndicator:
-    override func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void
+    override func animateIndicator(_ scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void
     {
         if ((scrollView.contentOffset.x - self.lastContentOffset) >= 0 && (scrollView.contentOffset.x - self.lastContentOffset) <= (scrollView.frame.size.width)/2)
         {
-            self.scrollDirection = PbUIAnimatedPageControlScrollDirection.Left
+            self.scrollDirection = PbUIAnimatedPageControlScrollDirection.left
         }
         else if ((scrollView.contentOffset.x - self.lastContentOffset) <= 0 && (scrollView.contentOffset.x - self.lastContentOffset) >= -(scrollView.frame.size.width)/2)
         {
-            self.scrollDirection = PbUIAnimatedPageControlScrollDirection.Right
+            self.scrollDirection = PbUIAnimatedPageControlScrollDirection.right
         }
         
         if (!beginGooeyAnim)
@@ -160,37 +160,37 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
         
         if (originX - self.indicatorSize/2 <= 0)
         {
-            self.currentRect = CGRectMake(0, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize)
+            self.currentRect = CGRect(x: 0, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize)
         }
         else if ((originX - self.indicatorSize/2) >= self.frame.size.width - self.indicatorSize)
         {
-            self.currentRect = CGRectMake(self.frame.size.width - self.indicatorSize, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize)
+            self.currentRect = CGRect(x: self.frame.size.width - self.indicatorSize, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize)
         }
         else
         {
-            self.currentRect = CGRectMake(originX - self.indicatorSize/2, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize)
+            self.currentRect = CGRect(x: originX - self.indicatorSize/2, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize)
         }
         
         self.setNeedsDisplay()
     }
     
     //restoreAnimation:
-    override func restoreAnimation(distince:Float) -> Void
+    override func restoreAnimation(_ distince:Float) -> Void
     {
         let anim=CALayer.pbAnimation(createSpring:"factor", duration: 0.8, usingSpringWithDamping: 0.5, initialSpringVelocity: 3, fromValue: Float(0.5+distince*1.5),toValue:0)
         anim.delegate=self
         self.factor=0
-        self.addAnimation(anim,forKey:"restoreAnimation")
+        self.add(anim,forKey:"restoreAnimation")
     }
     
     //animationDidStart:
-    override func animationDidStart(anim: CAAnimation)
+    override func animationDidStart(_ anim: CAAnimation)
     {
         self.beginGooeyAnim=true
     }
     
     //animationDidStop:
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool)
+    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
     {
         if(flag)
         {
@@ -203,14 +203,14 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
 class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicator
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String) -> Bool
+    override class func needsDisplay(forKey key: String) -> Bool
     {
         if("index" == key)
         {
             return true
         }
         
-        return super.needsDisplayForKey(key)
+        return super.needsDisplay(forKey: key)
     }
     
     //index:
@@ -221,7 +221,7 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
     {
         super.init()
     }
-    override init(layer: AnyObject)
+    override init(layer: Any)
     {
         super.init(layer:layer)
         
@@ -238,28 +238,28 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext)
+    override func draw(in ctx: CGContext)
     {
         let rectPath=UIBezierPath(rect: self.currentRect)
         
-        let bounds = CGPathGetBoundingBox(rectPath.CGPath)
+        let bounds = rectPath.cgPath.boundingBox
         let radians = CGFloat(Double(self.index) * M_PI_2)
-        let center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))
-        var transform = CGAffineTransformIdentity
-        transform = CGAffineTransformTranslate(transform, center.x, center.y)
-        transform = CGAffineTransformRotate(transform,radians)
-        transform = CGAffineTransformTranslate(transform, -center.x, -center.y)
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        var transform = CGAffineTransform.identity
+        transform = transform.translatedBy(x: center.x, y: center.y)
+        transform = transform.rotated(by: radians)
+        transform = transform.translatedBy(x: -center.x, y: -center.y)
         
-        let path=CGPathCreateCopyByTransformingPath(rectPath.CGPath,&transform)
-        rectPath.CGPath=path!
+        let path=rectPath.cgPath.copy(using: &transform)
+        rectPath.cgPath=path!
         
-        CGContextAddPath(ctx, path)
-        CGContextSetFillColorWithColor(ctx, self.indicatorColor.CGColor)
-        CGContextFillPath(ctx)
+        ctx.addPath(path!)
+        ctx.setFillColor(self.indicatorColor.cgColor)
+        ctx.fillPath()
     }
     
     //animateIndicator:
-    override func animateIndicator(scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void
+    override func animateIndicator(_ scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void
     {
         let originX = (scrollView.contentOffset.x / scrollView.frame.size.width) * (pageControl.frame.size.width / (CGFloat(pageControl.pageCount)-1)) 
         
@@ -267,17 +267,17 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
         
         if (originX - self.indicatorSize/2 <= 0)
         {
-            self.currentRect = CGRectMake(0, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize) 
+            self.currentRect = CGRect(x: 0, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize) 
             
         }
         else if ((originX - self.indicatorSize/2) >= self.frame.size.width - self.indicatorSize)
         {
-            self.currentRect = CGRectMake(self.frame.size.width - self.indicatorSize, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize) 
+            self.currentRect = CGRect(x: self.frame.size.width - self.indicatorSize, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize) 
             
         }
         else
         {
-            self.currentRect = CGRectMake(originX - self.indicatorSize/2, self.frame.size.height/2-self.indicatorSize/2, self.indicatorSize, self.indicatorSize) 
+            self.currentRect = CGRect(x: originX - self.indicatorSize/2, y: self.frame.size.height/2-self.indicatorSize/2, width: self.indicatorSize, height: self.indicatorSize) 
         }
         
         self.setNeedsDisplay()
@@ -288,14 +288,14 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
 class PbUIAnimatedPageControlLine:CALayer
 {
     //needsDisplayForKey:
-    override class func needsDisplayForKey(key: String) -> Bool
+    override class func needsDisplay(forKey key: String) -> Bool
     {
         if("selectedLineLength" == key)
         {
             return true
         }
         
-        return super.needsDisplayForKey(key)
+        return super.needsDisplay(forKey: key)
     }
     
     //pageCount:page的个数
@@ -322,9 +322,9 @@ class PbUIAnimatedPageControlLine:CALayer
     var ballDiameter=10.0
     
     //unSelectedColor:未选中时的颜色
-    var unSelectedColor=UIColor.lightGrayColor()
+    var unSelectedColor=UIColor.lightGray
     //selectedColor:选中的颜色
-    var selectedColor=UIColor.redColor()
+    var selectedColor=UIColor.red
     
     //selectedLineLength:选中的长度
     var selectedLineLength=1.0
@@ -341,7 +341,7 @@ class PbUIAnimatedPageControlLine:CALayer
     {
         super.init()
     }
-    override init(layer: AnyObject)
+    override init(layer: Any)
     {
         super.init(layer:layer)
         
@@ -363,49 +363,49 @@ class PbUIAnimatedPageControlLine:CALayer
     }
     
     //drawInContext:重构绘制UI的方法
-    override func drawInContext(ctx: CGContext)
+    override func draw(in ctx: CGContext)
     {
         if(self.selectedPage <= self.pageCount){}
         if(self.selectedPage != 0){}
         
         if (self.pageCount == 1)
         {
-            let linePath = CGPathCreateMutable()
+            let linePath = CGMutablePath()
             CGPathMoveToPoint(linePath, nil, self.frame.size.width/2, self.frame.size.height/2)
-            let circleRect = CGRectMake(self.frame.size.width/2-CGFloat(self.ballDiameter/2),self.frame.size.height/2-CGFloat(self.ballDiameter/2),CGFloat(self.ballDiameter),CGFloat(self.ballDiameter))
+            let circleRect = CGRect(x: self.frame.size.width/2-CGFloat(self.ballDiameter/2),y: self.frame.size.height/2-CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
             CGPathAddEllipseInRect(linePath, nil, circleRect)
             
-            CGContextAddPath(ctx, linePath)
-            CGContextSetFillColorWithColor(ctx, self.selectedColor.CGColor)
-            CGContextFillPath(ctx)
+            ctx.addPath(linePath)
+            ctx.setFillColor(self.selectedColor.cgColor)
+            ctx.fillPath()
             
             return
         }
         
-        var linePath = CGPathCreateMutable()
+        var linePath = CGMutablePath()
         CGPathMoveToPoint(linePath, nil,CGFloat(self.ballDiameter/2),self.frame.size.height/2)
         
         //画默认颜色的背景线
-        CGPathAddRoundedRect(linePath, nil, CGRectMake(CGFloat(self.ballDiameter/2), self.frame.size.height/2 - CGFloat(self.lineHeight/2), self.frame.size.width - CGFloat(self.ballDiameter),CGFloat(self.lineHeight)), 0, 0)
+        linePath.__addRoundedRect(transform: nil, rect: CGRect(x: CGFloat(self.ballDiameter/2), y: self.frame.size.height/2 - CGFloat(self.lineHeight/2), width: self.frame.size.width - CGFloat(self.ballDiameter),height: CGFloat(self.lineHeight)), cornerWidth: 0, cornerHeight: 0)
         
         //画pageCount个小圆
         for i in 0 ..< self.pageCount
         {
-            let circleRect = CGRectMake(CGFloat(Double(i)*self.distince()), self.frame.size.height/2 - CGFloat(self.ballDiameter/2),CGFloat(self.ballDiameter),CGFloat(self.ballDiameter))
+            let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()), y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
             CGPathAddEllipseInRect(linePath, nil, circleRect)
         }
         
-        CGContextAddPath(ctx, linePath)
-        CGContextSetFillColorWithColor(ctx, self.unSelectedColor.CGColor)
-        CGContextFillPath(ctx)
+        ctx.addPath(linePath)
+        ctx.setFillColor(self.unSelectedColor.cgColor)
+        ctx.fillPath()
         
         if (self.shouldShowProgressLine == true)
         {
-            CGContextBeginPath(ctx)
-            linePath = CGPathCreateMutable()
+            ctx.beginPath()
+            linePath = CGMutablePath()
             
             //画带颜色的线
-            CGPathAddRoundedRect(linePath,nil,CGRectMake(CGFloat(self.ballDiameter/2),self.frame.size.height/2-CGFloat(self.lineHeight/2),CGFloat(self.selectedLineLength),CGFloat(self.lineHeight)), 0, 0)
+            linePath.__addRoundedRect(transform: nil,rect: CGRect(x: CGFloat(self.ballDiameter/2),y: self.frame.size.height/2-CGFloat(self.lineHeight/2),width: CGFloat(self.selectedLineLength),height: CGFloat(self.lineHeight)), cornerWidth: 0, cornerHeight: 0)
             
             //画pageCount个有色小圆
             for i in 0 ..< self.pageCount 
@@ -413,34 +413,34 @@ class PbUIAnimatedPageControlLine:CALayer
                 
                 if (Double(i)*self.distince() <= self.selectedLineLength+0.1)
                 {
-                    let circleRect = CGRectMake(CGFloat(Double(i)*self.distince()),self.frame.size.height/2 - CGFloat(self.ballDiameter/2),CGFloat(self.ballDiameter),CGFloat(self.ballDiameter))
+                    let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()),y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
                     CGPathAddEllipseInRect(linePath, nil, circleRect)
                 }
             }
             
-            CGContextAddPath(ctx, linePath)
-            CGContextSetFillColorWithColor(ctx, self.selectedColor.CGColor)
-            CGContextFillPath(ctx)
+            ctx.addPath(linePath)
+            ctx.setFillColor(self.selectedColor.cgColor)
+            ctx.fillPath()
             
         }
     }
     
     //直线动画接口:传入目标index作为参数
-    func animateSelectedLineToNewIndex(newIndex:Int)
+    func animateSelectedLineToNewIndex(_ newIndex:Int)
     {
         let newLineLength = Double(newIndex-1) * self.distince()
-        let anim = CALayer.pbAnimation(create:"selectedLineLength",duration: 0.2, fromValue: Float(self.selectedLineLength), toValue: Float(newLineLength))
+        let anim = CALayer.pbAnimation(create:"selectedLineLength",duration: 0.2, fromValue: Float(self.selectedLineLength) as AnyObject, toValue: Float(newLineLength) as AnyObject)
         anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
         
         self.selectedLineLength = newLineLength 
         anim.delegate = self 
-        self.addAnimation(anim, forKey:"lineAnimation")
+        self.add(anim, forKey:"lineAnimation")
         
         self.selectedPage = newIndex
     }
     
     //直线动画接口:传入绑定scrollView作为参数
-    func animateSelectedLineWithScrollView(scrollView:UIScrollView)
+    func animateSelectedLineWithScrollView(_ scrollView:UIScrollView)
     {
         if (scrollView.contentOffset.x <= 0)
         {
@@ -454,7 +454,7 @@ class PbUIAnimatedPageControlLine:CALayer
     }
     
     //animationDidStop:
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool)
+    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
     {
         if (flag)
         {
@@ -464,14 +464,14 @@ class PbUIAnimatedPageControlLine:CALayer
     }
     
     //distince
-    private func distince() -> Double
+    fileprivate func distince() -> Double
     {
         return (Double(self.frame.size.width)-self.ballDiameter)/Double(self.pageCount-1)
     }
 }
 
 //PbUIAnimatedPageControl:动画页码切换器
-public class PbUIAnimatedPageControl: UIView
+open class PbUIAnimatedPageControl: UIView
 {
     //pageCount:页码数量
     var pageCount:Int=0
@@ -479,9 +479,9 @@ public class PbUIAnimatedPageControl: UIView
     var selectedPage:Int=1
     
     //unSelectedColor:未选中时的颜色
-    var unSelectedColor=UIColor.lightGrayColor()
+    var unSelectedColor=UIColor.lightGray
     //selectedColor:选中的颜色
-    var selectedColor=UIColor.redColor()
+    var selectedColor=UIColor.red
     
     //shouldShowProgressLine:是否显示填充进度条
     var shouldShowProgressLine=true
@@ -491,23 +491,23 @@ public class PbUIAnimatedPageControl: UIView
     var swipeEnable=true
     
     //indicatorStyle:Indicator样式
-    var indicatorStyle=PbUIAnimatedPageControlIndicatorStyle.GooeyCircle
+    var indicatorStyle=PbUIAnimatedPageControlIndicatorStyle.gooeyCircle
     //indicatorSize:Indicator大小
     var indicatorSize:CGFloat=3.0
     //indicator:指示器
     var indicator:PbUIAnimatedPageControlIndicator!
     
     //didSelectIndexBlock:选中某个index的回调 DidSelecteSomeIndex Block
-    var didSelectIndexBlock:((index:Int)->Void)?
+    var didSelectIndexBlock:((_ index:Int)->Void)?
     
     //line:
-    private var line:PbUIAnimatedPageControlLine?
+    fileprivate var line:PbUIAnimatedPageControlLine?
     //gooeyCircle:
-    private var gooeyCircle:PbUIAnimatedPageControlIndicatorGooeyCircle?
+    fileprivate var gooeyCircle:PbUIAnimatedPageControlIndicatorGooeyCircle?
     //rotateRect:
-    private var rotateRect:PbUIAnimatedPageControlIndicatorRotateRect?
+    fileprivate var rotateRect:PbUIAnimatedPageControlIndicatorRotateRect?
     //lastIndex:
-    private var lastIndex=1
+    fileprivate var lastIndex=1
     
     //重构构造方法
     override public init(frame: CGRect)
@@ -528,7 +528,7 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //willMoveToSuperview:
-    override public func willMoveToSuperview(newSuperview: UIView?)
+    override open func willMove(toSuperview newSuperview: UIView?)
     {
         self.layer.addSublayer(self.pageControlLine())
         self.layer.insertSublayer(self.getIndicator(),above: self.pageControlLine())
@@ -542,7 +542,7 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //animateToIndex:Animate to index
-    public func animationToIndex(index:Int)
+    open func animationToIndex(_ index:Int)
     {
         let a=abs(self.line!.selectedLineLength-Double(index)*((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1)))
         let b=((Double(self.line!.frame.size.width)-self.line!.ballDiameter)/Double(self.line!.pageCount - 1))
@@ -552,19 +552,19 @@ public class PbUIAnimatedPageControl: UIView
         self.line?.animateSelectedLineToNewIndex(Int(index+1))
         
         //scrollview 滑动
-        self.bindScrollView?.setContentOffset(CGPointMake(self.bindScrollView!.frame.size.width * CGFloat(index), 0), animated: true)
+        self.bindScrollView?.setContentOffset(CGPoint(x: self.bindScrollView!.frame.size.width * CGFloat(index), y: 0), animated: true)
         
         //恢复动画
         self.indicator.restoreAnimation(Float(distince/Double(self.pageCount)),after: 0.2)
     }
     
     //tapAction:
-    public func tapAction(recognizer:UITapGestureRecognizer)
+    open func tapAction(_ recognizer:UITapGestureRecognizer)
     {
         if(self.bindScrollView != nil)
         {
-            let location = recognizer.locationInView(self)
-            if (CGRectContainsPoint(self.line!.frame, location))
+            let location = recognizer.location(in: self)
+            if (self.line!.frame.contains(location))
             {
                 let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
                 var index =  Double(location.x) / ballDistance
@@ -581,29 +581,29 @@ public class PbUIAnimatedPageControl: UIView
                 self.line!.animateSelectedLineToNewIndex(Int(index+1))
                 
                 //scrollview 滑动
-                self.bindScrollView!.setContentOffset(CGPointMake(self.bindScrollView!.frame.size.width*CGFloat(index),0), animated:true)
+                self.bindScrollView!.setContentOffset(CGPoint(x: self.bindScrollView!.frame.size.width*CGFloat(index),y: 0), animated:true)
                 
                 //恢复动画
                 self.indicator.restoreAnimation(Float(distince/Double(self.pageCount)), after:0.2)
                 
                 if(self.didSelectIndexBlock != nil)
                 {
-                    self.didSelectIndexBlock!(index:Int(index+1))
+                    self.didSelectIndexBlock!(Int(index+1))
                 }
             }
         }
     }
     
     //panAction:
-    public func panAction(recognizer:UIPanGestureRecognizer)
+    open func panAction(_ recognizer:UIPanGestureRecognizer)
     {
         if (!self.swipeEnable)
         {
             return
         }
         
-        let location=recognizer.locationInView(self)
-        if (CGRectContainsPoint(self.line!.frame, location))
+        let location=recognizer.location(in: self)
+        if (self.line!.frame.contains(location))
         {
             let ballDistance = Double(self.frame.size.width) / Double(self.pageCount - 1)
             var index:Int =  Int(Double(location.x) / ballDistance)
@@ -621,65 +621,65 @@ public class PbUIAnimatedPageControl: UIView
     }
     
     //getLine:
-    private func getLine() -> PbUIAnimatedPageControlLine
+    fileprivate func getLine() -> PbUIAnimatedPageControlLine
     {
         if (self.line == nil)
         {
             self.line = PbUIAnimatedPageControlLine()
-            self.line?.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+            self.line?.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
             self.line?.pageCount = self.pageCount
             self.line?.selectedPage = 1
             self.line?.shouldShowProgressLine = self.shouldShowProgressLine
             self.line?.unSelectedColor = self.unSelectedColor
             self.line?.selectedColor = self.selectedColor
             self.line?.bindScrollView = self.bindScrollView
-            self.line?.contentsScale = UIScreen.mainScreen().scale
+            self.line?.contentsScale = UIScreen.main.scale
         }
         
         return self.line!
     }
     
     //getGooeyCircle:
-    private func getGooeyCircle() -> PbUIAnimatedPageControlIndicatorGooeyCircle
+    fileprivate func getGooeyCircle() -> PbUIAnimatedPageControlIndicatorGooeyCircle
     {
         if (self.gooeyCircle == nil)
         {
             self.gooeyCircle=PbUIAnimatedPageControlIndicatorGooeyCircle()
             self.gooeyCircle?.indicatorColor=self.selectedColor
-            self.gooeyCircle?.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+            self.gooeyCircle?.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
             self.gooeyCircle?.indicatorSize  = self.indicatorSize
-            self.gooeyCircle?.contentsScale = UIScreen.mainScreen().scale
+            self.gooeyCircle?.contentsScale = UIScreen.main.scale
         }
         
         return self.gooeyCircle!
     }
     
     //getRotateRect:
-    private func getRotateRect() -> PbUIAnimatedPageControlIndicatorRotateRect
+    fileprivate func getRotateRect() -> PbUIAnimatedPageControlIndicatorRotateRect
     {
         if (self.rotateRect == nil)
         {
             self.rotateRect = PbUIAnimatedPageControlIndicatorRotateRect()
             self.rotateRect?.indicatorColor = self.selectedColor
-            self.rotateRect?.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+            self.rotateRect?.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
             self.rotateRect?.indicatorSize  = self.indicatorSize
-            self.rotateRect?.contentsScale = UIScreen.mainScreen().scale
+            self.rotateRect?.contentsScale = UIScreen.main.scale
         }
         
         return self.rotateRect!
     }
     
     //getIndicator:
-    private func getIndicator() -> PbUIAnimatedPageControlIndicator
+    fileprivate func getIndicator() -> PbUIAnimatedPageControlIndicator
     {
         if (self.indicator == nil)
         {
             switch (self.indicatorStyle)
             {
-                case .GooeyCircle:
+                case .gooeyCircle:
                     self.indicator = self.getGooeyCircle()
                     break
-                case .RotateRect:
+                case .rotateRect:
                     self.indicator = self.getRotateRect()
                     break
             }

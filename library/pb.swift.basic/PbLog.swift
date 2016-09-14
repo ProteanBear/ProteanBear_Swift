@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class PbLog
+open class PbLog
 {
     static let isDebug=true
     
-    public class func debug(infor:String)
+    open class func debug(_ infor:String)
     {
         if(isDebug)
         {
@@ -20,7 +20,7 @@ public class PbLog
         }
     }
     
-    public class func error(error:String)
+    open class func error(_ error:String)
     {
         print("[ERROR]"+error)
     }

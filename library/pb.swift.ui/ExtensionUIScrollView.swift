@@ -12,20 +12,20 @@ import UIKit
 extension UIScrollView
 {
     //pbAddUIRefreshViewToHeader:增加顶部下拉刷新视图
-    public func pbAddUIRefreshViewToHeader(callback:(() -> Void)!)
+    public func pbAddUIRefreshViewToHeader(_ callback:(() -> Void)!)
     {
-        let headerView=PbUIRefreshHeaderView(frame:CGRectMake(0,0,PbSystem.screenCurrentWidth(),CGFloat(PbSystem.sizeUpdateViewHeight)))
+        let headerView=PbUIRefreshHeaderView(frame:CGRect(x: 0,y: 0,width: PbSystem.screenCurrentWidth(),height: CGFloat(PbSystem.sizeUpdateViewHeight)))
         headerView.beginRefreshingCallback=callback
-        headerView.state=PbUIRefreshState.Normal
+        headerView.state=PbUIRefreshState.normal
         self.addSubview(headerView)
     }
     
     //pbAddUIRefreshViewToHeader:增加顶部下拉刷新视图
-    public func pbAddUIRefreshViewToHeader(callback:(() -> Void)!,delegate:PbUIRefreshConfigProtocol)
+    public func pbAddUIRefreshViewToHeader(_ callback:(() -> Void)!,delegate:PbUIRefreshConfigProtocol)
     {
-        let headerView=PbUIRefreshHeaderView(frame:CGRectMake(0, 0,PbSystem.screenCurrentWidth(),CGFloat(PbSystem.sizeUpdateViewHeight)),config:delegate)
+        let headerView=PbUIRefreshHeaderView(frame:CGRect(x: 0, y: 0,width: PbSystem.screenCurrentWidth(),height: CGFloat(PbSystem.sizeUpdateViewHeight)),config:delegate)
         headerView.beginRefreshingCallback=callback
-        headerView.state=PbUIRefreshState.Normal
+        headerView.state=PbUIRefreshState.normal
         self.addSubview(headerView)
     }
     
@@ -66,13 +66,13 @@ extension UIScrollView
     }
     
     //pbUIRefreshHeaderSetUpdateTime:停止载入
-    public func pbUIRefreshHeaderSetUpdateTime(date:NSDate)
+    public func pbUIRefreshHeaderSetUpdateTime(_ date:Date)
     {
         for object : AnyObject in self.subviews
         {
             if object is PbUIRefreshHeaderView
             {
-                (object as! PbUIRefreshHeaderView).arrowView.hidden=false
+                (object as! PbUIRefreshHeaderView).arrowView.isHidden=false
                 (object as! PbUIRefreshHeaderView).lastUpdateTime=date
                 (object as! PbUIRefreshHeaderView).updateTimeLabel?.text=PbSystem.stringFromDate(date, format: "yyyy年MM月dd日 HH:mm")
             }

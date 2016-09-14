@@ -9,11 +9,11 @@
 
 import Foundation
 
-public class PbDataUserController:NSObject
+open class PbDataUserController:NSObject
 {
     /*-----------------------开始：静态方法，实现单例模式*/
     
-    public class var getInstance:PbDataUserController
+    open class var getInstance:PbDataUserController
     {
         return Inner.instance;
     }
@@ -29,69 +29,69 @@ public class PbDataUserController:NSObject
     /*isFirstLaunch:
      *  返回用户是否第一次打开应用
      */
-    public func isFirstLaunch() -> Bool
+    open func isFirstLaunch() -> Bool
     {
-        return self.userDefaults.boolForKey(PbDataUserController.keyFirstLaunch)
+        return self.userDefaults.bool(forKey: PbDataUserController.keyFirstLaunch)
     }
     
     /*saveUserData
      *  保存用户信息
      */
-    public func saveUserData()
+    open func saveUserData()
     {
         self.userData?.setValue(self.userFavorite,forKey:"userFavorite")
-        self.userDefaults.setObject(self.userData, forKey: PbDataUserController.keyUserData)
+        self.userDefaults.set(self.userData, forKey: PbDataUserController.keyUserData)
         self.userDefaults.synchronize()
     }
     
     /*isFavorite:
      *  是否已经收藏
      */
-    public func isFavorite(id:String) ->Bool
+    open func isFavorite(_ id:String) ->Bool
     {
-        return self.userFavorite?.valueForKey(id) != nil
+        return self.userFavorite?.value(forKey: id) != nil
     }
     
     /*addFavorite:
      *  增加收藏
      */
-    public func addFavorite(data:AnyObject,id:String)
+    open func addFavorite(_ data:AnyObject,id:String)
     {
-        self.userFavorite?.setObject(data, forKey: id)
+        self.userFavorite?.setObject(data, forKey: id as NSCopying)
         self.saveUserData()
     }
     
     /*removeFavorite:
      *  移除收藏
      */
-    public func removeFavorite(id:String)
+    open func removeFavorite(_ id:String)
     {
-        self.userFavorite?.removeObjectForKey(id)
+        self.userFavorite?.removeObject(forKey: id)
         self.saveUserData()
     }
-    public func removeFavoritesWithArray(idArray:NSArray)
+    open func removeFavoritesWithArray(_ idArray:NSArray)
     {
-        self.userFavorite?.removeObjectsForKeys(idArray as [AnyObject])
+        self.userFavorite?.removeObjects(forKeys: idArray as [AnyObject])
         self.saveUserData()
     }
-    public func removeFavorites(ids:[String])
+    open func removeFavorites(_ ids:[String])
     {
-        self.userFavorite?.removeObjectsForKeys(ids)
+        self.userFavorite?.removeObjects(forKeys: ids)
         self.saveUserData()
     }
     
     /*contains:
      *  检查键是否存在
      */
-    public func contains(forKey:String) ->Bool
+    open func contains(_ forKey:String) ->Bool
     {
-        return self.userData!.valueForKey(forKey) != nil
+        return self.userData!.value(forKey: forKey) != nil
     }
     
     /*setValue:
      *  设置或者增加键值
      */
-    public func setObject(value: AnyObject?, forKey key: String)
+    open func setObject(_ value: AnyObject?, forKey key: String)
     {
         self.userData?.setValue(value,forKey:key)
         self.saveUserData()
@@ -100,17 +100,17 @@ public class PbDataUserController:NSObject
     /*valueForKey:
      *  设置或者增加键值
      */
-    public func valueForKey(forKey key: String) -> AnyObject?
+    open func valueForKey(forKey key: String) -> AnyObject?
     {
-        return self.userData?.valueForKey(key)
+        return self.userData?.value(forKey: key) as AnyObject?
     }
     
     /*removeValueForKey:
      *  删除键值
      */
-    public func removeValueForKey(forKey key: String)
+    open func removeValueForKey(forKey key: String)
     {
-        self.userData?.removeObjectForKey(key)
+        self.userData?.removeObject(forKey: key)
         self.saveUserData()
     }
     /*-----------------------结束：公共方法*/
@@ -118,48 +118,48 @@ public class PbDataUserController:NSObject
     /*-----------------------开始：声明属性*/
     
     //静态属性
-    private static let keyUserData="userData"
-    public static let keyEverLaunch="everLaunched"
-    public static let keyFirstLaunch="firstLaunch"
+    fileprivate static let keyUserData="userData"
+    open static let keyEverLaunch="everLaunched"
+    open static let keyFirstLaunch="firstLaunch"
     
     //调试定位信息
-    private let logPre="PbDataUserController:";
+    fileprivate let logPre="PbDataUserController:";
     
     //用户设置信息
-    private let userDefaults=NSUserDefaults.standardUserDefaults()
+    fileprivate let userDefaults=UserDefaults.standard
     //用户数据
-    private var userData:NSMutableDictionary?
-    public var userId:String?{
+    fileprivate var userData:NSMutableDictionary?
+    open var userId:String?{
         didSet{
             self.userData?.setValue(self.userId, forKey: "userId")
         }
     }
-    public var userName:String?{
+    open var userName:String?{
         didSet{
             self.userData?.setValue(self.userName, forKey: "userName")
         }
     }
-    public var userPass:String?{
+    open var userPass:String?{
         didSet{
             self.userData?.setValue(self.userPass, forKey: "userPass")
         }
     }
-    public var userHead:String?{
+    open var userHead:String?{
         didSet{
             self.userData?.setValue(self.userHead, forKey: "userHead")
         }
     }
-    public var userFontSize:Int?{
+    open var userFontSize:Int?{
         didSet{
             self.userData?.setValue(self.userFontSize, forKey: "userFontSize")
         }
     }
-    public var userLineHeight:Float?{
+    open var userLineHeight:Float?{
         didSet{
             self.userData?.setValue(self.userLineHeight, forKey: "userLineHeight")
         }
     }
-    public var userFavorite:NSMutableDictionary?
+    open var userFavorite:NSMutableDictionary?
     
     /*-----------------------结束：声明属性*/
     
@@ -168,7 +168,7 @@ public class PbDataUserController:NSObject
     /*initWithPlistName:
      *  使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
      */
-    public func initWithPlistName(plistName:String)
+    open func initWithPlistName(_ plistName:String)
     {
         self.reloadByPlistName(plistName)
     }
@@ -176,7 +176,7 @@ public class PbDataUserController:NSObject
     /*reloadByPlistName:
      *  重新载入配置文件并重新初始化内部处理器对象
      */
-    public func reloadByPlistName(plistName:String)
+    open func reloadByPlistName(_ plistName:String)
     {
         /*载入plist配置文件*/
         self.loadPlist(plistName)
@@ -188,13 +188,13 @@ public class PbDataUserController:NSObject
     /*loadPlist:
      *  载入指定的PList文件
      */
-    private func loadPlist(plistName:String)
+    fileprivate func loadPlist(_ plistName:String)
     {
         //调试信息前缀
         let logPre=self.logPre+"loadPlist:"
         
         //如果用户设置存在，直接读取用户设置
-        if let data=self.userDefaults.dictionaryForKey(PbDataUserController.keyUserData)
+        if let data=self.userDefaults.dictionary(forKey: PbDataUserController.keyUserData)
         {
             PbLog.debug(logPre+":开始读取用户设置(UserDefaults)")
             self.userData=NSMutableDictionary(dictionary:data)
@@ -203,7 +203,7 @@ public class PbDataUserController:NSObject
         else
         {
             //查找Plist对应的资源路径,载入资源
-            if let path:String?=NSBundle.mainBundle().pathForResource(plistName,ofType:"plist")
+            if let path:String?=Bundle.main.path(forResource: plistName,ofType:"plist")
             {
                 PbLog.debug(logPre+"开始读取Plist资源（Path:"+path!+"）")
                 self.userData=NSMutableDictionary(contentsOfFile:path!)
@@ -216,40 +216,40 @@ public class PbDataUserController:NSObject
     /*readConfig:
     *  读取相应的配置信息
     */
-    private func readConfig()
+    fileprivate func readConfig()
     {
         //调试信息前缀
         let logPre=self.logPre+"readConfig:"
         PbLog.debug(logPre+"开始读取用户数据信息")
         
         //用户标识
-        let userId=self.userData?.objectForKey("userId")?.description
+        let userId=(self.userData?.object(forKey: "userId") as AnyObject).description
         self.userId=(userId==nil || userId=="") ? "":userId
         PbLog.debug(logPre+"userId:"+self.userId!)
         //用户昵称
-        let userName=self.userData?.objectForKey("userName")?.description
+        let userName=(self.userData?.object(forKey: "userName") as AnyObject).description
         self.userName=(userName==nil || userName=="") ? "":userName
         PbLog.debug(logPre+"userName:"+self.userName!)
         //用户密钥
-        let userPass=self.userData?.objectForKey("userPass")?.description
+        let userPass=(self.userData?.object(forKey: "userPass") as AnyObject).description
         self.userPass=(userPass==nil || userPass=="") ? "":userPass
         PbLog.debug(logPre+"userPass:"+self.userPass!)
         //用户头像
-        let userHead=self.userData?.objectForKey("userHead")?.description
+        let userHead=(self.userData?.object(forKey: "userHead") as AnyObject).description
         self.userHead=(userHead==nil || userHead=="") ? "":userHead
         PbLog.debug(logPre+"userHead:"+self.userHead!)
         
         //显示字体
-        let userFontSize=self.userData?.objectForKey("userFontSize")?.integerValue
+        let userFontSize=(self.userData?.object(forKey: "userFontSize")? as AnyObject).intValue
         self.userFontSize=(userFontSize==nil) ? 16:userFontSize
         PbLog.debug(logPre+"userFontSize:"+self.userFontSize!.description)
         //显示行距
-        let userLineHeight=self.userData?.objectForKey("userLineHeight")?.floatValue
+        let userLineHeight=(self.userData?.object(forKey: "userLineHeight") as AnyObject).floatValue
         self.userLineHeight=(userLineHeight==nil) ? 1.4:userLineHeight
         PbLog.debug(logPre+"userLineHeight:"+self.userLineHeight!.description)
         
         //用户收藏
-        if let favorite=self.userData?.objectForKey("userFavorite")
+        if let favorite=self.userData?.object(forKey: "userFavorite")
         {
             self.userFavorite=NSMutableDictionary(dictionary:(favorite as! NSDictionary))
         }
@@ -259,20 +259,20 @@ public class PbDataUserController:NSObject
         }
         
         //当用户设置不存在时同步数据到用户设置中
-        if(self.userDefaults.dictionaryForKey(PbDataUserController.keyUserData) == nil)
+        if(self.userDefaults.dictionary(forKey: PbDataUserController.keyUserData) == nil)
         {
             self.saveUserData()
         }
         
         //处理用户是否为第一次打开应用
-        if(!self.userDefaults.boolForKey(PbDataUserController.keyEverLaunch))
+        if(!self.userDefaults.bool(forKey: PbDataUserController.keyEverLaunch))
         {
-            self.userDefaults.setBool(true, forKey:PbDataUserController.keyEverLaunch)
-            self.userDefaults.setBool(true, forKey:PbDataUserController.keyFirstLaunch)
+            self.userDefaults.set(true, forKey:PbDataUserController.keyEverLaunch)
+            self.userDefaults.set(true, forKey:PbDataUserController.keyFirstLaunch)
         }
         else
         {
-            self.userDefaults.setBool(false, forKey:PbDataUserController.keyFirstLaunch)
+            self.userDefaults.set(false, forKey:PbDataUserController.keyFirstLaunch)
         }
         
         PbLog.debug(logPre+"结束配置信息读取")

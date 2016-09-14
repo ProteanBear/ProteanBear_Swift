@@ -11,14 +11,14 @@ import Foundation
 public protocol PbDataRequester
 {
     //request:发送请求，并返回数据
-    mutating func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
+    mutating func request(_ address:String,data:NSDictionary,callback:(_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     
     //request:发送请求上传资源数据，并返回数据
-    mutating func request(address:String,data:NSDictionary,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void,isMultipart:Bool)
+    mutating func request(_ address:String,data:NSDictionary,callback:(_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void,isMultipart:Bool)
     
     //requestForResource:发送请求，获取资源数据
-    mutating func requestForResource(address:String,callback:(data:NSData!,response:AnyObject!,error:NSError!) -> Void)
+    mutating func requestForResource(_ address:String,callback:(_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     
     //paramsString:获取当前请求参数的字符串格式
-    mutating func paramString(params:NSDictionary?)->String
+    mutating func paramString(_ params:NSDictionary?)->String
 }

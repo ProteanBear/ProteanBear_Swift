@@ -11,7 +11,7 @@ import UIKit
 
 public enum PbUIViewControllerErrorType:Int
 {
-    case NetNotConnected,NetFailed,NetError,ServerError
+    case netNotConnected,netFailed,netError,serverError
 }
 
 public enum PbUIViewType:Int
@@ -28,31 +28,31 @@ public protocol PbUIActivityIndicator
 public protocol PbUIViewControllerProtocol
 {
     //pbDoInitForDataLoad:数据适配器初始化时调用
-    func pbDoInitForDataLoad(delegate:PbUIViewControllerProtocol?)
+    func pbDoInitForDataLoad(_ delegate:PbUIViewControllerProtocol?)
     //pbKeyForDataLoad:返回当前数据访问使用的链接标识
     func pbKeyForDataLoad() -> String?
     //pbParamsForDataLoad:返回当前数据访问使用的参数
-    func pbParamsForDataLoad(updateMode:PbDataUpdateMode) -> NSMutableDictionary?
+    func pbParamsForDataLoad(_ updateMode:PbDataUpdateMode) -> NSMutableDictionary?
     //pbPageKeyForDataLoad:返回当前数据访问使用的页码参数名称
     func pbPageKeyForDataLoad() -> String
     //pbPropertyForDataLoad:设置数据请求回执附带属性
-    func pbPropertyForDataLoad(updateMode:PbDataUpdateMode) -> NSDictionary?
+    func pbPropertyForDataLoad(_ updateMode:PbDataUpdateMode) -> NSDictionary?
     //pbWillRequestForDataLoad:开始请求前处理
-    func pbWillRequestForDataLoad(updateMode:PbDataUpdateMode)
+    func pbWillRequestForDataLoad(_ updateMode:PbDataUpdateMode)
     //pbErrorForDataLoad:出现访问错误时调用
-    func pbErrorForDataLoad(type:PbUIViewControllerErrorType,error:String)
+    func pbErrorForDataLoad(_ type:PbUIViewControllerErrorType,error:String)
     //pbResolveFromResponse:解析处理返回的数据
-    func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
+    func pbResolveFromResponse(_ response:NSDictionary) -> AnyObject?
     //pbResolveFromResponse:解析处理返回的数据
-    func pbResolveFromResponse(response:NSDictionary,updateMode:PbDataUpdateMode) -> AnyObject?
+    func pbResolveFromResponse(_ response:NSDictionary,updateMode:PbDataUpdateMode) -> AnyObject?
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
-    func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    func pbDoUpdateForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     //pbDoInsertForDataLoad:执行增量类相关返回后的处理
-    func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    func pbDoInsertForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     //pbDoUIDisplayForDataLoad:执行相关返回后的视图更新处理
-    func pbDoUIDisplayForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    func pbDoUIDisplayForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     //pbDoEndForDataLoad:执行数据载入结束后的处理
-    func pbDoEndForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    func pbDoEndForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     //pbAutoUpdateAfterFirstLoad:初次载入后是否立即更新
     func pbAutoUpdateAfterFirstLoad() -> Bool
     //pbSupportActivityIndicator:是否支持载入显示器
@@ -80,22 +80,22 @@ public protocol PbUITableViewControllerProtocol:PbUIViewControllerProtocol
     func pbSupportFooterLoadColor() -> UIColor?
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
+    func pbResolveDataInIndexPath(_ indexPath:IndexPath) -> AnyObject?
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
+    func pbIdentifierForTableView(_ indexPath:IndexPath,data:AnyObject?) -> String
     
     //pbNibNameForTableView:返回指定位置单元格使用的资源文件
-    func pbNibNameForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String?
+    func pbNibNameForTableView(_ indexPath:IndexPath,data:AnyObject?) -> String?
     
     //pbNibIndexForTableView:返回指定位置单元格使用的资源文件
-    func pbNibIndexForTableView(indexPath:NSIndexPath,data:AnyObject?) -> Int
+    func pbNibIndexForTableView(_ indexPath:IndexPath,data:AnyObject?) -> Int
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
+    func pbInitCellForTableView(_ indexPath:IndexPath,data:AnyObject?) -> AnyObject?
     
     //pbSetDataForTableView:设置表格数据显示
-    func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    func pbSetDataForTableView(_ cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:IndexPath) -> AnyObject
 }
 
 public protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
@@ -116,22 +116,22 @@ public protocol PbUICollectionViewControllerProtocol:PbUIViewControllerProtocol
     func pbSupportFooterLoadColor() -> UIColor?
     
     //pbResolveDataInIndexPath:获取指定单元格位置的数据
-    func pbResolveDataInIndexPath(indexPath:NSIndexPath) -> AnyObject?
+    func pbResolveDataInIndexPath(_ indexPath:IndexPath) -> AnyObject?
     
     //pbIdentifierForCollectionView:返回指定位置的单元格标识
-    func pbIdentifierForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String
+    func pbIdentifierForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> String
     
     //pbNibNameForCollectionView:返回指定位置单元格使用的资源文件
-    func pbNibNameForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> String?
+    func pbNibNameForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> String?
     
     //pbCellClassForCollectionView:返回指定位置单元格的类
-    func pbCellClassForCollectionView(indexPath:NSIndexPath,data:AnyObject?) -> AnyClass?
+    func pbCellClassForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> AnyClass?
     
     //pbSetDataForCollectionView:设置网格数据显示
-    func pbSetDataForCollectionView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    func pbSetDataForCollectionView(_ cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:IndexPath) -> AnyObject
 }
 
-public class PbDataAdapter
+open class PbDataAdapter
 {
     //delegate:数据处理方法绑定委托
     var delegate:PbUIViewControllerProtocol?
@@ -140,11 +140,11 @@ public class PbDataAdapter
     //pageNum:记录当前的列表访问页码
     lazy var pageNum=1
     //nextIsNull:下一页是否为空
-    public lazy var nextIsNull=false
+    open lazy var nextIsNull=false
     //isInitLoad:是否初始化载入
-    public lazy var isInitLoad=true
+    open lazy var isInitLoad=true
     //isDataLoading:是否在数据载入中
-    public lazy var isDataLoading=false
+    open lazy var isDataLoading=false
     
     //init:初始化方法
     public init(delegate:PbUIViewControllerProtocol?)
@@ -157,30 +157,30 @@ public class PbDataAdapter
     }
     
     //loadData:加载网络数据
-    public func loadData(updateMode:PbDataUpdateMode)
+    open func loadData(_ updateMode:PbDataUpdateMode)
     {
         if(self.delegate == nil){return}
         
         //判断获取模式
-        var getMode=PbDataGetMode.FromLocalOrNet
+        var getMode=PbDataGetMode.fromLocalOrNet
         var toPage=self.pageNum
-        if(updateMode == PbDataUpdateMode.First)
+        if(updateMode == PbDataUpdateMode.first)
         {
             toPage=1
-            getMode=PbDataGetMode.FromLocal
+            getMode=PbDataGetMode.fromLocal
             self.nextIsNull=false
             self.isInitLoad=true
         }
-        else if(updateMode == PbDataUpdateMode.Update)
+        else if(updateMode == PbDataUpdateMode.update)
         {
             toPage=1
-            getMode=PbDataGetMode.FromNet
+            getMode=PbDataGetMode.fromNet
             self.nextIsNull=false
         }
-        else if(updateMode == PbDataUpdateMode.NextPage)
+        else if(updateMode == PbDataUpdateMode.nextPage)
         {
             toPage += 1
-            getMode=PbDataGetMode.FromLocalOrNet
+            getMode=PbDataGetMode.fromLocalOrNet
         }
         else
         {
@@ -191,7 +191,7 @@ public class PbDataAdapter
         if let key = self.delegate!.pbKeyForDataLoad()
         {
             //如果为第一次载入，显示载入指示器
-            if(updateMode == PbDataUpdateMode.First)
+            if(updateMode == PbDataUpdateMode.first)
             {
                 self.indicator?.startAnimating()
             }
@@ -204,7 +204,7 @@ public class PbDataAdapter
             var params=self.delegate!.pbParamsForDataLoad(updateMode)
             params=(params != nil) ? params : NSMutableDictionary()
             //增加页码参数
-            params?.setObject(toPage,forKey:self.delegate!.pbPageKeyForDataLoad())
+            params?.setObject(toPage,forKey:self.delegate!.pbPageKeyForDataLoad() as NSCopying)
             //回执附带属性
             let property=self.delegate!.pbPropertyForDataLoad(updateMode)
             
@@ -218,12 +218,12 @@ public class PbDataAdapter
                 if(error != nil)
                 {
                     PbLog.error(logPre+error!.description)
-                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.NetError, error: error!.description)
+                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netError, error: error!.description)
                     return
                 }
                 
                 //解析控制器返回结果
-                var conRes=data.objectForKey(PbDataAppController.KEY_RESPONSE) as! Dictionary<String,String>
+                var conRes=data.object(forKey: PbDataAppController.KEY_RESPONSE) as! Dictionary<String,String>
                 let netStatus=conRes[PbDataAppController.KEY_NETWORK]!
                 let netSuccess=NSString(string:conRes[PbDataAppController.KEY_SUCCESS]!).boolValue
                 
@@ -233,12 +233,12 @@ public class PbDataAdapter
                     if(PbDataAppController.getInstance.isNetworkConnected(netStatus))
                     {
                         PbLog.error(logPre+"未连接网络")
-                        self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.NetNotConnected, error:"未连接网络")
+                        self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netNotConnected, error:"未连接网络")
                         return
                     }
                     
                     PbLog.error(logPre+"访问失败")
-                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.NetFailed, error:"访问失败")
+                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netFailed, error:"访问失败")
                     return
                 }
                 
@@ -251,10 +251,10 @@ public class PbDataAdapter
                 if(response == nil)
                 {
                     PbLog.error(logPre+"返回数据为空")
-                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.NetFailed, error:"返回数据为空")
+                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netFailed, error:"返回数据为空")
                 }
                 //非增量获取数据处理
-                if(updateMode != PbDataUpdateMode.NextPage)
+                if(updateMode != PbDataUpdateMode.nextPage)
                 {
                     self.delegate!.pbDoUpdateForDataLoad(response,updateMode:updateMode,property:property)
                     self.pageNum=1
@@ -270,9 +270,9 @@ public class PbDataAdapter
                 self.delegate!.pbDoUIDisplayForDataLoad(response, updateMode: updateMode,property:property)
                 
                 //初次载入后自动更新
-                if(updateMode==PbDataUpdateMode.First&&self.delegate!.pbAutoUpdateAfterFirstLoad()&&PbDataAppController.getInstance.isNetworkConnected())
+                if(updateMode==PbDataUpdateMode.first&&self.delegate!.pbAutoUpdateAfterFirstLoad()&&PbDataAppController.getInstance.isNetworkConnected())
                 {
-                    self.loadData(PbDataUpdateMode.Update)
+                    self.loadData(PbDataUpdateMode.update)
                 }
                 
                 //执行数据载入结束处理方法

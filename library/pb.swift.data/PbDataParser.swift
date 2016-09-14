@@ -11,5 +11,5 @@ import Foundation
 public protocol PbDataParser
 {
     //dictionaryByData:通过数据获取数据字典对象
-    mutating func dictionaryByData(data:NSData?) -> NSMutableDictionary?
+    mutating func dictionaryByData(_ data:Data?) -> NSMutableDictionary?
 }

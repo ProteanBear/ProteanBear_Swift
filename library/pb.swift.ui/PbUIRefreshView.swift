@@ -12,13 +12,13 @@ import UIKit
 //PbUIRefreshState:刷新状态
 public enum PbUIRefreshState:Int
 {
-    case Pulling,Normal,Refreshing,WillRefreshing
+    case pulling,normal,refreshing,willRefreshing
 }
 
 //PbUIRefreshPosition:刷新位置
 public enum PbUIRefreshPosition:Int
 {
-    case Header,Footer
+    case header,footer
 }
 
 //PbUIRefreshConfigProtocol:对刷新控件进行配置
@@ -33,47 +33,47 @@ public protocol PbUIRefreshConfigProtocol
 }
 
 //PbUIArrowView:箭头视图
-public class PbUIArrowView:UIView
+open class PbUIArrowView:UIView
 {
     //init:初始化
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        self.backgroundColor=UIColor.clearColor()
+        self.backgroundColor=UIColor.clear
     }
     required public init?(coder aDecoder: NSCoder)
     {
         super.init(coder:aDecoder)
-        self.backgroundColor=UIColor.clearColor()
+        self.backgroundColor=UIColor.clear
     }
     
     //绘制内容
-    override public func drawRect(rect: CGRect)
+    override open func draw(_ rect: CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
         let offset:CGFloat=4
         
-        CGContextSetLineWidth(context,2.0)
-        CGContextSetStrokeColorWithColor(context,self.tintColor.CGColor)
+        context?.setLineWidth(2.0)
+        context?.setStrokeColor(self.tintColor.cgColor)
         
-        CGContextMoveToPoint(context,CGRectGetMidX(self.bounds),offset)
-        CGContextAddLineToPoint(context,CGRectGetMidX(self.bounds),CGRectGetHeight(self.bounds)-offset*2)
+        context?.move(to: CGPoint(x: self.bounds.midX, y: offset))
+        context?.addLine(to: CGPoint(x: self.bounds.midX, y: self.bounds.height-offset*2))
         
-        let offsetX=(CGRectGetWidth(self.bounds)-offset*2)/4
-        let offsetY=(CGRectGetHeight(self.bounds)-offset*2)/3
-        CGContextAddLineToPoint(context,CGRectGetMidX(self.bounds)-offsetX,CGRectGetHeight(self.bounds)-offsetY-offset*2)
-        CGContextMoveToPoint(context,CGRectGetMidX(self.bounds),CGRectGetHeight(self.bounds)-offset*2)
-        CGContextAddLineToPoint(context,CGRectGetMidX(self.bounds)+offsetX,CGRectGetHeight(self.bounds)-offsetY-offset*2)
+        let offsetX=(self.bounds.width-offset*2)/4
+        let offsetY=(self.bounds.height-offset*2)/3
+        context?.addLine(to: CGPoint(x: self.bounds.midX-offsetX, y: self.bounds.height-offsetY-offset*2))
+        context?.move(to: CGPoint(x: self.bounds.midX, y: self.bounds.height-offset*2))
+        context?.addLine(to: CGPoint(x: self.bounds.midX+offsetX, y: self.bounds.height-offsetY-offset*2))
         
-        CGContextStrokePath(context)
+        context?.strokePath()
     }
 }
 
 //PbUIRefreshBaseView:刷新基本视图
-public class PbUIRefreshBaseView:UIView
+open class PbUIRefreshBaseView:UIView
 {
     //默认颜色
-    let textColor=UIColor.darkGrayColor()
+    let textColor=UIColor.darkGray
     
     //父类控件
     var scrollView:UIScrollView!
@@ -89,7 +89,7 @@ public class PbUIRefreshBaseView:UIView
     
     //记录状态
     var oldState:PbUIRefreshState?
-    var state=PbUIRefreshState.Normal
+    var state=PbUIRefreshState.normal
     
     //配置协议
     var config:PbUIRefreshConfigProtocol?
@@ -117,9 +117,9 @@ public class PbUIRefreshBaseView:UIView
     //createActivityView:创建载入指示器
     func createActivityView() -> PbUIActivityIndicator
     {
-        let indicator=PbUIRingSpinnerView(frame: CGRectZero)
-        let size=(self.config == nil ? CGSizeMake(32,32) : self.config!.pbUIRefreshActivityDefaultSize())
-        indicator.bounds=CGRectMake(0, 0, size.width, size.height)
+        let indicator=PbUIRingSpinnerView(frame: CGRect.zero)
+        let size=(self.config == nil ? CGSize(width: 32,height: 32) : self.config!.pbUIRefreshActivityDefaultSize())
+        indicator.bounds=CGRect(x: 0, y: 0, width: size.width, height: size.height)
         indicator.tintColor=(self.config == nil ? UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1) : self.config!.pbUIRefreshActivityDefaultColor())
         indicator.stopAnimating()
         
@@ -127,19 +127,19 @@ public class PbUIRefreshBaseView:UIView
     }
     
     //layoutSubviews:设置内部布局
-    override public func layoutSubviews()
+    override open func layoutSubviews()
     {
         super.layoutSubviews()
         //箭头
         let arrowX:CGFloat = self.frame.size.width * 0.5 - 80
-        self.arrowView.center = CGPointMake(arrowX, self.frame.size.height * 0.5)
+        self.arrowView.center = CGPoint(x: arrowX, y: self.frame.size.height * 0.5)
         //指示器
         (self.activityView as! UIView).center = self.arrowView.center
-        (self.activityView as! UIView).hidden=true
+        (self.activityView as! UIView).isHidden=true
     }
     
     //willMoveToSuperview:设置父控件
-    override public func willMoveToSuperview(newSuperview: UIView?)
+    override open func willMove(toSuperview newSuperview: UIView?)
     {
         if (self.superview != nil)
         {
@@ -148,7 +148,7 @@ public class PbUIRefreshBaseView:UIView
         
         if (newSuperview != nil)
         {
-            newSuperview!.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: nil)
+            newSuperview!.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.new, context: nil)
             var rect:CGRect = self.frame
             
             rect.size.width = newSuperview!.frame.size.width
@@ -161,12 +161,12 @@ public class PbUIRefreshBaseView:UIView
     }
     
     //drawRect:显示到屏幕上
-    override public func drawRect(rect: CGRect)
+    override open func draw(_ rect: CGRect)
     {
-        super.drawRect(rect)
-        if(self.state == PbUIRefreshState.WillRefreshing)
+        super.draw(rect)
+        if(self.state == PbUIRefreshState.willRefreshing)
         {
-            self.state = PbUIRefreshState.Refreshing
+            self.state = PbUIRefreshState.refreshing
         }
     }
     
@@ -175,11 +175,11 @@ public class PbUIRefreshBaseView:UIView
     {
         if (self.window != nil)
         {
-            self.state = PbUIRefreshState.Refreshing;
+            self.state = PbUIRefreshState.refreshing;
         }
         else
         {
-            state = PbUIRefreshState.WillRefreshing;
+            state = PbUIRefreshState.willRefreshing;
             super.setNeedsDisplay()
         }
         
@@ -189,17 +189,17 @@ public class PbUIRefreshBaseView:UIView
     func endRefreshing()
     {
         let delayInSeconds:Double = 0.3
-        let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds))
+        let popTime:DispatchTime = DispatchTime.now() + Double(Int64(delayInSeconds)) / Double(NSEC_PER_SEC)
         
-        dispatch_after(popTime, dispatch_get_main_queue(), {
-            self.state = PbUIRefreshState.Normal;
+        DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
+            self.state = PbUIRefreshState.normal;
         })
     }
     
     //setStateForView:设置状态
-    func setStateForView(newValue:PbUIRefreshState)
+    func setStateForView(_ newValue:PbUIRefreshState)
     {
-        if self.state != PbUIRefreshState.Refreshing
+        if self.state != PbUIRefreshState.refreshing
         {
             scrollViewOriginalInset = self.scrollView.contentInset;
         }
@@ -207,22 +207,22 @@ public class PbUIRefreshBaseView:UIView
         
         switch newValue
         {
-            case .Normal:
+            case .normal:
                 
                 self.arrowView.layer.opacity=1
                 self.activityView.stopAnimating()
-                (self.activityView as! UIView).hidden=true
+                (self.activityView as! UIView).isHidden=true
                 
                 break
             
-            case .Pulling:
+            case .pulling:
                 
                 break
             
-            case .Refreshing:
+            case .refreshing:
                 
                 self.arrowView.layer.opacity=0
-                (self.activityView as! UIView).hidden=false
+                (self.activityView as! UIView).isHidden=false
                 activityView.startAnimating()
                 if(beginRefreshingCallback != nil){beginRefreshingCallback!()}
                 
@@ -235,46 +235,46 @@ public class PbUIRefreshBaseView:UIView
     }
     
     //setup:初始化内部控件
-    private func setup()
+    fileprivate func setup()
     {
         //状态标签
         statusLabel = UILabel()
-        statusLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        statusLabel.font = UIFont.boldSystemFontOfSize(self.config == nil ? 12 : self.config!.pbUIRefreshLabelFontSize())
+        statusLabel.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        statusLabel.font = UIFont.boldSystemFont(ofSize: self.config == nil ? 12 : self.config!.pbUIRefreshLabelFontSize())
         statusLabel.textColor = self.config == nil ? textColor : self.config!.pbUIRefreshLabelTextColor()
-        statusLabel.backgroundColor =  UIColor.clearColor()
-        statusLabel.textAlignment = NSTextAlignment.Center
+        statusLabel.backgroundColor =  UIColor.clear
+        statusLabel.textAlignment = NSTextAlignment.center
         self.addSubview(statusLabel)
         
         //箭头图片
-        arrowView = PbUIArrowView(frame:CGRectZero)
-        let size=(self.config == nil ? CGSizeMake(32,32) : self.config!.pbUIRefreshActivityDefaultSize())
-        arrowView.bounds=CGRectMake(0, 0, size.width, size.height)
+        arrowView = PbUIArrowView(frame:CGRect.zero)
+        let size=(self.config == nil ? CGSize(width: 32,height: 32) : self.config!.pbUIRefreshActivityDefaultSize())
+        arrowView.bounds=CGRect(x: 0, y: 0, width: size.width, height: size.height)
         arrowView.tintColor=(self.config == nil ? UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1) : self.config!.pbUIRefreshActivityDefaultColor())
-        arrowView.hidden=true
+        arrowView.isHidden=true
         self.addSubview(arrowView)
         
         //状态标签
         self.activityView=(self.config == nil ? self.createActivityView() : self.config!.pbUIRefreshActivityView())
         self.activityView=(self.activityView == nil) ? self.createActivityView() : self.activityView
-        (self.activityView as! UIView).hidden=true
+        (self.activityView as! UIView).isHidden=true
         self.addSubview(self.activityView as! UIView)
         
         //自己的属性
-        self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        self.backgroundColor = UIColor.clearColor()
+        self.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        self.backgroundColor = UIColor.clear
         
         //设置默认状态
-        self.state = PbUIRefreshState.Normal
-        self.backgroundColor=(self.config == nil ? UIColor.clearColor() : self.config!.pbUIRefreshViewBackgroudColor())
+        self.state = PbUIRefreshState.normal
+        self.backgroundColor=(self.config == nil ? UIColor.clear : self.config!.pbUIRefreshViewBackgroudColor())
     }
 }
 
 //PbUIRefreshHeaderView:顶部刷新视图
-public class PbUIRefreshHeaderView:PbUIRefreshBaseView
+open class PbUIRefreshHeaderView:PbUIRefreshBaseView
 {
     //lastUpdateTime:记录最后更新时间
-    var lastUpdateTime=NSDate(){willSet{}didSet{}}
+    var lastUpdateTime=Date(){willSet{}didSet{}}
     //updateTimeLabel:更新时间标签
     var updateTimeLabel:UILabel?
     //state:覆盖父类属性，增加设置状态
@@ -290,15 +290,15 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
         {
             switch state
             {
-                case .Normal:
+                case .normal:
                     
                     self.statusLabel.text = "上拉可以刷新"
-                    if PbUIRefreshState.Refreshing == oldState
+                    if PbUIRefreshState.refreshing == oldState
                     {
-                        self.arrowView.transform = CGAffineTransformIdentity
-                        self.lastUpdateTime = NSDate()
+                        self.arrowView.transform = CGAffineTransform.identity
+                        self.lastUpdateTime = Date()
                         self.updateTimeLabel?.text=PbSystem.stringFromDate("yyyy年MM月dd日 HH:mm")
-                        UIView.animateWithDuration(0.3, animations:
+                        UIView.animate(withDuration: 0.3, animations:
                         {
                             var contentInset:UIEdgeInsets = self.scrollView.contentInset
                             contentInset.top = self.scrollViewOriginalInset.top
@@ -307,26 +307,26 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
                     }
                     else
                     {
-                        UIView.animateWithDuration(0.3, animations: {
-                            self.arrowView.transform = CGAffineTransformIdentity
+                        UIView.animate(withDuration: 0.3, animations: {
+                            self.arrowView.transform = CGAffineTransform.identity
                         })
                     }
             
                     break
                 
-            case .Pulling:
+            case .pulling:
                 
                     self.statusLabel.text = "松开立即刷新"
-                    UIView.animateWithDuration(0.3, animations: {
-                        self.arrowView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.arrowView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
                     })
                     break
                 
-            case .Refreshing:
+            case .refreshing:
                 
                 self.statusLabel.text = "正在刷新中...";
                 
-                UIView.animateWithDuration(0.3, animations:
+                UIView.animate(withDuration: 0.3, animations:
                 {
                     let top:CGFloat = self.scrollViewOriginalInset.top + self.frame.size.height
                     var inset:UIEdgeInsets = self.scrollView.contentInset
@@ -364,7 +364,7 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //layoutSubviews:设置内部布局
-    override public func layoutSubviews()
+    override open func layoutSubviews()
     {
         super.layoutSubviews()
         
@@ -374,19 +374,19 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
         let statusWidth:CGFloat = self.frame.size.width
         
         //状态标签
-        self.statusLabel.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight)
+        self.statusLabel.frame = CGRect(x: statusX, y: statusY, width: statusWidth, height: statusHeight)
         
         //时间标签
         let lastUpdateY:CGFloat = statusHeight-statusY
         let lastUpdateX:CGFloat = 0
         let lastUpdateHeight:CGFloat = statusHeight
         let lastUpdateWidth:CGFloat = statusWidth
-        self.updateTimeLabel!.frame = CGRectMake(lastUpdateX, lastUpdateY, lastUpdateWidth, lastUpdateHeight);
+        self.updateTimeLabel!.frame = CGRect(x: lastUpdateX, y: lastUpdateY, width: lastUpdateWidth, height: lastUpdateHeight);
     }
     
     //willMoveToSuperview:设置自己的位置和尺寸
-    override public func willMoveToSuperview(newSuperview: UIView!) {
-        super.willMoveToSuperview(newSuperview)
+    override open func willMove(toSuperview newSuperview: UIView!) {
+        super.willMove(toSuperview: newSuperview)
         
         var rect:CGRect = self.frame
         rect.origin.y = -self.frame.size.height
@@ -394,12 +394,12 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
     }
     
     //observeValueForKeyPath:监听UIScrollView的contentOffset属性
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
     {
-        if (!self.userInteractionEnabled || self.hidden){return}
-        if (self.state == PbUIRefreshState.Refreshing){return}
+        if (!self.isUserInteractionEnabled || self.isHidden){return}
+        if (self.state == PbUIRefreshState.refreshing){return}
         
-        if "contentOffset".isEqualToString(keyPath!)
+        if "contentOffset".isEqual(keyPath!)
         {
             self.adjustStateWithContentOffset()
         }
@@ -413,35 +413,35 @@ public class PbUIRefreshHeaderView:PbUIRefreshBaseView
         
         if (currentOffsetY >= happenOffsetY){return}
         
-        if self.scrollView.dragging
+        if self.scrollView.isDragging
         {
             let normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
-            if(self.state == PbUIRefreshState.Normal && currentOffsetY < normal2pullingOffsetY)
+            if(self.state == PbUIRefreshState.normal && currentOffsetY < normal2pullingOffsetY)
             {
-                self.state = PbUIRefreshState.Pulling
+                self.state = PbUIRefreshState.pulling
             }
-            else if(self.state == PbUIRefreshState.Pulling && currentOffsetY >= normal2pullingOffsetY)
+            else if(self.state == PbUIRefreshState.pulling && currentOffsetY >= normal2pullingOffsetY)
             {
-                self.state = PbUIRefreshState.Normal
+                self.state = PbUIRefreshState.normal
             }
         }
-        else if(self.state == PbUIRefreshState.Pulling)
+        else if(self.state == PbUIRefreshState.pulling)
         {
-            self.state = PbUIRefreshState.Refreshing
+            self.state = PbUIRefreshState.refreshing
         }
     }
     
     //setup:初始化内部控件
-    private override func setup()
+    fileprivate override func setup()
     {
         super.setup()
         
         updateTimeLabel = UILabel()
-        updateTimeLabel!.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        updateTimeLabel!.font = UIFont.boldSystemFontOfSize(self.config == nil ? 12 : self.config!.pbUIRefreshLabelFontSize())
+        updateTimeLabel!.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        updateTimeLabel!.font = UIFont.boldSystemFont(ofSize: self.config == nil ? 12 : self.config!.pbUIRefreshLabelFontSize())
         updateTimeLabel!.textColor = self.config == nil ? textColor : self.config!.pbUIRefreshLabelTextColor()
-        updateTimeLabel!.backgroundColor = UIColor.clearColor()
-        updateTimeLabel!.textAlignment = NSTextAlignment.Center
+        updateTimeLabel!.backgroundColor = UIColor.clear
+        updateTimeLabel!.textAlignment = NSTextAlignment.center
         self.addSubview(updateTimeLabel!);
     }
 }

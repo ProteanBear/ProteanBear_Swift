@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
+open class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
 {
     //indicator:指示器
-    let indicator=PbUIRingSpinnerView(frame: CGRectZero)
+    let indicator=PbUIRingSpinnerView(frame: CGRect.zero)
     
     //init:初始化
     override public init(frame: CGRect)
@@ -29,7 +29,7 @@ public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     }
     
     //tintColorDidChange:颜色改变时处理
-    override public func tintColorDidChange()
+    override open func tintColorDidChange()
     {
         super.tintColorDidChange()
         
@@ -37,16 +37,16 @@ public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     }
     
     //startAnimating:开始载入动画public 
-    public func startAnimating()
+    open func startAnimating()
     {
-        self.hidden=false
+        self.isHidden=false
         self.indicator.startAnimating()
     }
     
     //startAnimating:关闭载入动画
-    public func stopAnimating()
+    open func stopAnimating()
     {
-        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 0.6, options: [], animations: { () -> Void in
             
             self.layer.opacity=0
             
@@ -54,7 +54,7 @@ public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
             
             if(isCompleted)
             {
-                self.hidden=true
+                self.isHidden=true
                 self.indicator.stopAnimating()
             }
             
@@ -62,14 +62,14 @@ public class PbUIRingSpinnerCoverView:UIView,PbUIActivityIndicator
     }
     
     //setup:初始化动画层处理显示
-    private func setup()
+    fileprivate func setup()
     {
-        indicator.bounds=CGRectMake(0, 0, 40, 40);
+        indicator.bounds=CGRect(x: 0, y: 0, width: 40, height: 40);
         indicator.tintColor=UIColor(red:215/255, green: 49/255, blue: 69/255, alpha: 1)
-        indicator.center=CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)-64);
+        indicator.center=CGPoint(x: self.bounds.midX, y: self.bounds.midY-64);
         indicator.stopAnimating()
         
         self.addSubview(indicator)
-        self.bringSubviewToFront(indicator)
+        self.bringSubview(toFront: indicator)
     }
 }

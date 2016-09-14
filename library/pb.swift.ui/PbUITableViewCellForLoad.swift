@@ -9,25 +9,25 @@
 import Foundation
 import UIKit
 
-public class PbUITableViewCellForLoad:UITableViewCell
+open class PbUITableViewCellForLoad:UITableViewCell
 {
     //indicator:载入指示器
-    private var indicator=UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    fileprivate var indicator=UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     //startLoadAnimating:开始载入动画
-    public func startLoadAnimating()
+    open func startLoadAnimating()
     {
         self.indicator.startAnimating()
     }
     
     //stopLoadAnimating:开始载入动画
-    public func stopLoadAnimating()
+    open func stopLoadAnimating()
     {
         self.indicator.stopAnimating()
     }
     
     //setIndicatorTiniColor:设置指示器主题颜色
-    public func setIndicatorTiniColor(tiniColor:UIColor)
+    open func setIndicatorTiniColor(_ tiniColor:UIColor)
     {
         self.indicator.tintColor=tiniColor
     }
@@ -45,12 +45,12 @@ public class PbUITableViewCellForLoad:UITableViewCell
     }
     
     //setup:初始化载入指示器
-    private func setup()
+    fileprivate func setup()
     {
         self.indicator.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.indicator)
         
-        self.addConstraint(NSLayoutConstraint(item: self.indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: self.indicator, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.indicator, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.indicator, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0))
     }
 }
