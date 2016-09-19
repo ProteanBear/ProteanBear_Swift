@@ -20,7 +20,7 @@ open class PbDataParserJson: PbDataParser
         let result=NSMutableDictionary()
         if data != nil
         {
-            PbLog.debug(logPrex+"返回信息:"+String(NSString(data:data!,encoding: String.Encoding.utf8)!))
+            PbLog.debug(logPrex+"返回信息:"+String(NSString(data:data!,encoding: String.Encoding.utf8.rawValue)!))
             do {
                 let jsonResult:NSDictionary?=try JSONSerialization.jsonObject(with: data!,options: JSONSerialization.ReadingOptions.mutableLeaves) as? NSDictionary
                 if(jsonResult != nil)

@@ -34,7 +34,7 @@ open class PbUICollectionViewCellForImage:UICollectionViewCell
         self.imageView.contentMode=UIViewContentMode.scaleAspectFill
         self.addSubview(self.imageView)
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline,metrics:nil, views: ["imageView":self.imageView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline,metrics:nil, views: ["imageView":self.imageView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[imageView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline,metrics:nil, views: ["imageView":self.imageView]))
     }
 }

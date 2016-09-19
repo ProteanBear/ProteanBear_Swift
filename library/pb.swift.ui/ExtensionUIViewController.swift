@@ -49,14 +49,14 @@ extension UIViewController
         
         //设置布局
         self.view.addConstraint(NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[label(==width)]", options: .alignAllBaseline, metrics: ["width":minSize], views:["label":label]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[label(==width)]", options: .alignAllLastBaseline, metrics: ["width":minSize], views:["label":label]))
         if(position == .top)
         {
-            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-margin-[label(==height)]", options: .alignAllBaseline, metrics:["height":size.height+margin,"margin":margin], views:["label":label]))
+            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-margin-[label(==height)]", options: .alignAllLastBaseline, metrics:["height":size.height+margin,"margin":margin], views:["label":label]))
         }
         if(position == .bottom)
         {
-            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[label(==height)]-margin-|", options: .alignAllBaseline, metrics: ["height":size.height+margin,"margin":margin], views:["label":label]))
+            self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[label(==height)]-margin-|", options: .alignAllLastBaseline, metrics: ["height":size.height+margin,"margin":margin], views:["label":label]))
         }
         
         //显示元素

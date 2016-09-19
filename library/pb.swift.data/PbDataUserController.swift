@@ -203,10 +203,10 @@ open class PbDataUserController:NSObject
         else
         {
             //查找Plist对应的资源路径,载入资源
-            if let path:String?=Bundle.main.path(forResource: plistName,ofType:"plist")
+            if let path:String=Bundle.main.path(forResource: plistName,ofType:"plist")
             {
-                PbLog.debug(logPre+"开始读取Plist资源（Path:"+path!+"）")
-                self.userData=NSMutableDictionary(contentsOfFile:path!)
+                PbLog.debug(logPre+"开始读取Plist资源（Path:"+path+"）")
+                self.userData=NSMutableDictionary(contentsOfFile:path)
             }
         }
         
@@ -240,8 +240,8 @@ open class PbDataUserController:NSObject
         PbLog.debug(logPre+"userHead:"+self.userHead!)
         
         //显示字体
-        let userFontSize=(self.userData?.object(forKey: "userFontSize")? as AnyObject).intValue
-        self.userFontSize=(userFontSize==nil) ? 16:userFontSize
+        let userFontSize=self.userData?.object(forKey: "userFontSize")
+        self.userFontSize=(userFontSize==nil) ? 16:Int(userFontSize.debugDescription)
         PbLog.debug(logPre+"userFontSize:"+self.userFontSize!.description)
         //显示行距
         let userLineHeight=(self.userData?.object(forKey: "userLineHeight") as AnyObject).floatValue

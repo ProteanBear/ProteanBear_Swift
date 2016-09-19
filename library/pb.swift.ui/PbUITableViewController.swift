@@ -576,7 +576,7 @@ open class PbUITableViewController:UITableViewController,PbUITableViewController
             {
                 if let photoKey = self.pbPhotoKeyInIndexPath(indexPath)
                 {
-                    if let photoUrl: String? = data!.object(forKey: photoKey) as? String
+                    if let photoUrl = data!.object(forKey: photoKey) as? String
                     {
                         if(photoUrl != "")
                         {
@@ -603,11 +603,11 @@ open class PbUITableViewController:UITableViewController,PbUITableViewController
                 if let nibName=self.pbNibNameForTableView(indexPath, data: data)
                 {
                     //获取资源文件
-                    let nib=(Bundle.main.loadNibNamed(nibName, owner: self, options: nil)) as NSArray
+                    let nib=(Bundle.main.loadNibNamed(nibName, owner: self, options: nil))
                     //获取设置索引
                     let index=self.pbNibIndexForTableView(indexPath, data: data)
                     //获取单元格对象
-                    result=(nib.object(at: index)) as? UITableViewCell
+                    result=(nib?[index]) as? UITableViewCell
                 }
                 //使用自定义单元格类创建
                 else

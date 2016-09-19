@@ -288,7 +288,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         
         do
         {
-            self.reachability = try Reachability.reachabilityForInternetConnection()
+            self.reachability = Reachability()
             self.networkStatus=reachability.currentReachabilityStatus
             NotificationCenter.default.addObserver(self, selector: #selector(PbDataAppController.doWhenNetworkStatusChange(_:)), name: ReachabilityChangedNotification, object: reachability)
             try reachability.startNotifier()
@@ -576,7 +576,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
                     if(data != nil)
                     {
                         resData=data
-                        self.cacheManager?.setData(data, key: fileKey, subPath: self.dataSubPath)
+                        self.cacheManager?.setData(data!, key: fileKey, subPath: self.dataSubPath)
                     }
                     //如果网络请求数据不存在，则临时读取缓存数据
                     else
@@ -688,13 +688,13 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*-----------------------开始：实现CLLocationManagerDelegate委托*/
     
-    /*locationManager:didUpdateToLocation:fromLocation:
+    /*locationManager:didUpdateToLocation:
      *  更新到最新的位置
      */
-    open func locationManager(_ manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation)
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        lastLocation=newLocation
-        PbLog.debug(logPre+"locationManager:最新定位:"+"经度("+newLocation.coordinate.longitude.description+"),纬度("+newLocation.coordinate.latitude.description+")")
+        lastLocation=locations[locations.count-1]
+        PbLog.debug(logPre+"locationManager:最新定位:经度("+lastLocation!.coordinate.longitude.description+"),纬度("+lastLocation!.coordinate.latitude.description+")")
     }
     
     /*-----------------------结束：实现CLLocationManagerDelegate委托*/

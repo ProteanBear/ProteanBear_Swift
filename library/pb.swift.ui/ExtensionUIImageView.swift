@@ -69,14 +69,14 @@ extension UIImageView
                 if(data != nil)
                 {
                     //显示图片
-                    self.displayAnimation(UIImage(data: data),scale:scale,lowMode:lowMode,overMode:overMode)
+                    self.displayAnimation(UIImage(data: data!),scale:scale,lowMode:lowMode,overMode:overMode)
                     PbLog.debug("UIImageView:loadWithUrl:载入图片("+urlString+")完成")
                     //记录图片到缓存
-                    PbDataAppController.getInstance.saveImageIntoLocalCache(data, forUrl:urlString)
+                    PbDataAppController.getInstance.saveImageIntoLocalCache(data!, forUrl:urlString)
                 }
                 else
                 {
-                    PbLog.error("UIImageView:loadWithUrl:未获取到图片:"+error.description)
+                    PbLog.error("UIImageView:loadWithUrl:未获取到图片:"+(error?.description)!)
                 }
             })
         }

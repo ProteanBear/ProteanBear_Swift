@@ -91,8 +91,8 @@ open class PbUITabMenuViewCell:UICollectionViewCell
     {
         super.layoutSubviews()
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
     }
     
     //初始化网格视图
@@ -149,8 +149,8 @@ open class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollecti
     {
         super.layoutSubviews()
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline, metrics: nil, views: ["collectionView":collectionView]))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllBaseline, metrics: nil, views: ["collectionView":collectionView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["collectionView":collectionView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["collectionView":collectionView]))
     }
     
     //绘制单元格底部的线

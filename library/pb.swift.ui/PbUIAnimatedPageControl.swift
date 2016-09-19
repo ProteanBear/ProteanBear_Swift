@@ -24,7 +24,7 @@ public enum PbUIAnimatedPageControlScrollDirection:Int
 }
 
 //PbUIAnimatedPageControlIndicator:指示器基类
-open class PbUIAnimatedPageControlIndicator:CALayer
+open class PbUIAnimatedPageControlIndicator:CALayer,CAAnimationDelegate
 {
     //indicatorSize:
     var indicatorSize:CGFloat!{
@@ -184,13 +184,13 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
     }
     
     //animationDidStart:
-    override func animationDidStart(_ anim: CAAnimation)
+    func animationDidStart(_ anim: CAAnimation)
     {
         self.beginGooeyAnim=true
     }
     
     //animationDidStop:
-    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
     {
         if(flag)
         {
@@ -285,7 +285,7 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
 }
 
 //PbUIAnimatedPageControlLine:过渡直线
-class PbUIAnimatedPageControlLine:CALayer
+class PbUIAnimatedPageControlLine:CALayer,CAAnimationDelegate
 {
     //needsDisplayForKey:
     override class func needsDisplay(forKey key: String) -> Bool
@@ -371,9 +371,9 @@ class PbUIAnimatedPageControlLine:CALayer
         if (self.pageCount == 1)
         {
             let linePath = CGMutablePath()
-            CGPathMoveToPoint(linePath, nil, self.frame.size.width/2, self.frame.size.height/2)
+//            CGPathMoveToPoint(linePath, nil, self.frame.size.width/2, self.frame.size.height/2)
             let circleRect = CGRect(x: self.frame.size.width/2-CGFloat(self.ballDiameter/2),y: self.frame.size.height/2-CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-            CGPathAddEllipseInRect(linePath, nil, circleRect)
+//            CGPathAddEllipseInRect(linePath, nil, circleRect)
             
             ctx.addPath(linePath)
             ctx.setFillColor(self.selectedColor.cgColor)
@@ -383,7 +383,7 @@ class PbUIAnimatedPageControlLine:CALayer
         }
         
         var linePath = CGMutablePath()
-        CGPathMoveToPoint(linePath, nil,CGFloat(self.ballDiameter/2),self.frame.size.height/2)
+//        CGPathMoveToPoint(linePath, nil,CGFloat(self.ballDiameter/2),self.frame.size.height/2)
         
         //画默认颜色的背景线
         linePath.__addRoundedRect(transform: nil, rect: CGRect(x: CGFloat(self.ballDiameter/2), y: self.frame.size.height/2 - CGFloat(self.lineHeight/2), width: self.frame.size.width - CGFloat(self.ballDiameter),height: CGFloat(self.lineHeight)), cornerWidth: 0, cornerHeight: 0)
@@ -392,7 +392,7 @@ class PbUIAnimatedPageControlLine:CALayer
         for i in 0 ..< self.pageCount
         {
             let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()), y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-            CGPathAddEllipseInRect(linePath, nil, circleRect)
+//            CGPathAddEllipseInRect(linePath, nil, circleRect)
         }
         
         ctx.addPath(linePath)
@@ -414,7 +414,7 @@ class PbUIAnimatedPageControlLine:CALayer
                 if (Double(i)*self.distince() <= self.selectedLineLength+0.1)
                 {
                     let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()),y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-                    CGPathAddEllipseInRect(linePath, nil, circleRect)
+//                    CGPathAddEllipseInRect(linePath, nil, circleRect)
                 }
             }
             
@@ -454,7 +454,7 @@ class PbUIAnimatedPageControlLine:CALayer
     }
     
     //animationDidStop:
-    override func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool)
     {
         if (flag)
         {

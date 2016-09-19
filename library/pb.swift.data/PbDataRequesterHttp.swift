@@ -59,7 +59,7 @@ open class PbDataRequesterHttp:PbDataRequester
         let session = URLSession.shared
         
         //创建请求对象
-        let request = NSMutableURLRequest(url: URL(string:address)!)
+        var request = URLRequest(url: URL(string:address)!)
         request.httpMethod = "GET"
         
         //异步请求
@@ -68,13 +68,13 @@ open class PbDataRequesterHttp:PbDataRequester
             //判断是在主线程还是子线程
             if Thread.isMainThread
             {
-                callback(data: data, response: response , error: error)
+                callback(data, response , error as NSError?)
             }
             else
             {
                 DispatchQueue.main.async
                     {
-                        callback(data: data, response: response , error: error)
+                        callback(data, response , error as NSError?)
                 }
             }
         })
@@ -96,7 +96,7 @@ open class PbDataRequesterHttp:PbDataRequester
             if(value == nil){continue}
             
             //数组型参数处理
-            if(value!.isKind(of: NSArray))
+            if(value!.isKind(of: NSArray.self))
             {
                 let array:NSArray=value as! NSArray
                 for j in 0 ..< array.count 
@@ -124,7 +124,7 @@ open class PbDataRequesterHttp:PbDataRequester
         let url=address+"?"+self.paramString(data)
         
         //创建请求对象
-        let request = NSMutableURLRequest(url: URL(string: url)!)
+        var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         
         //异步请求
@@ -133,13 +133,13 @@ open class PbDataRequesterHttp:PbDataRequester
             //判断是在主线程还是子线程
             if Thread.isMainThread
             {
-                callback(data: data, response: response , error: error)
+                callback(data, response , error as NSError?)
             }
             else
             {
                 DispatchQueue.main.async
                     {
-                        callback(data: data, response: response , error: error)
+                        callback(data, response , error as NSError?)
                 }
             }
         })
@@ -153,7 +153,7 @@ open class PbDataRequesterHttp:PbDataRequester
         let session = URLSession.shared
         
         //创建请求对象
-        let request = NSMutableURLRequest(url: URL(string: address)!)
+        var request = URLRequest(url: URL(string: address)!)
         request.httpMethod = "POST"
         
         //设置POST请求的内容体
@@ -166,13 +166,13 @@ open class PbDataRequesterHttp:PbDataRequester
             //判断是在主线程还是子线程
             if Thread.isMainThread
             {
-                callback(data: data, response: response , error: error)
+                callback(data, response , error as NSError?)
             }
             else
             {
                 DispatchQueue.main.async
                     {
-                        callback(data: data, response: response , error: error)
+                        callback(data, response , error as NSError?)
                 }
             }
         })
@@ -208,7 +208,7 @@ open class PbDataRequesterHttp:PbDataRequester
         let session = URLSession.shared
         
         //创建请求对象
-        let request = NSMutableURLRequest(url: URL(string: address)!)
+        var request = URLRequest(url: URL(string: address)!)
         request.httpMethod = "POST"
         
         //设置POST请求的格式
@@ -225,13 +225,13 @@ open class PbDataRequesterHttp:PbDataRequester
             if(value == nil){continue}
             
             //图片类型数据
-            if(value!.isKind(of: UIImage))
+            if(value!.isKind(of: UIImage.self))
             {
                 let image:UIImage=value as! UIImage
                 dictionary.setObject(image, forKey: key.description as NSCopying)
             }
             //文件类型数据
-            else if(value!.isKind(of: PbObjectFile))
+            else if(value!.isKind(of: PbObjectFile.self))
             {
                 let file:PbObjectFile=value as! PbObjectFile
                 dictionary.setObject(file, forKey: key.description as NSCopying)
@@ -251,7 +251,7 @@ open class PbDataRequesterHttp:PbDataRequester
             let value=dictionary.object(forKey: key)
             
             //图片类型数据
-            if((value! as AnyObject).isKind(of: UIImage))
+            if((value! as AnyObject).isKind(of: UIImage.self))
             {
                 let image:UIImage=value as! UIImage
                 bodyData.append("--\(self.boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -261,7 +261,7 @@ open class PbDataRequesterHttp:PbDataRequester
                 bodyData.append("\r\n".data(using: String.Encoding.utf8)!)
             }
             //文件类型数据
-            else if((value! as AnyObject).isKind(of: PbObjectFile))
+            else if((value! as AnyObject).isKind(of: PbObjectFile.self))
             {
                 let file:PbObjectFile=value as! PbObjectFile
                 bodyData.append("--\(self.boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -284,13 +284,13 @@ open class PbDataRequesterHttp:PbDataRequester
             //判断是在主线程还是子线程
             if Thread.isMainThread
             {
-                callback(data: data, response: response , error: error)
+                callback(data, response , error as NSError?)
             }
             else
             {
                 DispatchQueue.main.async
                     {
-                        callback(data: data, response: response , error: error)
+                        callback(data, response , error as NSError?)
                 }
             }
             

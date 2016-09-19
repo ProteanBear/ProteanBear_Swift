@@ -477,7 +477,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
             {
                 if let photoKey = self.pbPhotoKeyInIndexPath(indexPath)
                 {
-                    if let photoUrl: AnyObject = data!.object(forKey: photoKey)
+                    if let photoUrl = data?.object(forKey: photoKey)
                     {
                         imageRecord=PbDataPhotoRecord(urlString:self.pbFullUrlForDataLoad(photoUrl as? String)!, index: indexPath)
                         self.photoData[indexPath]=imageRecord

@@ -223,7 +223,7 @@ open class PbDataAdapter
                 }
                 
                 //解析控制器返回结果
-                var conRes=data.object(forKey: PbDataAppController.KEY_RESPONSE) as! Dictionary<String,String>
+                var conRes=data?.object(forKey: PbDataAppController.KEY_RESPONSE) as! Dictionary<String,String>
                 let netStatus=conRes[PbDataAppController.KEY_NETWORK]!
                 let netSuccess=NSString(string:conRes[PbDataAppController.KEY_SUCCESS]!).boolValue
                 
@@ -243,10 +243,10 @@ open class PbDataAdapter
                 }
                 
                 //处理数据
-                var response: AnyObject?=self.delegate!.pbResolveFromResponse(data)
+                var response: AnyObject?=self.delegate!.pbResolveFromResponse(data!)
                 if(response == nil)
                 {
-                    response=self.delegate?.pbResolveFromResponse(data, updateMode: updateMode)
+                    response=self.delegate?.pbResolveFromResponse(data!, updateMode: updateMode)
                 }
                 if(response == nil)
                 {

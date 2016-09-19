@@ -149,7 +149,8 @@ open class PbDataCacheFile
                 filePath=NSString(string:path).appendingPathComponent(fileArray!.object(at: i) as! String)
                 
                 var isDict:ObjCBool=false
-                if(fileManager.fileExists(atPath: filePath,isDirectory:&isDict)&&isDict)
+                let isDictPointer:UnsafeMutablePointer<ObjCBool>=UnsafeMutablePointer(&isDict);
+                if(fileManager.fileExists(atPath: filePath,isDirectory:isDictPointer) && isDict.boolValue)
                 {
                     result+=self.sizeOfSubPath(filePath)
                 }

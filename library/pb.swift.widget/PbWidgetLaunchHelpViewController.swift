@@ -146,8 +146,8 @@ open class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         //纵向
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[startButton(==btnHeight)]-margin-[pageControl(==height)]-margin-|", options:.alignAllCenterX, metrics: metrics, views:views))
         //横向
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[pageControl(==width)]", options:.alignAllBaseline, metrics: metrics, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[startButton(==btnWidth)]", options:.alignAllBaseline, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[pageControl(==width)]", options:.alignAllLastBaseline, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[startButton(==btnWidth)]", options:.alignAllLastBaseline, metrics: metrics, views:views))
         //中心位置
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.centerX, relatedBy:.equal, toItem: self.pageControl,attribute:.centerX, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.centerX, relatedBy:.equal, toItem: self.startButton,attribute:.centerX, multiplier: 1, constant: 0))
