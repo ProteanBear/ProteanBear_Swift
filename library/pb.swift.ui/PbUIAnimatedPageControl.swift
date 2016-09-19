@@ -371,9 +371,9 @@ class PbUIAnimatedPageControlLine:CALayer,CAAnimationDelegate
         if (self.pageCount == 1)
         {
             let linePath = CGMutablePath()
-//            CGPathMoveToPoint(linePath, nil, self.frame.size.width/2, self.frame.size.height/2)
+            linePath.move(to: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2))
             let circleRect = CGRect(x: self.frame.size.width/2-CGFloat(self.ballDiameter/2),y: self.frame.size.height/2-CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-//            CGPathAddEllipseInRect(linePath, nil, circleRect)
+            linePath.addEllipse(in: circleRect)
             
             ctx.addPath(linePath)
             ctx.setFillColor(self.selectedColor.cgColor)
@@ -392,7 +392,7 @@ class PbUIAnimatedPageControlLine:CALayer,CAAnimationDelegate
         for i in 0 ..< self.pageCount
         {
             let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()), y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-//            CGPathAddEllipseInRect(linePath, nil, circleRect)
+            linePath.addEllipse(in: circleRect)
         }
         
         ctx.addPath(linePath)
@@ -414,7 +414,7 @@ class PbUIAnimatedPageControlLine:CALayer,CAAnimationDelegate
                 if (Double(i)*self.distince() <= self.selectedLineLength+0.1)
                 {
                     let circleRect = CGRect(x: CGFloat(Double(i)*self.distince()),y: self.frame.size.height/2 - CGFloat(self.ballDiameter/2),width: CGFloat(self.ballDiameter),height: CGFloat(self.ballDiameter))
-//                    CGPathAddEllipseInRect(linePath, nil, circleRect)
+                    linePath.addEllipse(in: circleRect)
                 }
             }
             

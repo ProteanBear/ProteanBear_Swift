@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 open class PbDataCacheFile
 {
@@ -69,8 +68,8 @@ open class PbDataCacheFile
         
         if(fileManager.fileExists(atPath: path))
         {
-            let attrs:NSDictionary=try! fileManager.attributesOfItem(atPath: path) as NSDictionary
-            let date:Date=attrs.object(forKey: FileAttributeKey.modificationDate) as! Date
+            let attrs=try! fileManager.attributesOfItem(atPath: path)
+            let date:Date=attrs[FileAttributeKey.modificationDate] as! Date
             
             if(expireTime==0 || date.timeIntervalSinceNow<expireTime)
             {
