@@ -22,11 +22,11 @@ Pod::Spec.new do |s|
 
   # ――― Author Metadata
 
-  s.author             = { "ProteanBear" => "moru_1982@hotmail.com" }
+  s.author       = { "ProteanBear" => "moru_1982@hotmail.com" }
 
   # ――― Platform Specifics
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
   # ――― Source Location
 
@@ -58,7 +58,9 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "ReachabilitySwift"
-  s.dependency "CryptoSwift"
+
+  s.dependency 'ReachabilitySwift'
+
+  s.dependency 'CryptoSwift'
 
 end

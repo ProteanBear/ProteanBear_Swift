@@ -1,6 +1,6 @@
-platform:ios,"8.3"
+platform:ios,"9.0"
 use_frameworks!
 target 'PbSwiftLibrary' do
-    pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift', :branch => "feature/ios10"
-   pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "swift3"
+    pod 'ReachabilitySwift', :git => "https://github.com/ashleymills/Reachability.swift", :branch => "feature/ios10"
+    pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "swift3"
 end
