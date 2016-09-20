@@ -288,7 +288,7 @@ extension UIColor
     //levelName:获取级别名称
     public class func pbLevelName(_ levelRaw:Int) -> String
     {
-        return PbUIColorLevel(rawValue: levelRaw)!.description
+        return String(describing: PbUIColorLevel(rawValue: levelRaw))
     }
     //pbUIColor:自定义颜色（直接使用16进制值）
     public class func pbUIColor(_ color:UInt32) -> UIColor

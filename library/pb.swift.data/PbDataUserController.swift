@@ -223,29 +223,29 @@ open class PbDataUserController:NSObject
         PbLog.debug(logPre+"开始读取用户数据信息")
         
         //用户标识
-        let userId=(self.userData?.object(forKey: "userId") as AnyObject).description
+        let userId=self.userData?.object(forKey: "userId") as? String
         self.userId=(userId==nil || userId=="") ? "":userId
         PbLog.debug(logPre+"userId:"+self.userId!)
         //用户昵称
-        let userName=(self.userData?.object(forKey: "userName") as AnyObject).description
+        let userName=self.userData?.object(forKey: "userName") as? String
         self.userName=(userName==nil || userName=="") ? "":userName
         PbLog.debug(logPre+"userName:"+self.userName!)
         //用户密钥
-        let userPass=(self.userData?.object(forKey: "userPass") as AnyObject).description
+        let userPass=self.userData?.object(forKey: "userPass") as? String
         self.userPass=(userPass==nil || userPass=="") ? "":userPass
         PbLog.debug(logPre+"userPass:"+self.userPass!)
         //用户头像
-        let userHead=(self.userData?.object(forKey: "userHead") as AnyObject).description
+        let userHead=self.userData?.object(forKey: "userHead") as? String
         self.userHead=(userHead==nil || userHead=="") ? "":userHead
         PbLog.debug(logPre+"userHead:"+self.userHead!)
         
         //显示字体
         let userFontSize=self.userData?.object(forKey: "userFontSize")
-        self.userFontSize=(userFontSize==nil) ? 16:Int(userFontSize.debugDescription)
+        self.userFontSize=(userFontSize==nil) ? 16:(userFontSize as! NSNumber).intValue
         PbLog.debug(logPre+"userFontSize:"+self.userFontSize!.description)
         //显示行距
-        let userLineHeight=(self.userData?.object(forKey: "userLineHeight") as AnyObject).floatValue
-        self.userLineHeight=(userLineHeight==nil) ? 1.4:userLineHeight
+        let userLineHeight=self.userData?.object(forKey: "userLineHeight") as? String
+        self.userLineHeight=(userLineHeight==nil) ? 1.4:Float(userLineHeight!)
         PbLog.debug(logPre+"userLineHeight:"+self.userLineHeight!.description)
         
         //用户收藏
