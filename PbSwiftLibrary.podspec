@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata
 
   s.name         = "PbSwiftLibrary"
-  s.version      = “0.9.5”
+  s.version      = "0.9.5"
   s.summary      = "由ProteanBear创作使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用方法、数据绑定和一些常用的UI组件以及视图控制器。"
 
   s.description  = <<-DESC
@@ -22,11 +22,11 @@ Pod::Spec.new do |s|
 
   # ――― Author Metadata
 
-  s.author             = { "ProteanBear" => "moru_1982@hotmail.com" }
+  s.author       = { "ProteanBear" => "moru_1982@hotmail.com" }
 
   # ――― Platform Specifics
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
   # ――― Source Location
 
@@ -58,7 +58,9 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "ReachabilitySwift"
-  s.dependency "CryptoSwift"
+
+  s.dependency 'ReachabilitySwift'
+
+  s.dependency 'CryptoSwift'
 
 end

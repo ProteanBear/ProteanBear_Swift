@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class PbDataParserJson: PbDataParser
+open class PbDataParserJson: PbDataParser
 {
     //dictionaryByData:通过数据获取数据字典对象
-    public func dictionaryByData(data:NSData?) -> NSMutableDictionary?
+    open func dictionaryByData(_ data:Data?) -> NSMutableDictionary?
     {
         //调试信息前缀
         let logPrex:String="PbDataParserJson:dictionaryByData:"
@@ -20,12 +20,12 @@ public class PbDataParserJson: PbDataParser
         let result=NSMutableDictionary()
         if data != nil
         {
-            PbLog.debug(logPrex+"返回信息:"+String(NSString(data:data!,encoding: NSUTF8StringEncoding)!))
+            PbLog.debug(logPrex+"返回信息:"+String(NSString(data:data!,encoding: String.Encoding.utf8.rawValue)!))
             do {
-                let jsonResult:NSDictionary?=try NSJSONSerialization.JSONObjectWithData(data!,options: NSJSONReadingOptions.MutableLeaves) as? NSDictionary
+                let jsonResult:NSDictionary?=try JSONSerialization.jsonObject(with: data!,options: JSONSerialization.ReadingOptions.mutableLeaves) as? NSDictionary
                 if(jsonResult != nil)
                 {
-                    result.addEntriesFromDictionary(jsonResult! as [NSObject : AnyObject])
+                    result.addEntries(from: jsonResult! as! [AnyHashable: Any])
                 }
             } catch _ {
             }

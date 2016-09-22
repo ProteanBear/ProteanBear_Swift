@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 //PbUITabMenuData:Tab栏使用的菜单栏数据记录
-public class PbUITabMenuData
+open class PbUITabMenuData
 {
-    public var index:String?
-    public var indexId:Int=0
-    public var displayName:String=""
-    public var collectionCellClass:AnyClass?
-    public var targetController:AnyClass?
+    open var index:String?
+    open var indexId:Int=0
+    open var displayName:String=""
+    open var collectionCellClass:AnyClass?
+    open var targetController:AnyClass?
     
     public init(index:String,displayName:String)
     {
@@ -49,10 +49,10 @@ public class PbUITabMenuData
 }
 
 //PbUITabMenuViewCell:Tab栏使用的菜单栏单个菜单视图
-public class PbUITabMenuViewCell:UICollectionViewCell
+open class PbUITabMenuViewCell:UICollectionViewCell
 {
     //titleLabel:文字标签
-    public let titleLabel=UILabel()
+    open let titleLabel=UILabel()
     //menuData:菜单对应的数据
     var menuData:PbUITabMenuData?
     {
@@ -62,15 +62,15 @@ public class PbUITabMenuViewCell:UICollectionViewCell
         }
     }
     //selected:选中状态
-    override public var selected: Bool{
+    override open var isSelected: Bool{
         didSet{
-            self.titleLabel.textColor=(self.selected) ? self.tintColor:UIColor.lightGrayColor()
+            self.titleLabel.textColor=(self.isSelected) ? self.tintColor:UIColor.lightGray
         }
     }
     //选中颜色
-    override public var tintColor: UIColor!{
+    override open var tintColor: UIColor!{
         didSet{
-            self.titleLabel.textColor=(self.selected) ? self.tintColor:UIColor.lightGrayColor()
+            self.titleLabel.textColor=(self.isSelected) ? self.tintColor:UIColor.lightGray
         }
     }
     
@@ -87,40 +87,40 @@ public class PbUITabMenuViewCell:UICollectionViewCell
     }
     
     //布局完成后设置
-    override public func layoutSubviews()
+    override open func layoutSubviews()
     {
         super.layoutSubviews()
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["titleLabel":titleLabel]))
     }
     
     //初始化网格视图
-    private func setup()
+    fileprivate func setup()
     {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font=UIFont.systemFontOfSize(16)
-        titleLabel.textColor=UIColor.lightGrayColor()
-        titleLabel.textAlignment=NSTextAlignment.Center
+        titleLabel.font=UIFont.systemFont(ofSize: 16)
+        titleLabel.textColor=UIColor.lightGray
+        titleLabel.textAlignment=NSTextAlignment.center
         self.addSubview(titleLabel)
     }
 }
 
 //PbUITabMenuView:Tab栏使用的菜单栏视图
-public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate
+open class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollectionViewDelegate
 {
     //maxNumPer:最多一屏显示数量
-    public var maxNumPer=5
+    open var maxNumPer=5
     //textColorSelected:选中时的颜色
-    public var textColorSelected=UIColor.darkGrayColor()
+    open var textColorSelected=UIColor.darkGray
     //textFont:字体设置
-    public var textFont=UIFont.systemFontOfSize(16)
+    open var textFont=UIFont.systemFont(ofSize: 16)
     //collectionView:使用网格视图
-    public var collectionView:UICollectionView!
+    open var collectionView:UICollectionView!
     //click:点击选项卡处理
-    public var click:((data:PbUITabMenuData) -> Void)?
+    open var click:((_ data:PbUITabMenuData) -> Void)?
     //menuData:指定菜单数据
-    public var menuData:Array<PbUITabMenuData>?
+    open var menuData:Array<PbUITabMenuData>?
     {
         didSet
         {
@@ -128,7 +128,7 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
             self.collectionView.setCollectionViewLayout(self.collectionViewLayout(), animated: true)
             
             collectionView.reloadData()
-            self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.Right)
+            self.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.right)
         }
     }
     
@@ -145,57 +145,57 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
     }
     
     //布局完成后设置
-    override public func layoutSubviews()
+    override open func layoutSubviews()
     {
         super.layoutSubviews()
         
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: ["collectionView":collectionView]))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: ["collectionView":collectionView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["collectionView":collectionView]))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions.alignAllLastBaseline, metrics: nil, views: ["collectionView":collectionView]))
     }
     
     //绘制单元格底部的线
-    public override func drawRect(rect: CGRect)
+    open override func draw(_ rect: CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
         
         let width:CGFloat=0.1
-        CGContextSetLineWidth(context,width)
-        CGContextSetStrokeColorWithColor(context,UIColor.blackColor().CGColor)
+        context?.setLineWidth(width)
+        context?.setStrokeColor(UIColor.black.cgColor)
         
-        CGContextMoveToPoint(context,0,self.frame.size.height-width)
-        CGContextAddLineToPoint(context,self.frame.size.width,self.frame.size.height-width)
+        context?.move(to: CGPoint(x: 0, y: self.frame.size.height-width))
+        context?.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height-width))
         
-        CGContextStrokePath(context)
+        context?.strokePath()
         
         self.collectionView.setCollectionViewLayout(self.collectionViewLayout(), animated: true)
     }
     
     //选择指定的Tab栏
-    public func selectMenu(index:Int)
+    open func selectMenu(_ index:Int)
     {
-        self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.Right)
+        self.collectionView.selectItem(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.right)
     }
     
     //初始化网格视图
-    private func setup()
+    fileprivate func setup()
     {
-        self.backgroundColor=UIColor.clearColor()
+        self.backgroundColor=UIColor.clear
         
-        collectionView=UICollectionView(frame:CGRectZero, collectionViewLayout: self.collectionViewLayout())
+        collectionView=UICollectionView(frame:CGRect.zero, collectionViewLayout: self.collectionViewLayout())
         collectionView.dataSource=self
         collectionView.delegate=self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor=UIColor.clearColor()
+        collectionView.backgroundColor=UIColor.clear
         collectionView.showsHorizontalScrollIndicator=false
         collectionView.showsVerticalScrollIndicator=false
         self.addSubview(collectionView)
     }
     
     //获取布局设置
-    public func collectionViewLayout() -> UICollectionViewFlowLayout
+    open func collectionViewLayout() -> UICollectionViewFlowLayout
     {
         let layout=UICollectionViewFlowLayout()
-        layout.scrollDirection=UICollectionViewScrollDirection.Horizontal
+        layout.scrollDirection=UICollectionViewScrollDirection.horizontal
         layout.sectionInset=UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumInteritemSpacing=0
         layout.minimumLineSpacing=0
@@ -210,23 +210,23 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
     
     /*-----------------------开始：实现UICollectionViewDataSource*/
     //单元格数量
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return (self.menuData != nil) ? (self.menuData!.count) : 0
     }
     
     //单元格对象
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         var result:UICollectionViewCell?
         
         if(self.menuData != nil)
         {
-            let menu:PbUITabMenuData=self.menuData![indexPath.row]
+            let menu:PbUITabMenuData=self.menuData![(indexPath as NSIndexPath).row]
             if(menu.collectionCellClass != nil)
             {
-                self.collectionView.registerClass(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
-                result=self.collectionView.dequeueReusableCellWithReuseIdentifier("PbUITabMenuViewCell", forIndexPath: indexPath)
+                self.collectionView.register(menu.collectionCellClass, forCellWithReuseIdentifier:"PbUITabMenuViewCell")
+                result=self.collectionView.dequeueReusableCell(withReuseIdentifier: "PbUITabMenuViewCell", for: indexPath)
                 (result as! PbUITabMenuViewCell).tintColor=self.textColorSelected
                 (result as! PbUITabMenuViewCell).titleLabel.font=self.textFont
                 (result as! PbUITabMenuViewCell).menuData=menu
@@ -244,80 +244,80 @@ public class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollec
     
     /*-----------------------开始：实现UICollectionViewDelegate*/
     //选中单元格时处理
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
         if(self.click != nil)
         {
-            self.click!(data: self.menuData![indexPath.row])
+            self.click!(self.menuData![(indexPath as NSIndexPath).row])
         }
     }
     /*-----------------------结束：实现UICollectionViewDelegate*/
 }
 
 //PbUITabViewController:基础Tab视图控制器
-public class PbUITabViewController:PbUITableViewController
+open class PbUITabViewController:PbUITableViewController
 {
     //pbNormalHeightForRowAtIndexPath:返回正常单元格的高度
-    override public func pbNormalHeightForRowAtIndexPath(tableView: UITableView, indexPath: NSIndexPath) -> CGFloat
+    override open func pbNormalHeightForRowAtIndexPath(_ tableView: UITableView, indexPath: IndexPath) -> CGFloat
     {
         var result:CGFloat=0;
         //菜单栏
-        if(indexPath.section==0){result=CGFloat(PbSystem.sizeTopMenuBarHeight)}
+        if((indexPath as NSIndexPath).section==0){result=CGFloat(PbSystem.sizeTopMenuBarHeight)}
         //内容栏
-        if(indexPath.section==1){result=self.view.frame.size.height-CGFloat(PbSystem.sizeTopMenuBarHeight)}
+        if((indexPath as NSIndexPath).section==1){result=self.view.frame.size.height-CGFloat(PbSystem.sizeTopMenuBarHeight)}
         return result;
     }
     
     /*-----------------------开始：实现PbUITableViewControllerProtocol*/
     
     //pbResolveFromResponse:解析处理返回的数据
-    override public func pbResolveFromResponse(response:NSDictionary) -> AnyObject?
+    override open func pbResolveFromResponse(_ response:NSDictionary) -> AnyObject?
     {
         return nil
     }
     
     //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
-    override public func pbDoUpdateForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    override open func pbDoUpdateForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
     //pbDoInsertForDataLoad:执行增量类相关返回后的处理
-    override public func pbDoInsertForDataLoad(response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
+    override open func pbDoInsertForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
     //pbAutoUpdateAfterFirstLoad:初次载入后是否立即更新
-    override public func pbAutoUpdateAfterFirstLoad() -> Bool
+    override open func pbAutoUpdateAfterFirstLoad() -> Bool
     {
         return false
     }
     
     //pbSupportHeaderRefresh:是否支持表格顶部刷新
-    override public func pbSupportHeaderRefresh() -> Bool
+    override open func pbSupportHeaderRefresh() -> Bool
     {
         return false
     }
     
     //pbSupportFooterLoad:是否支持表格底部载入
-    override public func pbSupportFooterLoad() -> Bool
+    override open func pbSupportFooterLoad() -> Bool
     {
         return false
     }
     
     //pbIdentifierForTableView:返回指定位置的单元格标识
-    override public func pbIdentifierForTableView(indexPath:NSIndexPath,data:AnyObject?) -> String
+    override open func pbIdentifierForTableView(_ indexPath:IndexPath,data:AnyObject?) -> String
     {
-        return (indexPath.section==0) ? "PbUITabMenuView" : "PbUITabContentView"
+        return ((indexPath as NSIndexPath).section==0) ? "PbUITabMenuView" : "PbUITabContentView"
     }
     
     //pbInitCellForTableView:返回自定义的单元格对象
-    override public func pbInitCellForTableView(indexPath:NSIndexPath,data:AnyObject?) -> AnyObject?
+    override open func pbInitCellForTableView(_ indexPath:IndexPath,data:AnyObject?) -> AnyObject?
     {
         return nil
     }
     
     //pbSetDataForTableView:设置表格数据显示
-    override public func pbSetDataForTableView(cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:NSIndexPath) -> AnyObject
+    override open func pbSetDataForTableView(_ cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:IndexPath) -> AnyObject
     {
         return cell
     }
@@ -327,29 +327,29 @@ public class PbUITabViewController:PbUITableViewController
     /*-----------------------开始：实现UITableViewDataSource*/
     
     //numberOfSectionsInTableView:返回当前表格的节数量
-    override public func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override open func numberOfSections(in tableView: UITableView) -> Int
     {
         return (self.tableData == nil) ? 0 : 2
     }
     
     //tableView:numberOfRowsInSection:返回列表数据的数据量
-    override public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return (self.tableData == nil) ? 0 : 1
     }
     
     //tableView:cellForRowAtIndexPath:返回指定索引对应的列表项
-    override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         var result:UITableViewCell?
         
         //菜单栏
-        if(indexPath.section==0 && indexPath.row==0)
+        if((indexPath as NSIndexPath).section==0 && (indexPath as NSIndexPath).row==0)
         {
-            result=(self.tableView.dequeueReusableCellWithIdentifier(self.pbIdentifierForTableView(indexPath, data: nil)))
+            result=(self.tableView.dequeueReusableCell(withIdentifier: self.pbIdentifierForTableView(indexPath, data: nil)))
             if(result == nil)
             {
-                result=PbUITabMenuView(style: UITableViewCellStyle.Default, reuseIdentifier:self.pbIdentifierForTableView(indexPath, data: nil))
+                result=PbUITabMenuView(style: UITableViewCellStyle.default, reuseIdentifier:self.pbIdentifierForTableView(indexPath, data: nil))
             }
             
             //设置菜单
@@ -364,7 +364,7 @@ public class PbUITabViewController:PbUITableViewController
             ]
         }
         //内容栏
-        if(indexPath.section==1 && indexPath.row==0)
+        if((indexPath as NSIndexPath).section==1 && (indexPath as NSIndexPath).row==0)
         {
             
         }

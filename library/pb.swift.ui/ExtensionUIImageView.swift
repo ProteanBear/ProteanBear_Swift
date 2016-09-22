@@ -8,23 +8,43 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 extension UIImageView
 {
     //loadWithUrl:异步载入网络图片
-    public func loadWithUrl(urlString:String)
+    public func loadWithUrl(_ urlString:String)
     {
         self.loadWithUrl(urlString,scale:nil)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    public func loadWithUrl(urlString:String,scale:Float?)
+    public func loadWithUrl(_ urlString:String,scale:Float?)
     {
-        self.loadWithUrl(urlString, scale: scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
+        self.loadWithUrl(urlString, scale: scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    public func loadWithUrl(urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func loadWithUrl(_ urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //网络格式错误
         if(!urlString.hasPrefix("http:"))
@@ -49,52 +69,52 @@ extension UIImageView
                 if(data != nil)
                 {
                     //显示图片
-                    self.displayAnimation(UIImage(data: data),scale:scale,lowMode:lowMode,overMode:overMode)
+                    self.displayAnimation(UIImage(data: data!),scale:scale,lowMode:lowMode,overMode:overMode)
                     PbLog.debug("UIImageView:loadWithUrl:载入图片("+urlString+")完成")
                     //记录图片到缓存
-                    PbDataAppController.getInstance.saveImageIntoLocalCache(data, forUrl:urlString)
+                    PbDataAppController.getInstance.saveImageIntoLocalCache(data!, forUrl:urlString)
                 }
                 else
                 {
-                    PbLog.error("UIImageView:loadWithUrl:未获取到图片:"+error.description)
+                    PbLog.error("UIImageView:loadWithUrl:未获取到图片:"+(error?.description)!)
                 }
             })
         }
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    public func autoSetContentMode(scale:Float?)
+    public func autoSetContentMode(_ scale:Float?)
     {
-        self.autoSetContentMode(scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
+        self.autoSetContentMode(scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
     //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    public func autoSetContentMode(scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func autoSetContentMode(_ scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(self.image == nil || scale == nil){return}
         
-        let width=CGImageGetWidth(self.image?.CGImage)
-        let height=CGImageGetHeight(self.image?.CGImage)
+        let width=self.image?.cgImage?.width
+        let height=self.image?.cgImage?.height
         
-        let isFill=(scale > Float(width/height))
+        let isFill=(scale > Float(width!/height!))
         
         self.contentMode=isFill ? lowMode : overMode
     }
     
     //setImage:指定设置比例并动画显示图片
-    public func setImage(image:UIImage,scale:Float?)
+    public func setImage(_ image:UIImage,scale:Float?)
     {
-        self.displayAnimation(image, scale:scale, lowMode: UIViewContentMode.ScaleAspectFill, overMode: UIViewContentMode.ScaleAspectFit)
+        self.displayAnimation(image, scale:scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
     //setImage:指定设置比例并动画显示图片
-    public func setImage(image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func setImage(_ image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         self.displayAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
     }
     
     //displayAnimation:动画显示图片
-    public func displayAnimation(image:UIImage?)
+    public func displayAnimation(_ image:UIImage?)
     {
         if(image != nil)
         {
@@ -102,7 +122,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
+            UIView.animate(withDuration: 1.5,delay:0.2, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 
@@ -117,7 +137,7 @@ extension UIImageView
     }
     
     //displayAnimation:动画显示图片载入完成
-    public func displayAnimation(image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func displayAnimation(_ image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(image != nil)
         {
@@ -125,7 +145,7 @@ extension UIImageView
             self.alpha=0
             self.image=image
             self.setNeedsLayout()
-            UIView.animateWithDuration(1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
+            UIView.animate(withDuration: 1,delay:0, usingSpringWithDamping:1, initialSpringVelocity:0.5, options: [], animations: { () -> Void in
                 
                 self.alpha=1
                 

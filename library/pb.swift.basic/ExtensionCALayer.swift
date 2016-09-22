@@ -33,14 +33,14 @@ extension CALayer
         return anim
     }
     
-    private class func pbAnimationValues(fromValue:Float,toValue:Float,usingSpringWithDamping damping:Float,initialSpringVelocity velocity:Float,duration:Double) -> [AnyObject]
+    fileprivate class func pbAnimationValues(_ fromValue:Float,toValue:Float,usingSpringWithDamping damping:Float,initialSpringVelocity velocity:Float,duration:Double) -> [AnyObject]
     {
         //60个关键帧
         let numOfPoints:Int=Int(duration * 60)
         let values=NSMutableArray(capacity:numOfPoints)
         for _ in 0 ..< numOfPoints
         {
-            values.addObject(CGFloat(0))
+            values.add(CGFloat(0))
         }
         
         //差值

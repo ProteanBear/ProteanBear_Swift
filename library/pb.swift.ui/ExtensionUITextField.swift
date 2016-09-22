@@ -12,20 +12,20 @@ import UIKit
 extension UITextField
 {
     //pbSetLeftPadding:设置左侧边距
-    public func pbSetLeftPadding(width:CGFloat)
+    public func pbSetLeftPadding(_ width:CGFloat)
     {
         var rect=self.frame
         rect.size.width = width
-        self.leftViewMode = .Always
+        self.leftViewMode = .always
         self.leftView=UIView(frame:rect)
     }
     
     //pbSetRightPadding:设置右侧边距
-    public func pbSetRightPadding(width:CGFloat)
+    public func pbSetRightPadding(_ width:CGFloat)
     {
         var rect=self.frame
         rect.size.width = width
-        self.rightViewMode = .Always
+        self.rightViewMode = .always
         self.rightView=UIView(frame:rect)
     }
 }

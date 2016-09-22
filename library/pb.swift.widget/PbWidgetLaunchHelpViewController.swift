@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
+open class PbWidgetLaunchHelpViewController:PbUICollectionViewController
 {
     //pageControl:页码指示器
-    let pageControl=PbUIAnimatedPageControl(frame:CGRectZero)
+    let pageControl=PbUIAnimatedPageControl(frame:CGRect.zero)
     //startButton:进入按钮
-    let startButton=UIButton(frame:CGRectZero)
+    let startButton=UIButton(frame:CGRect.zero)
     
     //viewDidLoad:视图设置
-    override public func viewDidLoad()
+    override open func viewDidLoad()
     {
         super.viewDidLoad()
         
@@ -28,7 +28,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
             self.collectionData=NSMutableArray(capacity:array!.count)
             for i in 0 ..< array!.count 
             {
-                self.collectionData?.addObject(["image":array![i]])
+                self.collectionData?.add(["image":array![i]])
             }
         }
         
@@ -44,29 +44,29 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //pbSupport:设置网格控制器类型
-    override public func pbSupportActivityIndicator() -> PbUIActivityIndicator?{return nil}
-    override public func pbSupportHeaderRefresh() -> Bool{return false}
-    override public func pbSupportFooterLoad() -> Bool{return false}
+    override open func pbSupportActivityIndicator() -> PbUIActivityIndicator?{return nil}
+    override open func pbSupportHeaderRefresh() -> Bool{return false}
+    override open func pbSupportFooterLoad() -> Bool{return false}
     
     //pbCellClassForCollectionView:注册单元各类
-    override public func pbCellClassForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> AnyClass?
+    override open func pbCellClassForCollectionView(_ indexPath: IndexPath, data: AnyObject?) -> AnyClass?
     {
         return PbUICollectionViewCellForImage.self
     }
     
     //pbIdentifierForCollectionView:设置单元格复用标识
-    override public func pbIdentifierForCollectionView(indexPath: NSIndexPath, data: AnyObject?) -> String
+    override open func pbIdentifierForCollectionView(_ indexPath: IndexPath, data: AnyObject?) -> String
     {
         return "PbWidgetLaunchHelpView"
     }
     
     //pbSetDataForCollectionView:设置单元格显示
-    override public func pbSetDataForCollectionView(cell: AnyObject, data: AnyObject?, photoRecord: PbDataPhotoRecord?, indexPath: NSIndexPath) -> AnyObject
+    override open func pbSetDataForCollectionView(_ cell: AnyObject, data: AnyObject?, photoRecord: PbDataPhotoRecord?, indexPath: IndexPath) -> AnyObject
     {
         let cell=cell as! PbUICollectionViewCellForImage
         
-        cell.imageView.contentMode=UIViewContentMode.ScaleAspectFill
-        cell.imageView.image=UIImage(named:(data?.objectForKey("image") as! String))
+        cell.imageView.contentMode=UIViewContentMode.scaleAspectFill
+        cell.imageView.image=UIImage(named:(data?.object(forKey: "image") as! String))
         
         return cell
     }
@@ -81,28 +81,28 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.pageControl.unSelectedColor=UIColor.pbSmokeWhiteColor()
         self.pageControl.selectedColor=UIColor.pbSkyBlueColor()
         self.pageControl.shouldShowProgressLine = true
-        self.pageControl.indicatorStyle = PbUIAnimatedPageControlIndicatorStyle.GooeyCircle
+        self.pageControl.indicatorStyle = PbUIAnimatedPageControlIndicatorStyle.gooeyCircle
         self.pageControl.indicatorSize = self.pageControlSize().height
         self.pageControl.swipeEnable = true
-        self.pageControl.frame=CGRectMake(0, 0,self.pageControlSize().width,self.pageControlSize().height)
+        self.pageControl.frame=CGRect(x: 0, y: 0,width: self.pageControlSize().width,height: self.pageControlSize().height)
         
         //startButton
         self.startButton.translatesAutoresizingMaskIntoConstraints = false
-        self.startButton.setTitle("进入应用",forState:.Normal)
-        self.startButton.setTitleColor(UIColor.blackColor(),forState:.Normal)
-        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor(), size: self.startButtonSize()), forState: UIControlState.Normal)
-        self.startButton.titleLabel?.font=UIFont.systemFontOfSize(15)
+        self.startButton.setTitle("进入应用",for:UIControlState())
+        self.startButton.setTitleColor(UIColor.black,for:UIControlState())
+        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white, size: self.startButtonSize()), for: UIControlState())
+        self.startButton.titleLabel?.font=UIFont.systemFont(ofSize: 15)
         self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true
         self.startButton.layer.opacity=0
-        self.startButton.addTarget(self, action: #selector(PbWidgetLaunchHelpViewController.startButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.startButton.addTarget(self, action: #selector(PbWidgetLaunchHelpViewController.startButtonAction(_:)), for: UIControlEvents.touchUpInside)
         
         //collectionView
-        self.collectionView?.backgroundColor=UIColor.whiteColor()
+        self.collectionView?.backgroundColor=UIColor.white
         self.collectionView?.showsHorizontalScrollIndicator=false
         self.collectionView?.showsVerticalScrollIndicator=false
-        self.collectionView?.scrollEnabled=true
-        self.collectionView?.pagingEnabled=true
+        self.collectionView?.isScrollEnabled=true
+        self.collectionView?.isPagingEnabled=true
     }
     
     //imageArray:设置显示图的图片数组(覆盖此方法设置每页显示的图片)
@@ -114,29 +114,29 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     //pageControlSize:设置分页指示器的大小(覆盖此方法重设页码指示器大小)
     func pageControlSize() -> CGSize
     {
-        return CGSizeMake(80,15)
+        return CGSize(width: 80,height: 15)
     }
     
     //startButtonSize:设置进入按钮的大小(覆盖此方法重设进入按钮大小)
     func startButtonSize() -> CGSize
     {
-        return CGSizeMake(200,34)
+        return CGSize(width: 200,height: 34)
     }
     
     //startButtonAction:设置进入按钮的点击事件(覆盖此方法重设点击事件)
-    func startButtonAction(button:UIButton){}
+    func startButtonAction(_ button:UIButton){}
     
     //setCollectionViewLayout:设置单元格布局
-    private func setCollectionViewLayout()
+    fileprivate func setCollectionViewLayout()
     {
         //collectionViewLayout
         let layout=UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing=0
         layout.minimumLineSpacing=0
-        layout.headerReferenceSize=CGSizeMake(0, 0)
-        layout.footerReferenceSize=CGSizeMake(0, 0)
+        layout.headerReferenceSize=CGSize(width: 0, height: 0)
+        layout.footerReferenceSize=CGSize(width: 0, height: 0)
         layout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.scrollDirection=UICollectionViewScrollDirection.Horizontal
+        layout.scrollDirection=UICollectionViewScrollDirection.horizontal
         layout.itemSize=PbSystem.screenCurrentSize(true)
         self.collectionView?.setCollectionViewLayout(layout,animated: false)
         
@@ -144,43 +144,43 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         let metrics=["width":self.pageControlSize().width,"height":self.pageControlSize().height,"btnWidth":self.startButtonSize().width,"btnHeight":self.startButtonSize().height,"margin":20]
         let views=["pageControl":self.pageControl,"startButton":self.startButton]
         //纵向
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[startButton(==btnHeight)]-margin-[pageControl(==height)]-margin-|", options:.AlignAllCenterX, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[startButton(==btnHeight)]-margin-[pageControl(==height)]-margin-|", options:.alignAllCenterX, metrics: metrics, views:views))
         //横向
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[pageControl(==width)]", options:.AlignAllBaseline, metrics: metrics, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[startButton(==btnWidth)]", options:.AlignAllBaseline, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[pageControl(==width)]", options:.alignAllLastBaseline, metrics: metrics, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[startButton(==btnWidth)]", options:.alignAllLastBaseline, metrics: metrics, views:views))
         //中心位置
-        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.CenterX, relatedBy:.Equal, toItem: self.pageControl,attribute:.CenterX, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.CenterX, relatedBy:.Equal, toItem: self.startButton,attribute:.CenterX, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.centerX, relatedBy:.equal, toItem: self.pageControl,attribute:.centerX, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: self.view, attribute:.centerX, relatedBy:.equal, toItem: self.startButton,attribute:.centerX, multiplier: 1, constant: 0))
     }
     
     //displayStartButton:显示进入按钮
-    private func displayStartButton(show:Bool)
+    fileprivate func displayStartButton(_ show:Bool)
     {
         if(show)
         {
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
+            UIView.animate(withDuration: 0.1, animations: { () -> Void in
                 self.startButton.layer.opacity=1
-                }) { (finished) -> Void in
+                }, completion: { (finished) -> Void in
                     
-            }
+            }) 
         }
         else
         {
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
+            UIView.animate(withDuration: 0.1, animations: { () -> Void in
                 self.startButton.layer.opacity=0
-                }) { (finished) -> Void in
+                }, completion: { (finished) -> Void in
                     
-            }
+            }) 
         }
     }
     
     //scrollViewDidScroll:滚动时执行粘土动画
-    override public func scrollViewDidScroll(scrollView: UIScrollView)
+    override open func scrollViewDidScroll(_ scrollView: UIScrollView)
     {
         //Indicator动画
         self.pageControl.indicator.animateIndicator(scrollView, pageControl: self.pageControl)
         
-        if (scrollView.dragging || scrollView.decelerating || scrollView.tracking)
+        if (scrollView.isDragging || scrollView.isDecelerating || scrollView.isTracking)
         {
             //背景线条动画
             self.pageControl.pageControlLine().animateSelectedLineWithScrollView(scrollView)
@@ -188,7 +188,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //scrollViewWillBeginDecelerating:将要开始滚动，重置指示器位置
-    override public func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
+    override open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
     {
         if(self.startButton.layer.opacity==1)
         {
@@ -198,7 +198,7 @@ public class PbWidgetLaunchHelpViewController:PbUICollectionViewController
     }
     
     //scrollViewDidEndDecelerating:停止滚动，记录最后滚动的位置
-    override public func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    override open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
     {
         self.pageControl.indicator.lastContentOffset=scrollView.contentOffset.x
         self.pageControl.selectedPage=Int(Double(scrollView.contentOffset.x)/Double((self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width))

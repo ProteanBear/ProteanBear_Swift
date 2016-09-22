@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class PbObjectFile:AnyObject
+open class PbObjectFile:AnyObject
 {
     let name: String!
-    let url: NSURL!
-    public init(name: String, url: NSURL)
+    let url: URL!
+    public init(name: String, url: URL)
     {
         self.name = name
         self.url = url
