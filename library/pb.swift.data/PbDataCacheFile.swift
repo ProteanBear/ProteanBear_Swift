@@ -28,7 +28,7 @@ open class PbDataCacheFile
     public init(cachePathName:String)
     {
         //获取用户缓存目录
-        let paths:Array=NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask,true) as Array
+        let paths=NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask,true) as Array<String>
         rootPath=paths[0] 
         
         //指定的缓存目录不存在则创建目录

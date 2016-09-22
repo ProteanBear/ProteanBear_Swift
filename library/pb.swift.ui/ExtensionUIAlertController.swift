@@ -54,11 +54,11 @@ extension UIAlertController
     }
     public class func pbSheet(_ title:String,cancelLabel:String,actions:[UIAlertAction]) ->UIAlertController
     {
-        return UIAlertController.pbSheet(title, message: "",cancelLabel:cancelLabel, actions: actions)
+        return UIAlertController.pbSheet(title, message: nil,cancelLabel:cancelLabel, actions: actions)
     }
-    public class func pbSheet(_ title:String,message:String,cancelLabel:String,actions:[UIAlertAction]) ->UIAlertController
+    public class func pbSheet(_ title:String,message:String?,cancelLabel:String,actions:[UIAlertAction]) ->UIAlertController
     {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: cancelLabel, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         

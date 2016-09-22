@@ -522,7 +522,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         let attributes=interface?.object(forKey: key) as! NSDictionary
         
         //获取远程接口链接地址
-        let url:String=((!alterServer.isEmpty&&useAlterServer) ?alterServer:server)+(attributes.object(forKey: "url")! as AnyObject).description
+        let url:String=((!alterServer.isEmpty&&useAlterServer) ?alterServer:server)+(attributes.object(forKey: "url")as! String)
         PbLog.debug(curLogPre+"请求地址:"+url)
         
         //获取请求参数

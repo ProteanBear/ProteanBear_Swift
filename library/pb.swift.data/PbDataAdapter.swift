@@ -217,8 +217,8 @@ open class PbDataAdapter
                 //输出错误信息
                 if(error != nil)
                 {
-                    PbLog.error(logPre+error!.description)
-                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netError, error: error!.description)
+                    PbLog.error(logPre+(error?.description)!)
+                    self.delegate!.pbErrorForDataLoad(PbUIViewControllerErrorType.netError, error: (error?.description)!)
                     return
                 }
                 
