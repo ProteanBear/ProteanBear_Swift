@@ -97,6 +97,18 @@ open class PbSystem
         return osVersion()>8.0
     }
     
+    //当前系统是否为9.0以上版本
+    open class func osUp9() -> Bool
+    {
+        return osVersion()>9.0
+    }
+    
+    //当前系统是否为10.0以上版本
+    open class func osUp10() -> Bool
+    {
+        return osVersion()>10.0
+    }
+    
     //获取当前屏幕的宽度
     open class func screenWidth() -> CGFloat
     {

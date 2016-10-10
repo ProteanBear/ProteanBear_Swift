@@ -160,7 +160,7 @@ open class PbUITableViewController:UITableViewController,PbUITableViewController
             //滤镜处理：缩放图片
             let isLand=(image.size.width>image.size.height)
             let scale=isLand ? (size.height/image.size.height):(size.width/image.size.width)
-            return UIImage.scaleImage(image,toScale:scale)
+            return UIImage.pbScale(image,scale:scale)
         }
         return nil
     }

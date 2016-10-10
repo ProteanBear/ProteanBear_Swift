@@ -3,12 +3,12 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata
 
   s.name         = "PbSwiftLibrary"
-  s.version      = "0.9.6"
-  s.summary      = "由ProteanBear创作使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用方法、数据绑定和一些常用的UI组件以及视图控制器。"
+  s.version      = “1.0.0”
+  s.summary      = "使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。"
 
   s.description  = <<-DESC
 
-                    说明：由ProteanBear创作使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用方法、数据绑定和一些常用的UI组件以及视图控制器。
+                    说明：使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。
 
                    DESC
 

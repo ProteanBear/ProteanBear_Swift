@@ -32,47 +32,47 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 extension UIImageView
 {
     //loadWithUrl:异步载入网络图片
-    public func loadWithUrl(_ urlString:String)
+    public func pbLoadWith(_ url:String)
     {
-        self.loadWithUrl(urlString,scale:nil)
+        self.pbLoadWith(url,scale:nil)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    public func loadWithUrl(_ urlString:String,scale:Float?)
+    public func pbLoadWith(_ url:String,scale:Float?)
     {
-        self.loadWithUrl(urlString, scale: scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
+        self.pbLoadWith(url, scale: scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
     //loadWithUrl:异步载入网络图片(指定显示的比例)
-    public func loadWithUrl(_ urlString:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    public func pbLoadWith(_ url:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //网络格式错误
-        if(!urlString.hasPrefix("http:"))
+        if(!url.hasPrefix("http:"))
         {
-            let image=UIImage(named: urlString)
-            self.displayAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
+            let image=UIImage(named: url)
+            self.pbAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
             return
         }
         
         //读取本地图片
-        let image=PbDataAppController.getInstance.imageInLocalCache(urlString)
+        let image=PbDataAppController.getInstance.imageInLocalCache(url)
         
         //本地图片存在，显示图片
         if(image != nil)
         {
-            self.displayAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
+            self.pbAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
         }
         //本地图片不存在，访问网络数据
         else
         {
-            PbDataRequesterHttp().requestForResource(urlString, callback: { (data, response, error) -> Void in
+            PbDataRequesterHttp().requestForResource(url, callback: { (data, response, error) -> Void in
                 if(data != nil)
                 {
                     //显示图片
-                    self.displayAnimation(UIImage(data: data!),scale:scale,lowMode:lowMode,overMode:overMode)
-                    PbLog.debug("UIImageView:loadWithUrl:载入图片("+urlString+")完成")
+                    self.pbAnimation(UIImage(data: data!),scale:scale,lowMode:lowMode,overMode:overMode)
+                    PbLog.debug("UIImageView:loadWithUrl:载入图片("+url+")完成")
                     //记录图片到缓存
-                    PbDataAppController.getInstance.saveImageIntoLocalCache(data!, forUrl:urlString)
+                    PbDataAppController.getInstance.saveImageIntoLocalCache(data!, forUrl:url)
                 }
                 else
                 {
@@ -82,14 +82,14 @@ extension UIImageView
         }
     }
     
-    //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    public func autoSetContentMode(_ scale:Float?)
+    //pbAutoSetContentMode:根据指定的比例设置图片视图显示模式
+    public func pbAutoSetContentMode(_ scale:Float?)
     {
-        self.autoSetContentMode(scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
+        self.pbAutoSetContentMode(scale, lowMode: .scaleAspectFill, overMode: .scaleAspectFit)
     }
     
-    //autoSetContentMode:根据指定的比例设置图片视图显示模式
-    public func autoSetContentMode(_ scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    //pbAutoSetContentMode:根据指定的比例设置图片视图显示模式
+    public func pbAutoSetContentMode(_ scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(self.image == nil || scale == nil){return}
         
@@ -101,20 +101,20 @@ extension UIImageView
         self.contentMode=isFill ? lowMode : overMode
     }
     
-    //setImage:指定设置比例并动画显示图片
-    public func setImage(_ image:UIImage,scale:Float?)
+    //pbSetImage:指定设置比例并动画显示图片
+    public func pbSet(_ image:UIImage,scale:Float?)
     {
-        self.displayAnimation(image, scale:scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
+        self.pbAnimation(image, scale:scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
-    //setImage:指定设置比例并动画显示图片
-    public func setImage(_ image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    //pbSetImage:指定设置比例并动画显示图片
+    public func pbSet(_ image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
-        self.displayAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
+        self.pbAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
     }
     
-    //displayAnimation:动画显示图片
-    public func displayAnimation(_ image:UIImage?)
+    //pbAnimation:动画显示图片
+    public func pbAnimation(_ image:UIImage?)
     {
         if(image != nil)
         {
@@ -136,8 +136,8 @@ extension UIImageView
         }
     }
     
-    //displayAnimation:动画显示图片载入完成
-    public func displayAnimation(_ image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
+    //pbAnimation:动画显示图片载入完成
+    public func pbAnimation(_ image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(image != nil)
         {
@@ -158,7 +158,7 @@ extension UIImageView
             })
             
             //自动设置比例
-            self.autoSetContentMode(scale, lowMode: lowMode, overMode: overMode)
+            self.pbAutoSetContentMode(scale, lowMode: lowMode, overMode: overMode)
         }
     }
 }
