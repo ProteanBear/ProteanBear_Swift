@@ -1,10 +1,12 @@
+[TOC]
+
 # PbSwiftLibrary
 
 &nbsp;&nbsp;&nbsp;&nbsp;使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。现在已经修改为Swift3.0语法。
 
 #### 引用方法
 
-&nbsp;&nbsp;&nbsp;&nbsp;使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
+    使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
 
 &nbsp;&nbsp;&nbsp;&nbsp;目前CocoaPods上的PbSwiftLibrary的最新版本是0.9.5，Swift2.3语法编写（其实本人想提交Swift3.0语法的但是老是报错……，将错就错还能有个区分吧╮(╯_╰)╭）。
 
@@ -31,11 +33,6 @@
 
 #### 使用手册
 
-##### 目录索引
-
-* [使用手册之基本：扩展String](./#extension_string)
-* [使用手册之基本：扩展UIColor](./#extension_uicolor)
-
 ##### 基本（Basic）
 
     本来这里我放了几个需要的配置文件模板，不过CocoaPods引入后肯定是看不到的，这三个源代码里是有的：
@@ -45,9 +42,9 @@
 * Common-Bridging-Header.h ：Swift和ObjC混编时的头文件，历史性产物而已，框架库里没啥作用。
 
 
-###### <span id="extension_string">扩展String</span>
+###### 扩展String
 
-###### <span id="extension_uicolor">扩展UIColor</span>
+###### 扩展UIColor
 
 ###### 扩展UIImage
 
