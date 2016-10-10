@@ -33,8 +33,8 @@
 
 ##### 目录索引
 
-* [使用手册之基本：扩展String](#扩展String)
-* [使用手册之基本：扩展UIColor](#扩展UIColor)
+* [使用手册之基本：扩展String](./#extension_string)
+* [使用手册之基本：扩展UIColor](./#extension_uicolor)
 
 ##### 基本（Basic）
 
@@ -45,9 +45,9 @@
 * Common-Bridging-Header.h ：Swift和ObjC混编时的头文件，历史性产物而已，框架库里没啥作用。
 
 
-###### 扩展String
+###### <span id="extension_string">扩展String</span>
 
-###### 扩展UIColor
+###### <span id="extension_uicolor">扩展UIColor</span>
 
 ###### 扩展UIImage
 
