@@ -78,8 +78,8 @@ open class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.pageControl.bindScrollView=self.collectionView
         self.pageControl.pageCount=self.collectionData!.count
         self.pageControl.translatesAutoresizingMaskIntoConstraints = false
-        self.pageControl.unSelectedColor=UIColor.pbSmokeWhiteColor()
-        self.pageControl.selectedColor=UIColor.pbSkyBlueColor()
+        self.pageControl.unSelectedColor=UIColor.pbSmokeWhite
+        self.pageControl.selectedColor=UIColor.pbSkyBlue
         self.pageControl.shouldShowProgressLine = true
         self.pageControl.indicatorStyle = PbUIAnimatedPageControlIndicatorStyle.gooeyCircle
         self.pageControl.indicatorSize = self.pageControlSize().height
@@ -90,7 +90,7 @@ open class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         self.startButton.translatesAutoresizingMaskIntoConstraints = false
         self.startButton.setTitle("进入应用",for:UIControlState())
         self.startButton.setTitleColor(UIColor.black,for:UIControlState())
-        self.startButton.setBackgroundImage(UIImage.imageWithColor(UIColor.white, size: self.startButtonSize()), for: UIControlState())
+        self.startButton.setBackgroundImage(UIImage.pbGenerateBy(UIColor.white, size: self.startButtonSize()), for: UIControlState())
         self.startButton.titleLabel?.font=UIFont.systemFont(ofSize: 15)
         self.startButton.layer.cornerRadius=3
         self.startButton.clipsToBounds=true

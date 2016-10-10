@@ -11,36 +11,36 @@ import UIKit
 
 extension UIImage
 {
-    //scaleImage:缩放指定的图片,等比例缩放
-    public class func scaleImage(_ image:UIImage,toScale:CGFloat) -> UIImage!
+    //pbScale:缩放指定的图片,等比例缩放
+    public class func pbScale(_ image:UIImage,scale:CGFloat) -> UIImage!
     {
-        UIGraphicsBeginImageContext(CGSize(width: image.size.width * toScale,height: image.size.height * toScale))
-        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width * toScale, height: image.size.height * toScale))
+        UIGraphicsBeginImageContext(CGSize(width: image.size.width * scale,height: image.size.height * scale))
+        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width * scale, height: image.size.height * scale))
         let result=UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
     }
     
-    //scaleImage:缩放指定的图片,指定尺寸
-    public class func scaleImage(_ image:UIImage,toSize:CGSize) -> UIImage!
+    //pbScale:缩放指定的图片,指定尺寸
+    public class func pbScale(_ image:UIImage,size:CGSize) -> UIImage!
     {
-        UIGraphicsBeginImageContext(CGSize(width: toSize.width,height: toSize.height))
-        image.draw(in: CGRect(x: 0, y: 0,width: toSize.width,height: toSize.height))
+        UIGraphicsBeginImageContext(CGSize(width: size.width,height: size.height))
+        image.draw(in: CGRect(x: 0, y: 0,width: size.width,height: size.height))
         let result=UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
     }
     
-    //resizeToNewImage:将指定图片剪裁为指定的大小
-    public class func resizeToNewImage(_ image:UIImage,newSize:CGSize) -> UIImage!
+    //pbResizeToNew:将指定图片剪裁为指定的大小
+    public class func pbResize(_ image:UIImage,to size:CGSize) -> UIImage!
     {
-        if newSize.width > image.size.width || newSize.height > image.size.height
+        if size.width > image.size.width || size.height > image.size.height
         {
             return image
         }
         
-        let hRatio = newSize.width / image.size.width
-        let vRatio = newSize.height / image.size.height
+        let hRatio = size.width / image.size.width
+        let vRatio = size.height / image.size.height
         let ratio = hRatio > vRatio ? hRatio : vRatio
         let scaledSize = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
         
@@ -59,8 +59,8 @@ extension UIImage
         return newImage
     }
     
-    //imageWithColor:根据颜色生成图片
-    public class func imageWithColor(_ color:UIColor,size:CGSize) -> UIImage
+    //pbGenerateBy:根据颜色生成图片
+    public class func pbGenerateBy(_ color:UIColor,size:CGSize) -> UIImage
     {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
