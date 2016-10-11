@@ -11,7 +11,9 @@ import UIKit
 
 extension UIImage
 {
-    //pbScale:缩放指定的图片,等比例缩放
+    /// 缩放指定的图片,等比例缩放
+    /// - parameter image:指定图片
+    /// - parameter scale:指定图片的缩放比例，如缩小一半即为0.5
     public class func pbScale(_ image:UIImage,scale:CGFloat) -> UIImage!
     {
         UIGraphicsBeginImageContext(CGSize(width: image.size.width * scale,height: image.size.height * scale))
@@ -21,7 +23,9 @@ extension UIImage
         return result
     }
     
-    //pbScale:缩放指定的图片,指定尺寸
+    /// 缩放指定的图片,指定尺寸（注意比例，可能会变形）
+    /// - parameter image   :指定图片
+    /// - parameter size    :指定生成图片的最终尺寸
     public class func pbScale(_ image:UIImage,size:CGSize) -> UIImage!
     {
         UIGraphicsBeginImageContext(CGSize(width: size.width,height: size.height))
@@ -31,7 +35,9 @@ extension UIImage
         return result
     }
     
-    //pbResizeToNew:将指定图片剪裁为指定的大小
+    /// 将指定图片剪裁为指定的大小
+    /// - parameter image   :指定图片
+    /// - parameter to size :指定生成图片的最终尺寸
     public class func pbResize(_ image:UIImage,to size:CGSize) -> UIImage!
     {
         if size.width > image.size.width || size.height > image.size.height
@@ -59,7 +65,9 @@ extension UIImage
         return newImage
     }
     
-    //pbGenerateBy:根据颜色生成图片
+    /// 根据颜色生成一张纯色的图片
+    /// - parameter color   :指定颜色
+    /// - parameter size    :指定生成图片的尺寸
     public class func pbGenerateBy(_ color:UIColor,size:CGSize) -> UIImage
     {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)

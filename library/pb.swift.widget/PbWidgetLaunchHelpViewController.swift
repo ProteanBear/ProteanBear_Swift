@@ -137,7 +137,7 @@ open class PbWidgetLaunchHelpViewController:PbUICollectionViewController
         layout.footerReferenceSize=CGSize(width: 0, height: 0)
         layout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0)
         layout.scrollDirection=UICollectionViewScrollDirection.horizontal
-        layout.itemSize=PbSystem.screenCurrentSize(true)
+        layout.itemSize=PbSystem.screenCurrentSize
         self.collectionView?.setCollectionViewLayout(layout,animated: false)
         
         //pageControl+startButton

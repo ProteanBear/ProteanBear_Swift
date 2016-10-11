@@ -393,7 +393,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
             PbLog.debug(logPre+"createLocationManager:创建定位管理器")
             
             //iOS8下询问用户
-            if(PbSystem.osUp8())
+            if(PbSystem.osUp8)
             {
                 if(locationMode == PbDataLocationMode.always)
                 {

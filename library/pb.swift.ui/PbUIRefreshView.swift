@@ -297,7 +297,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
                     {
                         self.arrowView.transform = CGAffineTransform.identity
                         self.lastUpdateTime = Date()
-                        self.updateTimeLabel?.text=PbSystem.stringFromDate("yyyy年MM月dd日 HH:mm")
+                        self.updateTimeLabel?.text=String.date("yyyy年MM月dd日 HH:mm")
                         UIView.animate(withDuration: 0.3, animations:
                         {
                             var contentInset:UIEdgeInsets = self.scrollView.contentInset
