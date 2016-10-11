@@ -1,28 +1,33 @@
 # PbSwiftLibrary
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。现在已经修改为Swift3.0语法。
 
-#### 引用方法
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
+        使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。现在已经修改为Swift3.0语法。
+
+
+
+### 引用方法
+
+        使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前CocoaPods上的PbSwiftLibrary的最新版本是0.9.5，Swift2.3语法编写（其实本人想提交Swift3.0语法的但是老是报错……，将错就错还能有个区分吧╮(╯_╰)╭）。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Master分支上为最新版本1.0.0，Swift3.0语法。
+        Master分支上为最新版本1.0.0，Swift3.0语法。
 
 ###### Swift2.3 Podfile：
 
-`pod 'PbSwiftLibrary'`
+	pod 'PbSwiftLibrary'
 
 ###### Swift3.0 Podfile:
 
-`pod 'PbSwiftLibrary',:git => "https://github.com/ProteanBear/ProteanBear_Swift", :branch => "master"`
+	pod 'PbSwiftLibrary',:git => "https://github.com/ProteanBear/ProteanBear_Swift", :branch => "master"
 
-#### 框架库说明
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个库的开发目的就是提高开发效率。所以没有什么MVC、MVP、MVVM的架构模式，没有什么高深的底层技术，只是总结了日常的开发经验积累，将常用的开发方式融合封装到库中，走的就是简洁轻量的路线。需要的就是**快速上手**使用，让开发流程**更快**进行，**更快**的实现业务功能！
+### 框架库说明
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当然还是结合了本人编程的风格特点，应该说比较适合小型、比较偏重展示类的应用。总结起来还是有几个特点的：
+        这个库的开发目的就是提高开发效率。所以没有什么MVC、MVP、MVVM的架构模式，没有什么高深的底层技术，只是总结了日常的开发经验积累，将常用的开发方式融合封装到库中，走的就是简洁轻量的路线。需要的就是**快速上手**使用，让开发流程**更快**进行，**更快**的实现业务功能！
+
+        当然还是结合了本人编程的风格特点，应该说比较适合小型、比较偏重展示类的应用。总结起来还是有几个特点的：
 
 1. **网络通讯外部文件配置**
 
@@ -40,9 +45,13 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据开发者使用的经验累积，使用extension方式增加了很多实用的扩展方法，方便开发时即刻使用，如String中获取文字高度、UIImage中图片缩放和裁剪等。后面版本还会逐渐增加扩展。
 
-#### 使用手册
 
-##### 基本（Basic）
+
+### 使用手册
+
+
+
+#### 基本（Basic）
 
         本来这里我放了几个需要的配置文件模板，不过CocoaPods引入后肯定是看不到的，这三个源代码里是有的：
 
@@ -51,9 +60,50 @@
 * Common-Bridging-Header.h ：Swift和ObjC混编时的头文件，历史性产物而已，框架库里没啥作用。
 
 
-###### 扩展String
 
-###### 扩展UIColor
+
+###### 基本：扩展String
+
+        对String类进行扩展，增加了尺寸获取方法。方法内部是使用了NSString类的boundingRect方法获取的文字尺寸，扩展方法避免了每次使用时麻烦的构建方式。
+
+1. public func pbTextHeight(_ width:CGFloat,font:UIFont) -> CGFloat
+
+```
+/// 计算当前文字的高度
+/// - parameter width   :限制文字的宽度
+/// - parameter font    :字体
+```
+
+2. public func pbTextSize(_ size:CGSize,font:UIFont) -> CGSize
+
+```
+/// 计算当前文字的尺寸
+/// - parameter size:尺寸（宽度为0获取高度；高度为0获取宽度）
+/// - parameter font:字体
+```
+
+
+
+###### 基本：扩展UIColor
+
+        对UIColor类进行了扩展，增加了Material Design的标准颜色和一些iOS常用的颜色值，另外主要是实现了给定16进制值（如0x000000）直接获取颜色的方法，避免每次创建自定义的颜色值的纠结了。调用方法如下：
+
+```
+//Material Design 的标准色，如红色
+UIColor.pbRed(.level500)
+
+//iOS 常用色，如天蓝色(0xf0ffff)
+UIColor.pbSkyBlue
+
+//自定义颜色，如0x121212
+UIColor.pbUIColor(0x121212)
+```
+
+| MaterialDesign | 方法名   | 级别       | 颜色                                       |
+| -------------- | ----- | -------- | ---------------------------------------- |
+| 红色             | pbRed | .level50 | <span style="width:60px;backgroud-color:#fde0dc;"> </span> |
+|                |       |          |                                          |
+|                |       |          |                                          |
 
 ###### 扩展UIImage
 
@@ -61,13 +111,17 @@
 
 ###### 系统信息（PbSystem）
 
-#####  数据（Data）
+
+
+####  数据（Data）
 
 ###### 应用数据层控制器（PbDataAppController）
 
 ###### 用户数据控制器（PbDataUserController）
 
-#####  交互（UI）
+
+
+####  交互（UI）
 
 ###### 扩展UIImageView
 
