@@ -10,9 +10,9 @@
 
         使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前CocoaPods上的PbSwiftLibrary的最新版本是0.9.5，Swift2.3语法编写（其实本人想提交Swift3.0语法的但是老是报错……，将错就错还能有个区分吧╮(╯_╰)╭）。
+        目前CocoaPods上的PbSwiftLibrary的最新版本是0.9.5，Swift2.3语法编写（其实本人想提交Swift3.0语法的但是老是报错……，将错就错还能有个区分吧╮(╯_╰)╭，另外0.9.5版本中跟当前版本很多方法名字有些区别，所以建议还是用最新版本！）。
 
-        Master分支上为最新版本1.0.0，Swift3.0语法。
+        Master分支上为最新版本1.0.1，Swift3.0语法。
 
 ###### Swift2.3 Podfile：
 
@@ -1144,4 +1144,4 @@ func pbResolveFromResponse(_ response:NSDictionary,updateMode:PbDataUpdateMode) 
 
 ### 最强示例
 
-       还不知道怎么用！！！算了直接上代码了，而且不是Demo，到【[这里]()】吧！
+       还不知道怎么用！！！算了直接上代码了，而且不是Demo，到【[这里](https://github.com/ProteanBear/PbSwiftPaintingYxy)】吧！
