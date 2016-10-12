@@ -106,8 +106,8 @@ PbDataUserController.instance.initWithPlistName("UserData")
 
         本来这里我放了几个需要的配置文件模板，不过CocoaPods引入后肯定是看不到的，这三个源代码里是有的：
 
-* DataConfig.plist ：网络通讯使用的配置文件。（详细内容点开【这里】查看）
-* UserData.plist ：用户数据的初始化文件。（详细内容点开【这里】查看）
+* DataConfig.plist ：网络通讯使用的配置文件。
+* UserData.plist ：用户数据的初始化文件。
 * Common-Bridging-Header.h ：Swift和ObjC混编时的头文件，历史性产物而已，框架库里没啥作用。
 
 
