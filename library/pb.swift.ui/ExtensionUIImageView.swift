@@ -31,19 +31,26 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 extension UIImageView
 {
-    //loadWithUrl:异步载入网络图片
+    /// 异步载入网络图片，会自动先从缓存读取，如没有再从网络下载，并在下载完成后淡入效果显示
+    /// - parameter url:图片链接地址
     public func pbLoadWith(_ url:String)
     {
         self.pbLoadWith(url,scale:nil)
     }
     
-    //loadWithUrl:异步载入网络图片(指定显示的比例)
+    /// 异步载入网络图片(指定显示的比例)，会自动先从缓存读取，如没有再从网络下载，并在下载完成后淡入效果显示
+    /// - parameter url     :图片链接地址
+    /// - parameter scale   :显示比例宽比高，如4/3；默认小于这个比例用scaleAspectFill，大于比例用scaleAspectFit
     public func pbLoadWith(_ url:String,scale:Float?)
     {
         self.pbLoadWith(url, scale: scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
-    //loadWithUrl:异步载入网络图片(指定显示的比例)
+    /// 异步载入网络图片(指定显示的比例)，会自动先从缓存读取，如没有再从网络下载，并在下载完成后淡入效果显示
+    /// - parameter url     :图片链接地址
+    /// - parameter scale   :显示比例宽比高，如4/3
+    /// - parameter lowMode :小于比例时的显示模式
+    /// - parameter overMode:大于比例时的显示模式
     public func pbLoadWith(_ url:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //网络格式错误
@@ -55,7 +62,7 @@ extension UIImageView
         }
         
         //读取本地图片
-        let image=PbDataAppController.getInstance.imageInLocalCache(url)
+        let image=PbDataAppController.instance.imageInLocalCache(url)
         
         //本地图片存在，显示图片
         if(image != nil)
@@ -72,7 +79,7 @@ extension UIImageView
                     self.pbAnimation(UIImage(data: data!),scale:scale,lowMode:lowMode,overMode:overMode)
                     PbLog.debug("UIImageView:loadWithUrl:载入图片("+url+")完成")
                     //记录图片到缓存
-                    PbDataAppController.getInstance.saveImageIntoLocalCache(data!, forUrl:url)
+                    PbDataAppController.instance.saveImageIntoLocalCache(data!, forUrl:url)
                 }
                 else
                 {
@@ -82,13 +89,17 @@ extension UIImageView
         }
     }
     
-    //pbAutoSetContentMode:根据指定的比例设置图片视图显示模式
+    /// 根据指定的比例设置图片视图显示模式
+    /// - parameter scale   :显示比例宽比高，如4/3；默认小于这个比例用scaleAspectFill，大于比例用scaleAspectFit
     public func pbAutoSetContentMode(_ scale:Float?)
     {
         self.pbAutoSetContentMode(scale, lowMode: .scaleAspectFill, overMode: .scaleAspectFit)
     }
     
-    //pbAutoSetContentMode:根据指定的比例设置图片视图显示模式
+    /// 根据指定的比例设置图片视图显示模式
+    /// - parameter scale   :显示比例宽比高，如4/3
+    /// - parameter lowMode :小于比例时的显示模式
+    /// - parameter overMode:大于比例时的显示模式
     public func pbAutoSetContentMode(_ scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(self.image == nil || scale == nil){return}
@@ -101,19 +112,26 @@ extension UIImageView
         self.contentMode=isFill ? lowMode : overMode
     }
     
-    //pbSetImage:指定设置比例并动画显示图片
+    /// 指定设置比例并动画显示图片
+    /// - parameter image   :图片
+    /// - parameter scale   :显示比例宽比高，如4/3；默认小于这个比例用scaleAspectFill，大于比例用scaleAspectFit
     public func pbSet(_ image:UIImage,scale:Float?)
     {
         self.pbAnimation(image, scale:scale, lowMode: UIViewContentMode.scaleAspectFill, overMode: UIViewContentMode.scaleAspectFit)
     }
     
-    //pbSetImage:指定设置比例并动画显示图片
+    /// 指定设置比例并动画显示图片
+    /// - parameter image   :图片
+    /// - parameter scale   :显示比例宽比高，如4/3
+    /// - parameter lowMode :小于比例时的显示模式
+    /// - parameter overMode:大于比例时的显示模式
     public func pbSet(_ image:UIImage,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         self.pbAnimation(image, scale:scale, lowMode:lowMode,overMode:overMode)
     }
     
-    //pbAnimation:动画显示图片
+    /// 动画（淡入）显示图片
+    /// - parameter image   :图片
     public func pbAnimation(_ image:UIImage?)
     {
         if(image != nil)
@@ -136,7 +154,11 @@ extension UIImageView
         }
     }
     
-    //pbAnimation:动画显示图片载入完成
+    /// 动画（淡入）显示图片载入完成
+    /// - parameter image   :图片
+    /// - parameter scale   :显示比例宽比高，如4/3
+    /// - parameter lowMode :小于比例时的显示模式
+    /// - parameter overMode:大于比例时的显示模式
     public func pbAnimation(_ image:UIImage?,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         if(image != nil)

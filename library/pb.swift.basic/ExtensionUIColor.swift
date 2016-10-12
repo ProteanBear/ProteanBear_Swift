@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-//扩展标准颜色值
+/// 扩展标准颜色值
 extension UIColor
 {
     //红色（Red）
@@ -160,7 +160,8 @@ extension UIColor
     }
 }
 
-//PbUIColorLevel:颜色级别
+/// 枚举值：颜色级别。
+/// 为UIColor扩展了Material Design的标准颜色。
 public enum PbUIColorLevel:Int
 {
     //枚举值
@@ -282,34 +283,47 @@ public enum PbUIColorLevel:Int
 extension UIColor
 {
     //-----------------------开始：Design标准颜色值
-    //levelName:获取级别名称
+    /// 获取颜色级别的名称描述
+    /// - parameter levelRaw:颜色级别的对应值
     public class func pbLevelName(_ levelRaw:Int) -> String
     {
         return String(describing: PbUIColorLevel(rawValue: levelRaw))
     }
-    //pbUIColor:自定义颜色（直接使用16进制值）
+    
+    /// 根据给定的16进制值生成颜色
+    /// - parameter color:颜色值，格式为0x000000
     public class func pbUIColor(_ color:UInt32) -> UIColor
     {
         return pbUIColor(color, alpha: 1)
     }
+    /// 根据给定的16进制值生成颜色
+    /// - parameter color:颜色值，格式为0x000000
+    /// - parameter alpha:透明度
     public class func pbUIColor(_ color:UInt32,alpha:CGFloat) -> UIColor
     {
         return UIColor.pbUInt32ToUIColor(color, alpha: alpha)
     }
     
-    //红色Red
+    /// 红色
+    /// - parameter levelRaw:颜色级别的对应值
     public class func pbRed(_ levelRaw:Int) -> UIColor
     {
         return pbRed(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 红色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbRed(_ level:PbUIColorLevel) -> UIColor
     {
         return level.red
     }
+    /// 返回指定级别红色对应的颜色值
+    /// - parameter levelRaw:颜色级别的对应值
     public class func pbRedValue(_ levelRaw:Int) -> String
     {
         return pbRedValue(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 返回指定级别红色对应的颜色值
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbRedValue(_ level:PbUIColorLevel) -> String
     {
         return level.colorDescription(UIColor.standardRed)
@@ -320,6 +334,8 @@ extension UIColor
     {
         return pbPink(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 粉色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbPink(_ level:PbUIColorLevel) -> UIColor
     {
         return level.pink
@@ -338,6 +354,8 @@ extension UIColor
     {
         return pbPurple(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 紫色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbPurple(_ level:PbUIColorLevel) -> UIColor
     {
         return level.purple
@@ -356,6 +374,8 @@ extension UIColor
     {
         return pbPurpleDeep(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 深紫色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbPurpleDeep(_ level:PbUIColorLevel) -> UIColor
     {
         return level.purpleDeep
@@ -374,6 +394,8 @@ extension UIColor
     {
         return pbIndigo(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 靛蓝色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbIndigo(_ level:PbUIColorLevel) -> UIColor
     {
         return level.indigo
@@ -392,6 +414,8 @@ extension UIColor
     {
         return pbBlue(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 蓝色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbBlue(_ level:PbUIColorLevel) -> UIColor
     {
         return level.blue
@@ -410,6 +434,8 @@ extension UIColor
     {
         return pbBlueLight(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 浅蓝色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbBlueLight(_ level:PbUIColorLevel) -> UIColor
     {
         return level.blueLight
@@ -428,6 +454,8 @@ extension UIColor
     {
         return pbCyan(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 青色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbCyan(_ level:PbUIColorLevel) -> UIColor
     {
         return level.cyan
@@ -446,6 +474,8 @@ extension UIColor
     {
         return pbTeal(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 蓝绿色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbTeal(_ level:PbUIColorLevel) -> UIColor
     {
         return level.teal
@@ -464,6 +494,8 @@ extension UIColor
     {
         return pbGreen(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 绿色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbGreen(_ level:PbUIColorLevel) -> UIColor
     {
         return level.green
@@ -482,6 +514,8 @@ extension UIColor
     {
         return pbGreenLight(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 浅绿色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbGreenLight(_ level:PbUIColorLevel) -> UIColor
     {
         return level.greenLight
@@ -500,6 +534,8 @@ extension UIColor
     {
         return pbLime(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 黄绿色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbLime(_ level:PbUIColorLevel) -> UIColor
     {
         return level.lime
@@ -518,6 +554,8 @@ extension UIColor
     {
         return pbYellow(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 黄色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbYellow(_ level:PbUIColorLevel) -> UIColor
     {
         return level.yellow
@@ -536,6 +574,8 @@ extension UIColor
     {
         return pbAmber(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 琥珀色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbAmber(_ level:PbUIColorLevel) -> UIColor
     {
         return level.amber
@@ -554,6 +594,8 @@ extension UIColor
     {
         return pbOrange(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 橙色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbOrange(_ level:PbUIColorLevel) -> UIColor
     {
         return level.orange
@@ -572,6 +614,8 @@ extension UIColor
     {
         return pbOrangeDeep(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 深橙色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbOrangeDeep(_ level:PbUIColorLevel) -> UIColor
     {
         return level.orangeDeep
@@ -590,6 +634,8 @@ extension UIColor
     {
         return pbBrown(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 棕色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbBrown(_ level:PbUIColorLevel) -> UIColor
     {
         return level.brown
@@ -608,6 +654,8 @@ extension UIColor
     {
         return pbGrey(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 灰色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbGrey(_ level:PbUIColorLevel) -> UIColor
     {
         return level.grey
@@ -626,6 +674,8 @@ extension UIColor
     {
         return pbGreyBlue(PbUIColorLevel(rawValue:levelRaw)!)
     }
+    /// 蓝灰色
+    /// - parameter level:颜色级别，使用PbUIColorLevel中的枚举值
     public class func pbGreyBlue(_ level:PbUIColorLevel) -> UIColor
     {
         return level.greyBlue
@@ -642,91 +692,91 @@ extension UIColor
     
     //-----------------------开始：iOS常用颜色值
     //黑灰色系
-    //象牙黑（#292421）
+    /// 象牙黑（#292421）
     public static var pbIvoryBlack:UIColor{
         return UIColor.pbUInt32ToUIColor(0x292421, alpha: 1)
     }
-    //冷灰（#808A87）
+    /// 冷灰（#808A87）
     public static var pbColdGray:UIColor{
         return UIColor.pbUInt32ToUIColor(0x808a87, alpha: 1)
     }
-    //石板灰（#708069）
+    /// 石板灰（#708069）
     public static var pbSlateGray:UIColor{
         return UIColor.pbUInt32ToUIColor(0x708069, alpha: 1)
     }
-    //暖灰色（#808069）
+    /// 暖灰色（#808069）
     public static var pbWarmGray:UIColor{
         return UIColor.pbUInt32ToUIColor(0x808069, alpha: 1)
     }
     
     //白色系
-    //古董白（#FAEBD7）
+    /// 古董白（#FAEBD7）
     public static var pbAntiqueWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfaebd7, alpha: 1)
     }
-    //天蓝色（#F0FFFF）
+    /// 天蓝色（#F0FFFF）
     public static var pbSkyBlue:UIColor{
         return UIColor.pbUInt32ToUIColor(0xf0ffff, alpha: 1)
     }
-    //白烟（#F5F5F5）
+    /// 白烟（#F5F5F5）
     public static var pbSmokeWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xf5f5f5, alpha: 1)
     }
-    //白杏仁（#FFFFCD）
+    /// 白杏仁（#FFFFCD）
     public static var pbAlmondWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xffffcd, alpha: 1)
     }
-    //cornsilk（#FFF8DC）
+    /// cornsilk（#FFF8DC）
     public static var pbCornsilk:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfff8dc, alpha: 1)
     }
-    //蛋壳色（#FCE6C9）
+    /// 蛋壳色（#FCE6C9）
     public static var pbYellowEgg:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfce6c9, alpha: 1)
     }
-    //花白（#FFFAF0）
+    /// 花白（#FFFAF0）
     public static var pbFloralWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfffaf0, alpha: 1)
     }
-    //gainsboro（#DCDCDC）
+    /// gainsboro（#DCDCDC）
     public static var pbGainsboroColor:UIColor{
         return UIColor.pbUInt32ToUIColor(0xdcdcdc, alpha: 1)
     }
-    //ghostWhite（#F8F8FF）
+    /// ghostWhite（#F8F8FF）
     public static var pbGhostWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xf8f8ff, alpha: 1)
     }
-    //蜜露橙（#F0FFF0）
+    /// 蜜露橙（#F0FFF0）
     public static var pbHoneyDew:UIColor{
         return UIColor.pbUInt32ToUIColor(0xf0fff0, alpha: 1)
     }
-    //象牙白（#FAFFF0）
+    /// 象牙白（#FAFFF0）
     public static var pbIvoryWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfafff0, alpha: 1)
     }
-    //亚麻色（#FAF0E6）
+    /// 亚麻色（#FAF0E6）
     public static var pbFlaxen:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfaf0e6, alpha: 1)
     }
-    //navajoWhite（#FFDEAD）
+    /// navajoWhite（#FFDEAD）
     public static var pbNavajoWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xffdead, alpha: 1)
     }
-    //oldLace（#FDF5E6）
+    /// oldLace（#FDF5E6）
     public static var pbOldLace:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfdf5e6, alpha: 1)
     }
-    //海贝壳色（#FFF5EE）
+    /// 海贝壳色（#FFF5EE）
     public static var pbSeaShell:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfff5ee, alpha: 1)
     }
-    //雪白（#FFFAFA）
+    /// 雪白（#FFFAFA）
     public static var pbSnowWhite:UIColor{
         return UIColor.pbUInt32ToUIColor(0xfffafa, alpha: 1)
     }
     
     //红色系
-    //砖红（#9C661F）
+    /// 砖红（#9C661F）
     public static var brickRed:UIColor{
         return UIColor.pbUInt32ToUIColor(0x9c661f, alpha: 1)
     }

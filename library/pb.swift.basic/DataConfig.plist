@@ -10,8 +10,6 @@
 		<string>HTTP</string>
 		<key>method</key>
 		<string>POST</string>
-		<key>asynchronous</key>
-		<false/>
 		<key>responseType</key>
 		<string>JSON</string>
 		<key>timeOut</key>
@@ -74,13 +72,6 @@
 				<string>iOS</string>
 			</dict>
 		</dict>
-	</dict>
-	<key>localMenu</key>
-	<dict>
-		<key>menu</key>
-		<array/>
-		<key>subMenu</key>
-		<array/>
 	</dict>
 </dict>
 </plist>

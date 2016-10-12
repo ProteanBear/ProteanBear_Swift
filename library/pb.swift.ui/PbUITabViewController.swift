@@ -202,7 +202,7 @@ open class PbUITabMenuView:UITableViewCell,UICollectionViewDataSource,UICollecti
         
         if(self.menuData != nil)
         {
-            layout.itemSize=CGSize(width:PbSystem.screenWidth(true)/CGFloat(min(self.maxNumPer,self.menuData!.count)),height:CGFloat(PbSystem.sizeTopMenuBarHeight))
+            layout.itemSize=CGSize(width:PbSystem.screenWidth/CGFloat(min(self.maxNumPer,self.menuData!.count)),height:CGFloat(PbSystem.sizeTopMenuBarHeight))
         }
         
         return layout

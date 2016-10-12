@@ -8,8 +8,10 @@
 
 import Foundation
 
+/// 数据解析器实现的协议
 public protocol PbDataParser
 {
-    //dictionaryByData:通过数据获取数据字典对象
+    /// 通过数据获取数据字典对象
+    /// - parameter data:解析的数据
     mutating func dictionaryByData(_ data:Data?) -> NSMutableDictionary?
 }

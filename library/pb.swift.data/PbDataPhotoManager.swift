@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-//PbDataPhotoState:图片处理状态，包括新图片、已下载、已加滤镜和失败
+/// 图片处理状态，包括新图片、已下载、已加滤镜和失败
 public enum PbDataPhotoState
 {
     case new, downloaded, filtered, failed
 }
 
-//PbDataPhotoRecord:记录当前图片处理的相关信息
+/// 记录当前图片处理的相关信息
 open class PbDataPhotoRecord
 {
     open let url:String
@@ -30,11 +30,14 @@ open class PbDataPhotoRecord
     }
 }
 
-//PbDataPhotoDownloadOperate:图片数据下载器
+/// 图片数据下载器
 open class PbDataPhotoDownloadOperate:Operation
 {
+    /// 图片记录
     let photoRecord:PbDataPhotoRecord
     
+    /// 初始化
+    /// - parameter phptoRecord:图片记录
     public init(photoRecord:PbDataPhotoRecord)
     {
         self.photoRecord=photoRecord
@@ -45,7 +48,7 @@ open class PbDataPhotoDownloadOperate:Operation
         if(self.isCancelled){return}
         
         //从缓存中读取
-        if let cacheImage = PbDataAppController.getInstance.imageInLocalCache(photoRecord.url)
+        if let cacheImage = PbDataAppController.instance.imageInLocalCache(photoRecord.url)
         {
             //更新下载记录状态
             self.photoRecord.image=cacheImage
@@ -63,7 +66,7 @@ open class PbDataPhotoDownloadOperate:Operation
                 
                 PbLog.debug("PbDataPhotoDownloadOperate:main:下载图片("+self.photoRecord.url+")完成")
                 //记录图片到缓存
-                PbDataAppController.getInstance.saveImageIntoLocalCache(data!,forUrl:self.photoRecord.url)
+                PbDataAppController.instance.saveImageIntoLocalCache(data!,forUrl:self.photoRecord.url)
             }
             else
             {
@@ -75,13 +78,17 @@ open class PbDataPhotoDownloadOperate:Operation
     }
 }
 
-//PbDataPhotoFilterOperate:图片使用滤镜加载器
+/// 图片使用滤镜加载器
 open class PbDataPhotoFilterOperate:Operation
 {
+    /// 图片记录
     let photoRecord:PbDataPhotoRecord
-    //自定义图片处理
+    /// 自定义图片处理
     var specialFilter:((_ image:UIImage)->UIImage?)?
     
+    /// 初始化
+    /// - parameter phptoRecord:图片记录
+    /// - parameter specialFilter:处理过滤器
     public init(photoRecord:PbDataPhotoRecord,specialFilter:((_ image:UIImage)->UIImage?)?)
     {
         self.photoRecord=photoRecord
@@ -100,6 +107,8 @@ open class PbDataPhotoFilterOperate:Operation
         }
     }
     
+    /// 判断是否需要滤镜处理
+    /// - parameter image:图片
     open func applySepiaFilter(_ image:UIImage) -> UIImage?
     {
         if(self.specialFilter != nil)
@@ -110,21 +119,21 @@ open class PbDataPhotoFilterOperate:Operation
     }
 }
 
-//PbDataPhotoManager:图片下载队列管理器
+/// 图片下载队列管理器
 open class PbDataPhotoManager
 {
-    //downloadsInProgress:跟踪当前正在进行的下载进程
+    /// 跟踪当前正在进行的下载进程
     lazy var downloadsInProgress=[IndexPath:Operation]()
-    //downloadQueue:下载队列
+    /// 下载队列
     lazy var downloadQueue=OperationQueue()
-    //downloadMaxCount:下载线程最大并发量
+    /// 下载线程最大并发量
     lazy var downloadMaxCount=0
     
-    //filterInProgress:跟踪当前正在进行的滤镜进程
+    /// 跟踪当前正在进行的滤镜进程
     lazy var filterInProgress=[IndexPath:Operation]()
-    //filterQueue:滤镜队列
+    /// 滤镜队列
     lazy var filterQueue=OperationQueue()
-    //filterMaxCount:滤镜线程最大并发量
+    /// 滤镜线程最大并发量
     lazy var filterMaxCount=0
     
     public init()
@@ -155,13 +164,17 @@ open class PbDataPhotoManager
         if(filterMaxCount>0){self.filterQueue.maxConcurrentOperationCount=filterMaxCount}
     }
     
-    //download:下载给定的图片数组
+    /// 下载给定的图片数组
+    /// - parameter photos  :图片记录数组
+    /// - parameter callback:下载完成后调用
     open func download(_ photos:Array<PbDataPhotoRecord>,callback:@escaping (_ photoRecord:PbDataPhotoRecord) -> Void)
     {
         self.download(photos, callback: callback, imageFilter: nil)
     }
     
-    //download:下载给定的图片
+    /// 下载给定的图片
+    /// - parameter photos  :图片记录数组
+    /// - parameter callback:下载完成后调用
     open func download(_ photo:PbDataPhotoRecord,callback:@escaping (_ photoRecord:PbDataPhotoRecord) -> Void)
     {
         self.download(photo, callback: callback, imageFilter: nil)
@@ -176,7 +189,9 @@ open class PbDataPhotoManager
         }
     }
     
-    //download:下载给定的图片
+    /// 下载给定的图片
+    /// - parameter photos  :图片记录数组
+    /// - parameter callback:下载完成后调用
     open func download(_ photo:PbDataPhotoRecord,callback:@escaping (_ photoRecord:PbDataPhotoRecord) -> Void,imageFilter:((_ image:UIImage)->UIImage?)?)
     {
         //已在进行的进程
@@ -228,7 +243,7 @@ open class PbDataPhotoManager
         self.downloadQueue.addOperation(downloadOperate)
     }
     
-    //downloadCancel:取消全部图片下载任务
+    /// 取消全部图片下载任务
     open func downloadCancel()
     {
         for indexPath:IndexPath in downloadsInProgress.keys
@@ -239,7 +254,8 @@ open class PbDataPhotoManager
         downloadsInProgress.removeAll(keepingCapacity:false)
     }
     
-    //downloadCancel:取消指定的图片下载任务
+    /// 取消指定的图片下载任务
+    /// - parameter indexPath  :任务对应的索引
     open func downloadCancel(_ indexPath:IndexPath)
     {
         let operation=downloadsInProgress[indexPath]
@@ -247,13 +263,15 @@ open class PbDataPhotoManager
         downloadsInProgress.removeValue(forKey: indexPath)
     }
     
-    //downloadCancel:取消指定的图片下载任务
+    /// 取消指定的图片下载任务
+    /// - parameter photo  :任务对应的图片记录
     open func downloadCancel(_ photo:PbDataPhotoRecord)
     {
         self.downloadCancel(photo.indexPath)
     }
     
-    //downloadCancel:取消指定的图片下载任务
+    /// 取消指定的图片下载任务
+    /// - parameter urlString  :任务对应的下载链接
     open func downloadCancel(_ urlString:String)
     {
         for indexPath:IndexPath in downloadsInProgress.keys
@@ -267,19 +285,19 @@ open class PbDataPhotoManager
         }
     }
     
-    //downloadPauseAll:暂停全部下载任务
+    /// 暂停全部下载任务
     open func downloadPauseAll()
     {
         self.downloadQueue.isSuspended=true
     }
     
-    //downloadResumeAll:继续全部下载任务
+    /// 继续全部下载任务
     open func downloadResumeAll()
     {
         self.downloadQueue.isSuspended=false
     }
     
-    //downloadCancel:清除全部
+    /// 清除全部下载任务
     open func downloadCancelAll()
     {
         for indexPath:IndexPath in downloadsInProgress.keys
@@ -290,7 +308,7 @@ open class PbDataPhotoManager
         downloadsInProgress.removeAll()
     }
     
-    //filterCancel:取消全部图片下载任务
+    /// 取消全部图片滤镜任务
     open func filterCancel()
     {
         for indexPath:IndexPath in filterInProgress.keys
@@ -301,7 +319,8 @@ open class PbDataPhotoManager
         filterInProgress.removeAll(keepingCapacity:false)
     }
     
-    //filterCancel:取消指定的图片下载任务
+    /// 取消指定的图片滤镜任务
+    /// - parameter indexPath  :任务对应的索引
     open func filterCancel(_ indexPath:IndexPath)
     {
         let operation=filterInProgress[indexPath]
@@ -309,13 +328,15 @@ open class PbDataPhotoManager
         filterInProgress.removeValue(forKey: indexPath)
     }
     
-    //filterCancel:取消指定的图片滤镜任务
+    /// 取消指定的图片滤镜任务
+    /// - parameter photo  :任务对应的图片记录
     open func filterCancel(_ photo:PbDataPhotoRecord)
     {
         self.filterCancel(photo.indexPath)
     }
     
-    //filterCancel:取消指定的图片滤镜任务
+    /// 取消指定的图片滤镜任务
+    /// - parameter urlString  :任务对应的下载链接
     open func filterCancel(_ urlString:String)
     {
         for indexPath:IndexPath in filterInProgress.keys
@@ -329,13 +350,13 @@ open class PbDataPhotoManager
         }
     }
     
-    //filterPauseAll:暂停全部滤镜任务
+    /// 暂停全部滤镜任务
     open func filterPauseAll()
     {
         self.filterQueue.isSuspended=true
     }
     
-    //filterResumeAll:继续全部滤镜任务
+    /// 继续全部滤镜任务
     open func filterResumeAll()
     {
         self.filterQueue.isSuspended=false

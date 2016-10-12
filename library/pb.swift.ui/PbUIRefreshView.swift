@@ -9,33 +9,47 @@
 import Foundation
 import UIKit
 
-//PbUIRefreshState:刷新状态
+/**枚举类型，刷新状态
+ * pulling          :拖拽中
+ * normal           :正常
+ * refreshing       :刷新中
+ * willRefreshing   :将要刷新
+ */
 public enum PbUIRefreshState:Int
 {
     case pulling,normal,refreshing,willRefreshing
 }
 
-//PbUIRefreshPosition:刷新位置
+/**枚举类型，刷新位置
+ * header:头部
+ * footer:底部
+ */
 public enum PbUIRefreshPosition:Int
 {
     case header,footer
 }
 
-//PbUIRefreshConfigProtocol:对刷新控件进行配置
+/// 对刷新控件进行配置
 public protocol PbUIRefreshConfigProtocol
 {
+    /// 刷新控件的背景颜色
     func pbUIRefreshViewBackgroudColor() -> UIColor
+    /// 刷新控件的显示字体大小
     func pbUIRefreshLabelFontSize() -> CGFloat
+    /// 刷新控件的显示字体颜色
     func pbUIRefreshLabelTextColor() -> UIColor
+    /// 刷新控件的指示器
     func pbUIRefreshActivityView() -> PbUIActivityIndicator?
+    /// 刷新控件的指示器的默认尺寸
     func pbUIRefreshActivityDefaultSize() -> CGSize
+    /// 刷新控件的指示器的默认颜色
     func pbUIRefreshActivityDefaultColor() -> UIColor
 }
 
-//PbUIArrowView:箭头视图
+/// 箭头视图
 open class PbUIArrowView:UIView
 {
-    //init:初始化
+    /// 初始化
     override init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -47,7 +61,7 @@ open class PbUIArrowView:UIView
         self.backgroundColor=UIColor.clear
     }
     
-    //绘制内容
+    /// 绘制内容
     override open func draw(_ rect: CGRect)
     {
         let context = UIGraphicsGetCurrentContext()
@@ -69,32 +83,34 @@ open class PbUIArrowView:UIView
     }
 }
 
-//PbUIRefreshBaseView:刷新基本视图
+/// 刷新基本视图
 open class PbUIRefreshBaseView:UIView
 {
-    //默认颜色
+    /// 默认颜色
     let textColor=UIColor.darkGray
     
-    //父类控件
+    /// 父类控件
     var scrollView:UIScrollView!
     var scrollViewOriginalInset:UIEdgeInsets!
     
-    //内部显示控件
+    /// 内部显示控件
     var statusLabel:UILabel!
     var arrowView:PbUIArrowView!
     var activityView:PbUIActivityIndicator!
     
-    //回执方法
+    /// 回执方法
     var beginRefreshingCallback:(()->Void)?
     
     //记录状态
+    /// 历史状态
     var oldState:PbUIRefreshState?
+    /// 记录状态
     var state=PbUIRefreshState.normal
     
-    //配置协议
+    /// 配置协议
     var config:PbUIRefreshConfigProtocol?
     
-    //初始化方法
+    /// 初始化方法
     override init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -114,7 +130,7 @@ open class PbUIRefreshBaseView:UIView
         setup()
     }
     
-    //createActivityView:创建载入指示器
+    /// 创建载入指示器
     func createActivityView() -> PbUIActivityIndicator
     {
         let indicator=PbUIRingSpinnerView(frame: CGRect.zero)
@@ -126,7 +142,7 @@ open class PbUIRefreshBaseView:UIView
         return indicator
     }
     
-    //layoutSubviews:设置内部布局
+    /// 设置内部布局
     override open func layoutSubviews()
     {
         super.layoutSubviews()
@@ -138,7 +154,7 @@ open class PbUIRefreshBaseView:UIView
         (self.activityView as! UIView).isHidden=true
     }
     
-    //willMoveToSuperview:设置父控件
+    /// 设置父控件
     override open func willMove(toSuperview newSuperview: UIView?)
     {
         if (self.superview != nil)
@@ -160,7 +176,7 @@ open class PbUIRefreshBaseView:UIView
         }
     }
     
-    //drawRect:显示到屏幕上
+    /// 显示到屏幕上
     override open func draw(_ rect: CGRect)
     {
         super.draw(rect)
@@ -170,7 +186,7 @@ open class PbUIRefreshBaseView:UIView
         }
     }
     
-    //beginRefreshing:开始刷新
+    /// 开始刷新
     func beginRefreshing()
     {
         if (self.window != nil)
@@ -185,7 +201,7 @@ open class PbUIRefreshBaseView:UIView
         
     }
     
-    //结束刷新
+    /// 结束刷新
     func endRefreshing()
     {
         let delayInSeconds:Double = 0.3
@@ -196,7 +212,7 @@ open class PbUIRefreshBaseView:UIView
         })
     }
     
-    //setStateForView:设置状态
+    /// 设置状态
     func setStateForView(_ newValue:PbUIRefreshState)
     {
         if self.state != PbUIRefreshState.refreshing
@@ -234,7 +250,7 @@ open class PbUIRefreshBaseView:UIView
         }
     }
     
-    //setup:初始化内部控件
+    /// 初始化内部控件
     fileprivate func setup()
     {
         //状态标签
@@ -270,14 +286,14 @@ open class PbUIRefreshBaseView:UIView
     }
 }
 
-//PbUIRefreshHeaderView:顶部刷新视图
+/// 顶部刷新视图
 open class PbUIRefreshHeaderView:PbUIRefreshBaseView
 {
-    //lastUpdateTime:记录最后更新时间
+    /// 记录最后更新时间
     var lastUpdateTime=Date(){willSet{}didSet{}}
-    //updateTimeLabel:更新时间标签
+    /// 更新时间标签
     var updateTimeLabel:UILabel?
-    //state:覆盖父类属性，增加设置状态
+    /// 覆盖父类属性，增加设置状态
     override var state:PbUIRefreshState
     {
         willSet
@@ -297,7 +313,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
                     {
                         self.arrowView.transform = CGAffineTransform.identity
                         self.lastUpdateTime = Date()
-                        self.updateTimeLabel?.text=PbSystem.stringFromDate("yyyy年MM月dd日 HH:mm")
+                        self.updateTimeLabel?.text=String.date("yyyy年MM月dd日 HH:mm")
                         UIView.animate(withDuration: 0.3, animations:
                         {
                             var contentInset:UIEdgeInsets = self.scrollView.contentInset
@@ -345,7 +361,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         }
     }
     
-    //初始化方法
+    /// 初始化方法
     override public init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -363,7 +379,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         setup()
     }
     
-    //layoutSubviews:设置内部布局
+    /// 设置内部布局
     override open func layoutSubviews()
     {
         super.layoutSubviews()
@@ -384,7 +400,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         self.updateTimeLabel!.frame = CGRect(x: lastUpdateX, y: lastUpdateY, width: lastUpdateWidth, height: lastUpdateHeight);
     }
     
-    //willMoveToSuperview:设置自己的位置和尺寸
+    /// 设置自己的位置和尺寸
     override open func willMove(toSuperview newSuperview: UIView!) {
         super.willMove(toSuperview: newSuperview)
         
@@ -393,7 +409,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         self.frame = rect
     }
     
-    //observeValueForKeyPath:监听UIScrollView的contentOffset属性
+    /// 监听UIScrollView的contentOffset属性
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
     {
         if (!self.isUserInteractionEnabled || self.isHidden){return}
@@ -405,7 +421,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         }
     }
     
-    //adjustStateWithContentOffset:调整状态
+    /// 调整状态
     func adjustStateWithContentOffset()
     {
         let currentOffsetY:CGFloat = self.scrollView.contentOffset.y
@@ -431,7 +447,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
         }
     }
     
-    //setup:初始化内部控件
+    /// 初始化内部控件
     fileprivate override func setup()
     {
         super.setup()

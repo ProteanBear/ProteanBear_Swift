@@ -19,13 +19,18 @@ public enum PbMsyPosition:Int
 
 extension UIViewController
 {
-    //pbLoadData:获取数据
+    /// 获取数据,这种扩展方式需要实现协议
+    /// - parameter updateMode:数据更新模式
+    /// - parameter controller:协议实现对象
     public func pbLoadData(_ updateMode:PbDataUpdateMode,controller:PbUIViewControllerProtocol?)
     {
         PbDataAdapter(delegate:controller).loadData(updateMode)
     }
     
-    //pbMsgTip:提示信息
+    /// 提示信息，注意有些表格或网格视图底部显示时会看不到
+    /// - parameter msg                 :提示信息
+    /// - parameter dismissAfterSecond  :消失时间，单位为秒
+    /// - parameter position            :显示位置
     public func pbMsgTip(_ msg:String,dismissAfterSecond:TimeInterval,position:PbMsyPosition)
     {
         //创建元素
