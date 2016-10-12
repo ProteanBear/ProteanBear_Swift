@@ -11,22 +11,22 @@ import Foundation
 import UIKit
 import QuartzCore
 
-//PbUIAnimatedPageControlIndicatorStyle:指示器类型
+/// 指示器类型
 public enum PbUIAnimatedPageControlIndicatorStyle:Int
 {
     case gooeyCircle,rotateRect
 }
 
-//PbUIAnimatedPageControlScrollDirection:滚动方向
+/// 滚动方向
 public enum PbUIAnimatedPageControlScrollDirection:Int
 {
     case none,right,left,up,down,crazy
 }
 
-//PbUIAnimatedPageControlIndicator:指示器基类
+/// 指示器基类
 open class PbUIAnimatedPageControlIndicator:CALayer,CAAnimationDelegate
 {
-    //indicatorSize:
+    /// indicatorSize:
     var indicatorSize:CGFloat!{
         willSet
         {
@@ -34,20 +34,20 @@ open class PbUIAnimatedPageControlIndicator:CALayer,CAAnimationDelegate
                 && self.indicatorSize==newValue){return}
         }
     }
-    //indicatorColor:
+    /// indicatorColor:
     var indicatorColor:UIColor!
-    //currentRect:
+    /// currentRect:
     var currentRect:CGRect!
-    //lastContentOffset:
+    /// lastContentOffset:
     var lastContentOffset:CGFloat=0
-    //scrollDirection:
+    /// scrollDirection:
     var scrollDirection=PbUIAnimatedPageControlScrollDirection.none
     
-    //animateIndicator:
+    /// animateIndicator:
     open func animateIndicator(_ scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void {}
-    //restoreAnimation:
+    /// restoreAnimation:
     open func restoreAnimation(_ distince:Float) -> Void{}
-    //restoreAnimation:
+    /// restoreAnimation:
     open func restoreAnimation(_ distince:Float,after:TimeInterval) -> Void
     {
         UIView.animate(withDuration: after, animations: { () -> Void in
@@ -60,10 +60,10 @@ open class PbUIAnimatedPageControlIndicator:CALayer,CAAnimationDelegate
     }
 }
 
-//PbUIAnimatedPageControlIndicatorGooeyCircle:圆形指示器
+/// 圆形指示器
 class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicator
 {
-    //needsDisplayForKey:
+    /// needsDisplayForKey:
     override class func needsDisplay(forKey key: String) -> Bool
     {
         if("factor" == key)
@@ -74,12 +74,12 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
         return super.needsDisplay(forKey: key)
     }
     
-    //beginGooeyAnim:
+    /// beginGooeyAnim:
     var beginGooeyAnim=false
-    //factor:
+    /// factor:
     var factor:CGFloat!
     
-    //init:重载构造方法
+    /// 重载构造方法
     override init()
     {
         super.init()
@@ -101,7 +101,7 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
         super.init(coder: aDecoder)
     }
     
-    //drawInContext:重构绘制UI的方法
+    /// 重构绘制UI的方法
     override func draw(in ctx: CGContext)
     {
         //设置3.6 出来的弧度最像圆形
@@ -139,7 +139,7 @@ class PbUIAnimatedPageControlIndicatorGooeyCircle:PbUIAnimatedPageControlIndicat
         ctx.fillPath() 
     }
     
-    //animateIndicator:
+    /// animateIndicator:
     override func animateIndicator(_ scrollView:UIScrollView,pageControl:PbUIAnimatedPageControl) -> Void
     {
         if ((scrollView.contentOffset.x - self.lastContentOffset) >= 0 && (scrollView.contentOffset.x - self.lastContentOffset) <= (scrollView.frame.size.width)/2)

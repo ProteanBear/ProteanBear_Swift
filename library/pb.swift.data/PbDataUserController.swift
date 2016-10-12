@@ -13,8 +13,7 @@ open class PbDataUserController:NSObject
 {
     /*-----------------------开始：静态方法，实现单例模式*/
     
-    open class var getInstance:PbDataUserController
-    {
+    open class var instance:PbDataUserController{
         return Inner.instance;
     }
     
@@ -26,17 +25,12 @@ open class PbDataUserController:NSObject
     /*-----------------------结束：静态方法，实现单例模式*/
     
     /*-----------------------开始：公共方法*/
-    /*isFirstLaunch:
-     *  返回用户是否第一次打开应用
-     */
-    open func isFirstLaunch() -> Bool
-    {
+    /// 返回用户是否第一次打开应用
+    open var isFirstLaunch:Bool{
         return self.userDefaults.bool(forKey: PbDataUserController.keyFirstLaunch)
     }
     
-    /*saveUserData
-     *  保存用户信息
-     */
+    /// 保存用户信息
     open func saveUserData()
     {
         self.userData?.setValue(self.userFavorite,forKey:"userFavorite")
@@ -44,71 +38,70 @@ open class PbDataUserController:NSObject
         self.userDefaults.synchronize()
     }
     
-    /*isFavorite:
-     *  是否已经收藏
-     */
+    /// 是否已经收藏
+    /// - parameter id:收藏的主键标识
     open func isFavorite(_ id:String) ->Bool
     {
         return self.userFavorite?.value(forKey: id) != nil
     }
     
-    /*addFavorite:
-     *  增加收藏
-     */
+    /// 增加收藏
+    /// - parameter data:收藏数据
+    /// - parameter id:收藏的主键标识
     open func addFavorite(_ data:AnyObject,id:String)
     {
         self.userFavorite?.setObject(data, forKey: id as NSCopying)
         self.saveUserData()
     }
     
-    /*removeFavorite:
-     *  移除收藏
-     */
+    /// 移除收藏
+    /// - parameter id:收藏的主键标识
     open func removeFavorite(_ id:String)
     {
         self.userFavorite?.removeObject(forKey: id)
         self.saveUserData()
     }
+    /// 移除收藏
+    /// - parameter idArray:收藏的主键数组
     open func removeFavoritesWithArray(_ idArray:NSArray)
     {
         self.userFavorite?.removeObjects(forKeys: idArray as [AnyObject])
         self.saveUserData()
     }
+    /// 移除收藏
+    /// - parameter ids:收藏的主键数组
     open func removeFavorites(_ ids:[String])
     {
         self.userFavorite?.removeObjects(forKeys: ids)
         self.saveUserData()
     }
     
-    /*contains:
-     *  检查键是否存在
-     */
+    /// 检查用户数据中，指定的键是否存在
+    /// - parameter forKey:键值
     open func contains(_ forKey:String) ->Bool
     {
         return self.userData!.value(forKey: forKey) != nil
     }
     
-    /*setValue:
-     *  设置或者增加键值
-     */
-    open func setObject(_ value: AnyObject?, forKey key: String)
+    /// 设置或者增加键值
+    /// - parameter value:内容
+    /// - parameter key:键
+    open func setObject(_ value: AnyObject?, for key: String)
     {
         self.userData?.setValue(value,forKey:key)
         self.saveUserData()
     }
     
-    /*valueForKey:
-     *  设置或者增加键值
-     */
-    open func valueForKey(forKey key: String) -> AnyObject?
+    /// 获取键对应的内容
+    /// - parameter key:键
+    open func valueForKey(for key: String) -> AnyObject?
     {
         return self.userData?.value(forKey: key) as AnyObject?
     }
     
-    /*removeValueForKey:
-     *  删除键值
-     */
-    open func removeValueForKey(forKey key: String)
+    /// 删除键值
+    /// - parameter key:键
+    open func removeValueForKey(for key: String)
     {
         self.userData?.removeObject(forKey: key)
         self.saveUserData()
@@ -129,53 +122,59 @@ open class PbDataUserController:NSObject
     fileprivate let userDefaults=UserDefaults.standard
     //用户数据
     fileprivate var userData:NSMutableDictionary?
+    
+    /// 用户标识
     open var userId:String?{
         didSet{
             self.userData?.setValue(self.userId, forKey: "userId")
         }
     }
+    /// 用户名称
     open var userName:String?{
         didSet{
             self.userData?.setValue(self.userName, forKey: "userName")
         }
     }
+    /// 用户密码
     open var userPass:String?{
         didSet{
             self.userData?.setValue(self.userPass, forKey: "userPass")
         }
     }
+    /// 用户头像
     open var userHead:String?{
         didSet{
             self.userData?.setValue(self.userHead, forKey: "userHead")
         }
     }
+    /// 用户文本字体
     open var userFontSize:Int?{
         didSet{
             self.userData?.setValue(self.userFontSize, forKey: "userFontSize")
         }
     }
+    /// 用户文本行高
     open var userLineHeight:Float?{
         didSet{
             self.userData?.setValue(self.userLineHeight, forKey: "userLineHeight")
         }
     }
+    /// 用户收藏
     open var userFavorite:NSMutableDictionary?
     
     /*-----------------------结束：声明属性*/
     
     /*-----------------------开始：对象初始化相关方法*/
     
-    /*initWithPlistName:
-     *  使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
-     */
+    /// 使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
+    /// - parameter plistName:配置文件资源名称
     open func initWithPlistName(_ plistName:String)
     {
         self.reloadByPlistName(plistName)
     }
     
-    /*reloadByPlistName:
-     *  重新载入配置文件并重新初始化内部处理器对象
-     */
+    /// 重新载入配置文件并重新初始化内部处理器对象
+    /// - parameter plistName:配置文件资源名称
     open func reloadByPlistName(_ plistName:String)
     {
         /*载入plist配置文件*/
@@ -185,9 +184,8 @@ open class PbDataUserController:NSObject
         self.readConfig()
     }
     
-    /*loadPlist:
-     *  载入指定的PList文件
-     */
+    /// 载入指定的PList文件
+    /// - parameter plistName:配置文件资源名称
     fileprivate func loadPlist(_ plistName:String)
     {
         //调试信息前缀
@@ -213,9 +211,7 @@ open class PbDataUserController:NSObject
         PbLog.debug(logPre+"读取完成")
     }
     
-    /*readConfig:
-    *  读取相应的配置信息
-    */
+    /// 读取相应的配置信息
     fileprivate func readConfig()
     {
         //调试信息前缀

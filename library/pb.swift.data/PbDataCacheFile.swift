@@ -8,23 +8,23 @@
 
 import Foundation
 
+/// 本地文件缓存管理器
 open class PbDataCacheFile
 {
-    //fileManager:文件管理器
+    /// 文件管理器
     let fileManager:FileManager=FileManager.default
     
-    //rootPath:文件根目录
+    /// 文件根目录
     var rootPath:String=""
     
-    //cachePath:记录缓存目录
+    /// 记录缓存目录
     var cachePath:String=""
     
-    //expireTime:缓存过期时间
+    /// 缓存过期时间
     var expireTime:TimeInterval=0
     
-    /*init:
-     *初始化
-     */
+    /// 初始化
+    /// - parameter cachePathName:缓存目录名称
     public init(cachePathName:String)
     {
         //获取用户缓存目录
@@ -42,9 +42,8 @@ open class PbDataCacheFile
         }
     }
     
-    /*createSubCachePath:
-     *  创建缓存子目录
-     */
+    /// 创建缓存子目录
+    /// - parameter subCacheName:子目录名称
     open func createSubCachePath(_ subCacheName:String)
     {
         let subCache=NSString(string:cachePath).appendingPathComponent(subCacheName)
@@ -57,9 +56,9 @@ open class PbDataCacheFile
         }
     }
     
-    /*dataForKey:
-     *  获取指定标示对应的本地数据
-     */
+    /// 获取指定标示对应的本地数据
+    /// - parameter key:文件标识
+    /// - parameter subPath:所属子目录
     open func dataForKey(_ key:String,subPath:String) -> Data?
     {
         var path=NSString(string:cachePath).appendingPathComponent(subPath)
@@ -87,18 +86,19 @@ open class PbDataCacheFile
         return result
     }
     
-    /*setData:
-     *  存入本地数据
-     */
+    /// 存入本地数据
+    /// - parameter data:文件数据
+    /// - parameter key:文件标识
+    /// - parameter subPath:所属子目录
     open func setData(_ data:Data,key:String,subPath:String)
     {
         let path=self.removeDataForKey(key, subPath: subPath)
         try? data.write(to: URL(fileURLWithPath: path), options: [.atomic])
     }
     
-    /*removeDataForKey:
-     *  删除本地数据
-     */
+    /// 删除本地数据
+    /// - parameter key:文件标识
+    /// - parameter subPath:所属子目录
     open func removeDataForKey(_ key:String,subPath:String) -> String
     {
         var path=NSString(string:cachePath).appendingPathComponent(subPath)
@@ -115,9 +115,8 @@ open class PbDataCacheFile
         return path
     }
     
-    /*clearDataForSubPath:
-     *  清除子目录数据
-     */
+    /// 清除子目录数据
+    /// - parameter subPath:子目录
     open func clearDataForSubPath(_ subPath:String)
     {
         let path=NSString(string:cachePath).appendingPathComponent(subPath)
@@ -131,9 +130,8 @@ open class PbDataCacheFile
         }
     }
     
-    /*sizeOfSubPath:
-     *  获取子目录的数据大小
-     */
+    /// 获取子目录的数据大小
+    /// - parameter subPath:子目录
     open func sizeOfSubPath(_ subPath:String) -> UInt64
     {
         var result:UInt64=0

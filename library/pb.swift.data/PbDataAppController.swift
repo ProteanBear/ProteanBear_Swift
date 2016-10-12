@@ -13,46 +13,51 @@ import CoreLocation
 import ReachabilitySwift
 import CryptoSwift
 
-/*PbDataUpdateMode:
- *  枚举类型，数据更新模式
+/**枚举类型，数据更新模式
+ * first:第一次载入数据
+ * update:更新数据
+ * nextPage:下一页数据
  */
 public enum PbDataUpdateMode:Int
 {
     case first,update,nextPage
 }
 
-/*PbDataGetMode:
- *  枚举类型，数据获取模式
+/**枚举类型，数据获取模式
+ * fromNet:网络获取
+ * fromLocalOrNet:先从缓存读取，无缓存则从网络读取
+ * fromLocal:本地缓存获取
  */
 public enum PbDataGetMode:Int
 {
     case fromNet,fromLocalOrNet,fromLocal
 }
 
-/*PbDataLocationMode:
-*  枚举类型，定位获取模式
-*/
+/**枚举类型，定位获取模式
+ * none:不获取
+ * inUse:使用时获取
+ * always:一直获取
+ */
 public enum PbDataLocationMode:Int
 {
     case none,inUse,always
 }
 
-//应用数据层控制器
+/// 应用数据层控制器
 open class PbDataAppController:NSObject,CLLocationManagerDelegate
 {
     /*-----------------------开始：静态常量*/
-    //KEY_RESPONSE:控制器返回内容
+    /// KEY_RESPONSE:控制器返回内容
     open static let KEY_RESPONSE="PbDataResponse"
-    //KEY_NETWORK:控制器返回内容-网络状态
+    /// KEY_NETWORK:控制器返回内容-网络状态
     open static let KEY_NETWORK="network"
-    //KEY_SUCCESS:控制器返回内容-请求状态
+    /// KEY_SUCCESS:控制器返回内容-请求状态
     open static let KEY_SUCCESS="success"
     /*-----------------------结束：静态常量*/
     
     /*-----------------------开始：静态方法，实现单例模式*/
     
-    open class var getInstance:PbDataAppController
-    {
+    open class var instance:PbDataAppController{
         return Inner.instance;
     }
     
@@ -68,76 +73,75 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     //调试定位信息
     fileprivate let logPre="PbDataAppController:";
     
-    //config:Plist保存的相关URL访问及数据存储的配置
+    /// config:Plist保存的相关URL访问及数据存储的配置
     var config=NSDictionary()
-    //服务地址(server)
+    /// 服务地址(server)
     var server=""
-    //备用服务地址(alterServer)
+    /// 备用服务地址(alterServer)
     var alterServer=""
-    //全局参数字典(global)
+    /// 全局参数字典(global)
     var global:NSDictionary?=NSDictionary()
-    //访问协议(netProtocol)
+    /// 访问协议(netProtocol)
     var netProtocol="HTTP"
-    //请求方式(method)
+    /// 请求方式(method)
     var method="POST"
-    //返回类型(responseType)
+    /// 返回类型(responseType)
     var responseType="JSON"
-    //超时时间(timeOut,单位为秒)
+    /// 超时时间(timeOut,单位为秒)
     var timeOut=10
-    //是否启用本地缓存(isActiveLocalCache)
+    /// 是否启用本地缓存(isActiveLocalCache)
     var isActiveLocalCache=true
-    //本地目录(cachePath)
+    /// 本地目录(cachePath)
     var cachePath="localCache"
-    //资源子目录(resourceSubPath)
+    /// 资源子目录(resourceSubPath)
     var resourceSubPath="resources"
-    //数据子目录(dataSubPath)
+    /// 数据子目录(dataSubPath)
     var dataSubPath="localData"
-    //超时时间(expireTime)
+    /// 超时时间(expireTime)
     var expireTime=0
-    //请求接口(interface)
+    /// 请求接口(interface)
     var interface:NSDictionary?
-    //本地菜单(localMenu)
-//    var localMenu:NSDictionary?
+    /// 本地菜单(localMenu)
+//     var localMenu:NSDictionary?
     
     /*网络情况记录*/
-    //reachability:网络连接测试对象
+    /// reachability:网络连接测试对象
     var reachability:Reachability!
-    //networkStatus:网络连接状态
+    /// networkStatus:网络连接状态
     var networkStatus=Reachability.NetworkStatus.notReachable{didSet{PbLog.debug(logPre+"NetworkStatus:网络状态:"+self.networkStatus.description)}}
     
     /*当前设备相关信息*/
-    //reachability:设备相关信息
+    /// reachability:设备相关信息
     var deviceParams:Dictionary<String,String>=Dictionary()
     
     /*应用处理器*/
-    //requester:请求处理器对象
+    /// requester:请求处理器对象
     var requester:PbDataRequester?
-    //parser:结果解析器对象
+    /// parser:结果解析器对象
     var parser:PbDataParser?
-    //cacheManager:缓存管理器对象
+    /// cacheManager:缓存管理器对象
     var cacheManager:PbDataCacheFile?
     
     /*定位相关*/
-    //locationManager:定位管理器对象
+    /// locationManager:定位管理器对象
     var locationManager:CLLocationManager?
-    //lastLocation:最新定位地址
+    /// lastLocation:最新定位地址
     var lastLocation:CLLocation?
     
     /*-----------------------结束：声明私有属性*/
     
     /*-----------------------开始：对象初始化相关方法*/
     
-    /*initWithPlistName:
-     *  使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
-     */
+    /// 使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
+    /// - parameter plistName:配置文件资源名称
     open func initWithPlistName(_ plistName:String)
     {
-        self.initWithPlistName(plistName, initLocationManager:PbDataLocationMode.inUse)
+        self.initWithPlistName(plistName, initLocationManager:.inUse)
     }
     
-    /*initWithPlistName:
-     *  使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
-     */
+    /// 使用配置文件初始化应用数据控制器，读取相应的URL访问及数据存储相关配置
+    /// - parameter plistName:配置文件资源名称
+    /// - parameter initLocationManager:初始化时开启定位
     open func initWithPlistName(_ plistName:String,initLocationManager:PbDataLocationMode)
     {
         /*载入plist配置文件*/
@@ -159,16 +163,14 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         self.createLocationManager(initLocationManager)
     }
     
-    /*reloadByPlistName:
-     *  重新载入配置文件并重新初始化内部处理器对象
-     */
+    /// 重新载入配置文件并重新初始化内部处理器对象
+    /// - parameter plistName:配置文件资源名称
     open func reloadByPlistName(_ plistName:String)
     {
     }
     
-    /*loadPlist:
-     *  载入指定的PList文件
-     */
+    /// 载入指定的PList文件
+    /// - parameter plistName:配置文件资源名称
     fileprivate func loadPlist(_ plistName:String)
     {
         //调试信息前缀
@@ -184,9 +186,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
     }
     
-    /*readConfig:
-     *  读取相应的配置信息
-     */
+    /// 读取相应的配置信息
     fileprivate func readConfig()
     {
         //调试信息前缀
@@ -278,9 +278,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         PbLog.debug(logPre+"结束配置信息读取")
     }
     
-    /*loadNetworkStatus:
-     *  判断当前的网络状态
-     */
+    /// 判断当前的网络状态
     fileprivate func loadNetworkStatus()
     {
         //调试信息前缀
@@ -301,17 +299,13 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         
     }
     
-    /*doWhenNetworkStatusChange:
-     *  网络状态变化时记录当前的状态
-     */
+    /// 网络状态变化时记录当前的状态
     func doWhenNetworkStatusChange(_ note:Notification)
     {
         self.networkStatus=reachability.currentReachabilityStatus
     }
     
-    /*createProcessObjects:
-     *  根据配置信息初始化当前的处理对象
-     */
+    /// 根据配置信息初始化当前的处理对象
     fileprivate func createProcessObjects()
     {
         /*根据配置信息初始化远程服务请求处理对象*/
@@ -347,9 +341,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
     }
     
-    /*loadDeviceInfo
-     *  载入设备相关信息
-     */
+    /// 载入设备相关信息
     fileprivate func loadDeviceInfo()
     {
         //获取当前设备
@@ -377,9 +369,8 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
 //        PbLog.debug(logPre+"loadDeviceInfo:应用版本:"+self.deviceParams["appVersion"]!)
     }
     
-    /*createLocationManager
-     *  创建并配置定位管理器对象
-     */
+    /// 创建并配置定位管理器对象
+    /// - parameter locationMode:指定定位模式
     fileprivate func createLocationManager(_ locationMode:PbDataLocationMode)
     {
         if((locationManager) == nil&&locationMode != PbDataLocationMode.none)
@@ -413,110 +404,91 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*-----------------------开始：业务处理相关方法*/
     
-    /*isNetworkConnected:
-     *  是否连接网络
-     */
+    /// 是否连接网络
     open func isNetworkConnected() -> Bool
     {
         return networkStatus != Reachability.NetworkStatus.notReachable
     }
     
-    /*isNetworkConnected:
-     *  是否连接网络
-     */
+    /// 是否连接网络
     open func isNetworkConnected(_ statusDescription:String) -> Bool
     {
         return statusDescription != Reachability.NetworkStatus.notReachable.description
     }
     
-    /*deviceUuid:
-     *  获取指定的设备唯一编号
-     */
-    open func deviceUuid() -> String
-    {
+    /// 获取指定的设备唯一编号
+    open var deviceUuid:String{
         return deviceParams["uuid"]!
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key       接口标识
-     * @params params    传递参数
-     * @params callback  回调方法
-     * @params getMode   请求模式，包括网络、本地缓存或网络、本地
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode)
+    /// 通过指定接口标识，获取对应的数据信息
+    /// - parameter key       :接口标识
+    /// - parameter params    :传递参数
+    /// - parameter callback  :回调方法
+    /// - parameter getMode   :请求模式，包括网络、本地缓存或网络、本地
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode)
     {
-        requestWithKey(key, params: params, callback: callback, getMode: getMode, property: nil,useAlterServer:false,dataType:false)
+        request(key, params: params, callback: callback, getMode: getMode, property: nil,useAlterServer:false,dataType:false)
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key       接口标识
-     * @params params    传递参数
-     * @params callback  回调方法
-     * @params getMode   请求模式，包括网络、本地缓存或网络、本地
-     * @params property  回传属性
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?)
+    /// 通过指定接口标识，获取对应的数据信息
+    /// - parameter key       :接口标识
+    /// - parameter params    :传递参数
+    /// - parameter callback  :回调方法
+    /// - parameter getMode   :请求模式，包括网络、本地缓存或网络、本地
+    /// - parameter property  :回传属性
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?)
     {
-        requestWithKey(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:false,dataType:false)
+        request(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:false,dataType:false)
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key              接口标识
-     * @params params           传递参数
-     * @params callback         回调方法
-     * @params getMode          请求模式，包括网络、本地缓存或网络、本地
-     * @params property         回传属性
-     * @params useAlterServer   是否使用备用服务地址
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,useAlterServer:Bool)
+    /// 通过指定接口标识，获取对应的数据信息
+    /// - parameter key              :接口标识
+    /// - parameter params           :传递参数
+    /// - parameter callback         :回调方法
+    /// - parameter getMode          :请求模式，包括网络、本地缓存或网络、本地
+    /// - parameter property         :回传属性
+    /// - parameter useAlterServer   :是否使用备用服务地址
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,useAlterServer:Bool)
     {
-        requestWithKey(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:useAlterServer,dataType:false)
+        request(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:useAlterServer,dataType:false)
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key              接口标识
-     * @params params           传递参数
-     * @params callback         回调方法
-     * @params getMode          请求模式，包括网络、本地缓存或网络、本地
-     * @params sourceType       是否数据上传类型
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,dataType:Bool)
+    ///  通过指定接口标识，获取对应的数据信息
+    /// - parameter key         :接口标识
+    /// - parameter params      :传递参数
+    /// - parameter callback    :回调方法
+    /// - parameter getMode     :请求模式，包括网络、本地缓存或网络、本地
+    /// - parameter sourceType  :是否数据上传类型
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,dataType:Bool)
     {
-        requestWithKey(key, params: params, callback: callback, getMode: getMode, property: nil,useAlterServer:false,dataType:dataType)
+        request(key, params: params, callback: callback, getMode: getMode, property: nil,useAlterServer:false,dataType:dataType)
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key              接口标识
-     * @params params           传递参数
-     * @params callback         回调方法
-     * @params getMode          请求模式，包括网络、本地缓存或网络、本地
-     * @params property         回传属性
-     * @params sourceType       是否数据上传类型
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,dataType:Bool)
+    /// 通过指定接口标识，获取对应的数据信息
+    /// - parameter key         :接口标识
+    /// - parameter params      :传递参数
+    /// - parameter callback    :回调方法
+    /// - parameter getMode     :请求模式，包括网络、本地缓存或网络、本地
+    /// - parameter property    :回传属性
+    /// - parameter sourceType  :是否数据上传类型
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,dataType:Bool)
     {
-        requestWithKey(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:false,dataType:dataType)
+        request(key, params: params, callback: callback, getMode: getMode, property: property,useAlterServer:false,dataType:dataType)
     }
     
-    /*requestWithKey:
-     *  通过指定接口标识，获取对应的数据信息
-     * @params key              接口标识
-     * @params params           传递参数
-     * @params callback         回调方法
-     * @params getMode          请求模式，包括网络、本地缓存或网络、本地
-     * @params property         回传属性
-     * @params useAlterServer   是否使用备用服务地址
-     * @params sourceType       是否数据上传类型
-     */
-    open func requestWithKey(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,useAlterServer:Bool,dataType:Bool)
+    ///通过指定接口标识，获取对应的数据信息
+    /// - parameter key              :接口标识
+    /// - parameter params           :传递参数
+    /// - parameter callback         :回调方法
+    /// - parameter getMode          :请求模式，包括网络、本地缓存或网络、本地
+    /// - parameter property         :回传属性
+    /// - parameter useAlterServer   :是否使用备用服务地址
+    /// - parameter sourceType       :是否数据上传类型
+    open func request(_ key:String,params:NSDictionary,callback:@escaping (_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,getMode:PbDataGetMode,property:NSDictionary?,useAlterServer:Bool,dataType:Bool)
     {
         //调试信息前缀
-        let curLogPre=logPre+"requestWithKey:"
+        let curLogPre=logPre+"request:"
         
         //根据指定的接口标示获取接口信息
         let attributes=interface?.object(forKey: key) as! NSDictionary
@@ -594,18 +566,17 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
     }
     
-    /*imageInLocalCache:
-     *  读取本地缓存的图片
-     */
+    /// 读取本地缓存的图片
+    /// - parameter imageUrl:图片的链接地址
     open func imageInLocalCache(_ imageUrl:String) -> UIImage?
     {
         let data=cacheManager?.dataForKey(imageUrl.md5(),subPath:resourceSubPath)
         return (data == nil) ? nil : UIImage(data:data!)
     }
     
-    /*saveImageIntoLocalCache:
-     *  写入图片到本地缓存中
-     */
+    /// 写入图片到本地缓存中
+    /// - parameter imageData:图片数据
+    /// - parameter forUrl:对应的链接地址
     open func saveImageIntoLocalCache(_ imageData:Data,forUrl:String)
     {
         if(isActiveLocalCache)
@@ -614,9 +585,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         }
     }
     
-    /*sizeOfCacheDataInLocal:
-     *  获取本地缓存数据大小
-     */
+    /// 获取本地缓存数据大小
     open func sizeOfCacheDataInLocal() -> String
     {
         var size:UInt64=0
@@ -648,9 +617,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         return result
     }
     
-    /*clearCacheDataInLocal:
-     *  清理缓存数据
-     */
+    /// 清理缓存数据
     open func clearCacheDataInLocal() -> String
     {
         cacheManager?.clearDataForSubPath(dataSubPath)
@@ -658,9 +625,8 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         return self.sizeOfCacheDataInLocal()
     }
     
-    /*fullUrl:
-     *  获取完整路径
-     */
+    /// 获取完整路径
+    /// - parameter url:链接地址
     open func fullUrl(_ url:String) -> String
     {
         return url.hasPrefix("http:") ? url:(self.server+url)
@@ -669,9 +635,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*-----------------------开始：业务处理相关私有方法*/
     
-    /*handleResponse
-     *  处理返回数据内容
-     */
+    /// 处理返回数据内容
     fileprivate func handleResponse(_ data:Data?,callback:(_ data:NSDictionary?,_ error:NSError?,_ property:NSDictionary?) -> Void,error:NSError?,property:NSDictionary?)
     {
         var response:NSMutableDictionary? = parser?.dictionaryByData(data)
@@ -688,9 +652,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     
     /*-----------------------开始：实现CLLocationManagerDelegate委托*/
     
-    /*locationManager:didUpdateToLocation:
-     *  更新到最新的位置
-     */
+    // 更新到最新的位置
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         lastLocation=locations[locations.count-1]

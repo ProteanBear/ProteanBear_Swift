@@ -9,44 +9,49 @@
 import Foundation
 import UIKit
 
+/// 实现UIViewController中的扩展协议，创建网格视图父类，增加数据绑定载入方法
 open class PbUICollectionViewController:UICollectionViewController,PbUICollectionViewControllerProtocol,PbUIRefreshConfigProtocol
 {
-    //loadCellIdentifier
+    /// loadCellIdentifier
     open let loadCellIdentifier="PbUICollectionViewLoadCell"
     
-    //collectionData:记录当前的网格使用数据
+    /// 记录当前的网格使用数据
     open var collectionData:NSMutableArray?
-    //dataAdapter:当前使用的数据适配器
+    /// 当前使用的数据适配器
     open var dataAdapter:PbDataAdapter?
-    //loadCollectionCell:底部载入单元格
+    /// 底部载入单元格
     open var loadCollectionCell:PbUICollectionViewCellForLoad?
-    //photoData:记录表格对应的列表
+    /// 记录表格对应的列表
     open var photoData=[IndexPath:PbDataPhotoRecord]()
-    //photoManager:图片载入管理器对象
+    /// 图片载入管理器对象
     open lazy var photoManager=PbDataPhotoManager(downloadMaxCount:1)
     
     /*-----------------------开始：公共方法*/
     
-    //pbLoadData:获取数据
+    /// 获取数据
+    /// - parameter updateMode:数据更新模式，包括第一次、更新和翻页
     open func pbLoadData(_ updateMode:PbDataUpdateMode)
     {
         if(self.dataAdapter == nil){self.dataAdapter=PbDataAdapter(delegate: self)}
         self.dataAdapter?.loadData(updateMode)
     }
     
-    //pbPhotoKeyInIndexPath:返回单元格中的网络图片标识（不设置则无网络图片下载任务）
+    /// 返回单元格中的网络图片标识（不设置则无网络图片下载任务）
+    /// - parameter indexPath:单元格位置索引
     open func pbPhotoKeyInIndexPath(_ indexPath:IndexPath) -> String?
     {
         return nil
     }
     
-    //pbPhotoUrlInIndexPath:返回单元格中的网络图片链接（不设置则无网络图片下载任务）
+    /// 返回单元格中的网络图片链接（不设置则无网络图片下载任务）
+    /// - parameter indexPath   :单元格位置索引
+    /// - parameter data        :位置对应的数据
     open func pbPhotoUrlInIndexPath(_ indexPath:IndexPath, data: AnyObject?) -> String?
     {
         return nil
     }
     
-    //pbSetQueueForDisplayRow:设置下载图片的序列，只下载显示区域内的图片
+    /// 设置下载图片的序列，只下载显示区域内的图片
     open func pbSetQueueForDisplayRow()
     {
         if let pathArray = self.collectionView?.indexPathsForVisibleItems
@@ -86,7 +91,9 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbAddPhotoTaskToQueue:添加图片下载任务到队列
+    /// 添加图片下载任务到队列
+    /// - parameter indexPath   :单元格位置索引
+    /// - parameter data        :位置对应的数据
     open func pbAddPhotoTaskToQueue(_ indexPath:IndexPath,data:AnyObject?)
     {
         if let record=self.photoData[indexPath]
@@ -108,13 +115,18 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbGetPhotoImageSize:获取指定位置的图片尺寸
+    /// 获取指定位置的图片尺寸
+    /// - parameter indexPath   :单元格位置索引
+    /// - parameter data        :位置对应的数据
     open func pbGetPhotoImageSize(_ indexPath:IndexPath,data:AnyObject?) -> CGSize?
     {
         return nil
     }
     
-    //pbImageFilterForCell:设置图片载入滤镜处理
+    /// 设置图片载入滤镜处理
+    /// - parameter image       :图片
+    /// - parameter indexPath   :单元格位置索引
+    /// - parameter data        :位置对应的数据
     open func pbImageFilterForCell(_ image:UIImage,indexPath:IndexPath,data:AnyObject?) -> UIImage?
     {
         if let size=self.pbGetPhotoImageSize(indexPath, data: data)
@@ -127,7 +139,8 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         return nil
     }
     
-    //pbFullUrlForDataLoad:根据给定的路径获取全路径
+    /// 根据给定的路径获取全路径
+    /// - parameter url:链接地址
     open func pbFullUrlForDataLoad(_ url:String?) -> String?
     {
         var result=url
@@ -140,14 +153,15 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
             }
             else
             {
-                result=PbDataAppController.getInstance.server+result!
+                result=PbDataAppController.instance.server+result!
             }
         }
         
         return result
     }
     
-    //pbIsLoadCellForDataLoad:是否是显示载入单元格
+    /// 是否是显示载入单元格
+    /// - parameter indexPath   :单元格位置索引
     open func pbIsLoadCellForDataLoad(_ indexPath:IndexPath) -> Bool
     {
         return self.pbSupportFooterLoad() && (indexPath as NSIndexPath).row == self.collectionData?.count
@@ -157,7 +171,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
     
     /*-----------------------开始：实现PbUICollectionViewControllerProtocol*/
     
-    //pbDoInitForDataLoad:数据适配器初始化时调用
+    // 数据适配器初始化时调用
     open func pbDoInitForDataLoad(_ delegate:PbUIViewControllerProtocol?)
     {
         //增加顶部刷新视图
@@ -186,32 +200,32 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbKeyForDataLoad:返回当前数据访问使用的链接标识
+    // 返回当前数据访问使用的链接标识
     open func pbKeyForDataLoad() -> String?
     {
         return nil
     }
     
-    //pbParamsForDataLoad:返回当前数据访问使用的参数
+    // 返回当前数据访问使用的参数
     open func pbParamsForDataLoad(_ updateMode:PbDataUpdateMode) -> NSMutableDictionary?
     {
         return NSMutableDictionary()
     }
     
-    //pbPageKeyForDataLoad:返回当前数据访问使用的页码参数名称
+    // 返回当前数据访问使用的页码参数名称
     open func pbPageKeyForDataLoad() -> String
     {
         return "page"
     }
     
-    //pbPropertyForDataLoad:设置数据请求回执附带属性
+    // 设置数据请求回执附带属性
     //请求返回时附带页码参数
     open func pbPropertyForDataLoad(_ updateMode:PbDataUpdateMode) -> NSDictionary?
     {
         return nil
     }
     
-    //pbWillRequestForDataLoad:开始请求前处理
+    // 开始请求前处理
     open func pbWillRequestForDataLoad(_ updateMode:PbDataUpdateMode)
     {
         if(self.pbSupportHeaderRefresh())
@@ -220,24 +234,24 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbErrorForDataLoad:出现访问错误时调用
+    // 出现访问错误时调用
     open func pbErrorForDataLoad(_ type:PbUIViewControllerErrorType,error:String)
     {
     }
     
-    //pbResolveFromResponse:解析处理返回的数据
+    // 解析处理返回的数据
     open func pbResolveFromResponse(_ response:NSDictionary) -> AnyObject?
     {
         return nil
     }
     
-    //pbResolveFromResponse:解析处理返回的数据
+    // 解析处理返回的数据
     open func pbResolveFromResponse(_ response:NSDictionary,updateMode:PbDataUpdateMode) -> AnyObject?
     {
         return nil
     }
     
-    //pbDoUpdateForDataLoad:执行更新类相关返回后的处理
+    // 执行更新类相关返回后的处理
     open func pbDoUpdateForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         if(response == nil){return}
@@ -260,7 +274,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbDoInsertForDataLoad:执行增量类相关返回后的处理
+    // 执行增量类相关返回后的处理
     open func pbDoInsertForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         let newData=response as? NSArray
@@ -298,12 +312,12 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbDoUIDisplayForDataLoad:执行相关返回后的视图更新处理
+    // 执行相关返回后的视图更新处理
     open func pbDoUIDisplayForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
     }
     
-    //pbDoEndForDataLoad:执行数据载入结束后的处理
+    // 执行数据载入结束后的处理
     open func pbDoEndForDataLoad(_ response:AnyObject?,updateMode:PbDataUpdateMode,property:NSDictionary?)
     {
         //结束顶部视图载入状态
@@ -319,19 +333,19 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         }
     }
     
-    //pbAutoUpdateAfterFirstLoad:初次载入后是否立即更新
+    // 初次载入后是否立即更新
     open func pbAutoUpdateAfterFirstLoad() -> Bool
     {
         return true
     }
     
-    //pbSectionForInsertData:放回插入数据时对应的分组值
+    // 放回插入数据时对应的分组值
     func pbSectionForInsertData() -> Int
     {
         return 0
     }
     
-    //pbSupportActivityIndicator:是否支持载入显示器
+    // 是否支持载入显示器
     open func pbSupportActivityIndicator() -> PbUIActivityIndicator?
     {
         let indicator=PbUIRingSpinnerCoverView(frame:CGRect(x: 0, y: 0, width: 2000, height: 2000))
@@ -347,43 +361,43 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         return indicator
     }
     
-    //pbSupportHeaderRefresh:是否支持表格顶部刷新
+    // 是否支持表格顶部刷新
     open func pbSupportHeaderRefresh() -> Bool
     {
         return true
     }
     
-    //pbSupportHeaderRefreshColor:表格顶部刷新的颜色
+    // 表格顶部刷新的颜色
     open func pbSupportHeaderRefreshColor() -> UIColor?
     {
         return nil
     }
     
-    //pbSupportFooterLoad:是否支持表格底部载入
+    // 是否支持表格底部载入
     open func pbSupportFooterLoad() -> Bool
     {
         return true
     }
     
-    //pbSupportFooterLoadType:返回表格底部载入类型
+    // 返回表格底部载入类型
     open func pbSupportFooterLoadType() -> PbUIViewType
     {
         return PbUIViewType.auto
     }
     
-    //pbSupportFooterLoadColor:表格底部载入主题颜色（tiniColor）
+    // 表格底部载入主题颜色（tiniColor）
     open func pbSupportFooterLoadColor() -> UIColor?
     {
         return nil
     }
     
-    //pbResolveDataInIndexPath:获取指定单元格位置的数据
+    // 获取指定单元格位置的数据
     open func pbResolveDataInIndexPath(_ indexPath:IndexPath) -> AnyObject?
     {
         return nil
     }
     
-    //pbLoadCellInIndexPath:获取指定的载入指示器
+    // 获取指定的载入指示器
     open func pbLoadCellInIndexPath(_ indexPath:IndexPath) -> UICollectionViewCell?
     {
         var result:UICollectionViewCell?
@@ -405,25 +419,25 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         return nil
     }
     
-    //pbIdentifierForCollectionView:返回指定位置的单元格标识
+    // 返回指定位置的单元格标识
     open func pbIdentifierForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> String
     {
         return "PbUICollectionViewDataCell"
     }
     
-    //pbNibNameForCollectionView:返回指定位置单元格使用的资源文件
+    // 返回指定位置单元格使用的资源文件
     open func pbNibNameForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> String?
     {
         return nil
     }
     
-    //pbCellClassForCollectionView:返回指定位置单元格的类
+    // 返回指定位置单元格的类
     open func pbCellClassForCollectionView(_ indexPath:IndexPath,data:AnyObject?) -> AnyClass?
     {
         return nil
     }
     
-    //pbSetDataForCollectionView:设置表格数据显示
+    // 设置表格数据显示
     open func pbSetDataForCollectionView(_ cell:AnyObject,data:AnyObject?,photoRecord:PbDataPhotoRecord?,indexPath:IndexPath) -> AnyObject
     {
         return cell
@@ -433,7 +447,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
     
     /*-----------------------开始：实现UICollectionViewDataSource*/
     
-    //collectionView:numberOfItemsInSection:返回每节网格内的网格数
+    // 返回每节网格内的网格数
     override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         var result=0
@@ -451,7 +465,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         return result
     }
     
-    //collectionView:cellForItemAtIndexPath:返回每节每个网格的单元样式
+    // 返回每节每个网格的单元样式
     override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         var result:UICollectionViewCell?
@@ -531,14 +545,14 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
     
     /*-----------------------开始：实现UIScrollViewDelegate*/
     
-    //scrollViewWillBeginDragging:滚动视图开始拖动
+    // 滚动视图开始拖动
     override open func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
     {
         //挂起全部图片载入任务
         self.photoManager.downloadPauseAll()
     }
     
-    //scrollViewDidEndDragging:滚动视图结束拖动
+    // 滚动视图结束拖动
     override open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
     {
         //只载入显示区域内的图片
@@ -547,7 +561,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         self.photoManager.downloadResumeAll()
     }
     
-    //scrollViewDidEndDecelerating:滚动视图结束减速
+    // 滚动视图结束减速
     override open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
     {
         //只载入显示区域内的图片

@@ -8,9 +8,11 @@
 
 import Foundation
 
+/// Json格式的数据解析器
 open class PbDataParserJson: PbDataParser
 {
-    //dictionaryByData:通过数据获取数据字典对象
+    /// 通过数据获取数据字典对象
+    /// - parameter data:解析的数据
     open func dictionaryByData(_ data:Data?) -> NSMutableDictionary?
     {
         //调试信息前缀
