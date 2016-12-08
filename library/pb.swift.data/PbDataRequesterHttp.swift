@@ -9,30 +9,57 @@
 import Foundation
 import UIKit
 
-open class PbDataRequesterHttp:PbDataRequester
+open class PbDataRequesterHttp:NSObject,PbDataRequester,URLSessionDelegate
 {
-    //boundary:自定义上传数据体时的分隔符
+    ///自定义上传数据体时的分隔符
     let boundary="AaB03x"
 
-    //isGet:请求方式（Get或Post，Get方式为true，默认为Post）
+    ///请求方式（Get或Post，Get方式为true，默认为Post）
     var isGet:Bool=true
     
-    //init:初始化
-    public init(){}
+    ///https协议下使用的服务端证书
+    var certNameOfServer=""
+    ///https协议下使用的客户端证书
+    var certNameOfClient=""
+    ///https协议下使用的客户端证书访问密码
+    var certPassOfClient=""
     
-    //init:初始化
+    ///init:初始化
+    public override init(){}
+    
+    ///init:初始化
+    /// - parameter isGet:是否Get方式发送请求
     public init(isGet:Bool)
     {
         self.isGet=isGet
     }
     
-    //request:发送请求,默认为非上传资源
+    ///init:初始化
+    /// - parameter isGet:              是否Get方式发送请求
+    /// - parameter certNameOfServer:   https双向认证中服务端证书的名称（不包含.cer）
+    /// - parameter certNameOfClient:   https双向认证中客户端证书的名称（不包含.p12）
+    public init(isGet:Bool,certNameOfServer:String,certNameOfClient:String,certPassOfClient:String)
+    {
+        self.isGet=isGet
+        self.certNameOfServer=certNameOfServer
+        self.certNameOfClient=certNameOfClient
+        self.certPassOfClient=certPassOfClient
+    }
+    
+    /// 发送请求，并返回数据
+    /// - parameter address :请求地址
+    /// - parameter data :请求数据
+    /// - parameter callback :请求后的返回处理
     open func request(_ address:String,data:NSDictionary,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     {
         self.request(address, data: data, callback: callback, isMultipart: false)
     }
     
-    //request:发送请求，设置是否上传资源数据
+    /// 发送请求上传资源数据，并返回数据
+    /// - parameter address :请求地址
+    /// - parameter data :请求数据
+    /// - parameter callback :请求后的返回处理
+    /// - parameter isMultipart:是否为数据上传模式
     open func request(_ address:String,data:NSDictionary,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void,isMultipart:Bool)
     {
         if(isMultipart)
@@ -52,11 +79,13 @@ open class PbDataRequesterHttp:PbDataRequester
         }
     }
     
-    //requestForResource:发送请求，获取资源数据
+    /// 发送请求，获取资源数据
+    /// - parameter address :请求地址
+    /// - parameter callback :请求后的返回处理
     open func requestForResource(_ address:String,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     {
         //创建Session
-        let session = URLSession.shared
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
         //创建请求对象
         var request = URLRequest(url: URL(string:address)!)
@@ -81,7 +110,8 @@ open class PbDataRequesterHttp:PbDataRequester
         task.resume()
     }
     
-    //paramsString:获取当前请求参数的字符串格式
+    /// 获取当前请求参数的字符串格式
+    /// - parameter params :请求参数
     open func paramString(_ params:NSDictionary?)->String
     {
         if((params) == nil){return ""}
@@ -114,11 +144,14 @@ open class PbDataRequesterHttp:PbDataRequester
         return result;
     }
     
-    //get:创建GET方式请求
+    /// get:创建GET方式请求
+    /// - parameter address :请求地址
+    /// - parameter data :请求数据
+    /// - parameter callback :请求后的返回处理
     fileprivate func get(_ address:String,data:NSDictionary,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     {
         //创建Session
-        let session = URLSession.shared
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
         //重设GET传参的URL
         let url=address+"?"+self.paramString(data)
@@ -146,11 +179,14 @@ open class PbDataRequesterHttp:PbDataRequester
         task.resume()
     }
     
-    //post:创建POST方式请求
+    /// post:创建POST方式请求
+    /// - parameter address :请求地址
+    /// - parameter data :请求数据
+    /// - parameter callback :请求后的返回处理
     fileprivate func post(_ address:String,data:NSDictionary,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     {
         //创建Session
-        let session = URLSession.shared
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
         //创建请求对象
         var request = URLRequest(url: URL(string: address)!)
@@ -179,9 +215,12 @@ open class PbDataRequesterHttp:PbDataRequester
         task.resume()
     }
     
-    //upload:创建POST方式请求，上传文件内容
-    // HTTP 头 开始 Content-Type: multipart/form-data; boundary=PitayaUGl0YXlh 
-    // HTTP 头 结束 
+    ///upload:创建POST方式请求，上传文件内容
+    /// - parameter address :请求地址
+    /// - parameter data :请求数据
+    /// - parameter callback :请求后的返回处理
+    // HTTP 头 开始 Content-Type: multipart/form-data; boundary=PitayaUGl0YXlh
+    // HTTP 头 结束
     /* HTTP Body 开始
      格式示例：
      Content-type: multipart/form-data, boundary=AaB03x
@@ -205,7 +244,7 @@ open class PbDataRequesterHttp:PbDataRequester
     fileprivate func upload(_ address:String,data:NSDictionary,callback:@escaping (_ data:Data?,_ response:AnyObject?,_ error:NSError?) -> Void)
     {
         //创建Session
-        let session = URLSession.shared
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
         //创建请求对象
         var request = URLRequest(url: URL(string: address)!)
@@ -296,5 +335,77 @@ open class PbDataRequesterHttp:PbDataRequester
             
         })
         task.resume()
+    }
+    
+    /// 处理https协议的证书
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        //认证服务端证书
+        if(challenge.protectionSpace.authenticationMethod==NSURLAuthenticationMethodServerTrust)
+        {
+            let serverTrust:SecTrust = challenge.protectionSpace.serverTrust!
+            let certificate = SecTrustGetCertificateAtIndex(serverTrust, 0)!
+            let remoteCertificateData
+                = CFBridgingRetain(SecCertificateCopyData(certificate))!
+            let cerPath = Bundle.main.path(forResource: certNameOfServer,ofType: "cer")!
+            let localCertificateData = NSData(contentsOfFile:cerPath)!
+            
+            if (remoteCertificateData.isEqual(localCertificateData as Data) == true) {
+                let credential = URLCredential(trust: serverTrust)
+                challenge.sender?.use(credential,for: challenge)
+                completionHandler(.useCredential,URLCredential(trust: challenge.protectionSpace.serverTrust!))
+                
+            }
+            else
+            {
+                completionHandler(.cancelAuthenticationChallenge, nil)
+            }
+        }
+        //认证客户端证书
+        else if(challenge.protectionSpace.authenticationMethod==NSURLAuthenticationMethodClientCertificate)
+        {
+            var securityError:OSStatus = errSecSuccess
+            
+            let path: String = Bundle.main.path(forResource: certNameOfClient, ofType: "p12")!
+            let PKCS12Data = NSData(contentsOfFile:path)!
+            let key : NSString = kSecImportExportPassphrase as NSString
+            let options : NSDictionary = [key : certPassOfClient]
+            
+            var items : CFArray?
+            securityError = SecPKCS12Import(PKCS12Data, options, &items)
+            
+            if securityError == errSecSuccess {
+                let certItems:CFArray = items as CFArray!
+                let certItemsArray:Array = certItems as Array
+                let dict:AnyObject? = certItemsArray.first
+                let secIdentityRef:SecIdentity
+                let chainPointer:AnyObject?
+                
+                if let certEntry:Dictionary = dict as? Dictionary<String, AnyObject>
+                {
+                    let identityPointer:AnyObject? = certEntry["identity"]
+                    secIdentityRef = identityPointer as! SecIdentity!
+                    chainPointer = certEntry["chain"]
+                    let urlCredential = URLCredential(
+                        identity: secIdentityRef,
+                        certificates: chainPointer as? [AnyObject],
+                        persistence: URLCredential.Persistence.forSession)
+                    completionHandler(.useCredential, urlCredential)
+                }
+                else
+                {
+                    completionHandler(.cancelAuthenticationChallenge,nil)
+                }
+            }
+            else
+            {
+                completionHandler(.cancelAuthenticationChallenge,nil)
+            }
+        }
+        //其他情况不接受认证
+        else
+        {
+            completionHandler(.cancelAuthenticationChallenge,nil)
+        }
     }
 }

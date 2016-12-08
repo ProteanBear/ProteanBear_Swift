@@ -82,13 +82,19 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     /// 全局参数字典(global)
     var global:NSDictionary?=NSDictionary()
     /// 访问协议(netProtocol)
-    var netProtocol="HTTP"
+    var netProtocol="HTTPS"
     /// 请求方式(method)
     var method="POST"
     /// 返回类型(responseType)
     var responseType="JSON"
     /// 超时时间(timeOut,单位为秒)
     var timeOut=10
+    /// HTTPS协议下服务端的证书资源名称
+    var certNameOfServer=""
+    /// HTTPS协议下客户端的证书资源名称
+    var certNameOfClient=""
+    /// HTTPS协议下客户端的证书访问密码
+    var certPassOfClient=""
     /// 是否启用本地缓存(isActiveLocalCache)
     var isActiveLocalCache=true
     /// 本地目录(cachePath)
@@ -234,9 +240,23 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
                 responseType=communication.object(forKey: "responseType") as! String
                 PbLog.debug(logPre+"返回类型:"+responseType)
                 //超时时间(timeOut)
-                timeOut=communication.object(forKey: "timeOut") as! Int;
+                timeOut=communication.object(forKey: "timeOut") as! Int
                 PbLog.debug(logPre+"超时时间:"+timeOut.description)
-                //是否使用Cookie-Session处理
+                //HTTPS协议下服务端的证书资源名称
+                if let name=communication.object(forKey: "certNameOfServer")
+                {
+                    certNameOfServer=name as! String
+                }
+                //HTTPS协议下客户端的证书资源名称
+                if let name=communication.object(forKey: "certNameOfClient")
+                {
+                    certNameOfClient=name as! String
+                }
+                //HTTPS协议下客户端的证书访问密码
+                if let name=communication.object(forKey: "certPassOfClient")
+                {
+                    certPassOfClient=name as! String
+                }
             }
             
             //文件缓存(localCache)
@@ -314,6 +334,12 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         {
             self.requester=PbDataRequesterHttp(isGet: method=="GET")
             PbLog.debug(logPre+"createProcessObjects:应用处理器:"+"HTTP请求处理器")
+        }
+        //https协议
+        if(netProtocol=="HTTPS")
+        {
+            self.requester=PbDataRequesterHttp(isGet: method=="GET", certNameOfServer: certNameOfServer, certNameOfClient: certNameOfClient, certPassOfClient: certPassOfClient)
+            PbLog.debug(logPre+"createProcessObjects:应用处理器:"+"HTTPS请求处理器")
         }
         
         /*根据配置信息初始化远程服务结果处理对象*/
