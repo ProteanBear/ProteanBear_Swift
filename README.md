@@ -4,6 +4,10 @@
 
         使用Swift语言开发的用于开发iOS应用的轻量级框架库，包含了通用类方法扩展、网络数据访问以及扩展视图控制器等，方便应用快速开发。现在已经修改为Swift3.0语法。
 
+### 更新日志
+
+1.0.2 - 增加对HTTPS协议访问网络的支持（使用时只修改DataConfig.plist配置文件即可，详细见[这里](#应用数据层控制器pbdataappcontroller)）
+
 
 ### 目录索引
 
@@ -329,26 +333,29 @@ PbDataAppController.instance.initWithPlistName("DataConfig",initLocationManager:
 
 1、DataConfig.plist的配置
 
-| 名称                 | 类型         | 说明                      |
-| ------------------ | ---------- | ----------------------- |
-| Root               | Dictionary | 根                       |
-| — sever            | String     | 服务器地址【根据自己的服务地址修改】      |
-| — communication    | Dictionary | 通讯协议配置【建议不要修改】          |
-| —— protocol        | String     | 协议类型，目前仅支持HTTP          |
-| —— method          | String     | 传递方法，建议使用POST           |
-| —— responseType    | String     | 返回类型，目前仅支持JSON解析        |
-| —— timeOut         | Number     | 超时时间，默认为10秒             |
-| — localCache       | Dictionary | 本地文件缓存【建议不要修改】          |
-| —— isActive        | Boolean    | 是否激活，建议开启               |
-| —— cachePath       | String     | 文件缓存的文件夹名称              |
-| —— subResourcePath | String     | 缓存资源文件（图片）的文件夹名称        |
-| —— subDataPath     | String     | 缓存数据文件的文件夹名称            |
-| —— expireTime      | Number     | 缓存超时时间                  |
-| — interface        | Dictionary | 网络通信接口配置【这里可以根据自己的接口修改】 |
-| —— key1            | Dictionary | 接口名称【自己设置】              |
-| ——— url            | String     | 接口对应的URL相对地址            |
-| ——— params         | Dictionary | 接口传递的参数配置【此处设置静态参数】     |
-| ———— param1        | String     | 参数对应值【根据自己的接口设置】        |
+| 名称                  | 类型         | 说明                                       |
+| ------------------- | ---------- | ---------------------------------------- |
+| Root                | Dictionary | 根                                        |
+| — sever             | String     | 服务器地址【根据自己的服务地址修改】                       |
+| — communication     | Dictionary | 通讯协议配置【建议不要修改】                           |
+| —— protocol         | String     | 协议类型，目前仅支持HTTP和HTTPS（写为HTTPS时下面新增的证书名称配置才有效） |
+| —— method           | String     | 传递方法，建议使用POST                            |
+| —— responseType     | String     | 返回类型，目前仅支持JSON解析                         |
+| —— timeOut          | Number     | 超时时间，默认为10秒                              |
+| —— certNameOfServer | String     | *1.0.2新增，HTTPS协议下访问时服务端证书的资源名称(无.cer后缀)  |
+| —— certNameOfClient | String     | *1.0.2新增，HTTPS协议下访问时客户端证书的资源名称(无.p12后缀)  |
+| —— certPassOfServer | String     | *1.0.2新增，HTTPS协议下访问时服务端证书的资源名称(无.cer后缀)  |
+| — localCache        | Dictionary | 本地文件缓存【建议不要修改】                           |
+| —— isActive         | Boolean    | 是否激活，建议开启                                |
+| —— cachePath        | String     | 文件缓存的文件夹名称                               |
+| —— subResourcePath  | String     | 缓存资源文件（图片）的文件夹名称                         |
+| —— subDataPath      | String     | 缓存数据文件的文件夹名称                             |
+| —— expireTime       | Number     | 缓存超时时间                                   |
+| — interface         | Dictionary | 网络通信接口配置【这里可以根据自己的接口修改】                  |
+| —— key1             | Dictionary | 接口名称【自己设置】                               |
+| ——— url             | String     | 接口对应的URL相对地址                             |
+| ——— params          | Dictionary | 接口传递的参数配置【此处设置静态参数】                      |
+| ———— param1         | String     | 参数对应值【根据自己的接口设置】                         |
 
 2、调用示例
 
