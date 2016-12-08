@@ -379,8 +379,8 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
         self.deviceParams["deviceName"]=device.model
         self.deviceParams["deviceSystem"]=device.systemName
         self.deviceParams["deviceVersion"]=device.systemVersion
-        self.deviceParams["deviceWidth"]=(NSString(string:screen.applicationFrame.width.description).intValue).description
-        self.deviceParams["deviceHeight"]=(NSString(string:screen.applicationFrame.height.description).intValue).description
+        self.deviceParams["deviceWidth"]=(NSString(string:screen.bounds.width.description).intValue).description
+        self.deviceParams["deviceHeight"]=(NSString(string:screen.bounds.height.description).intValue).description
         self.deviceParams["deviceUuid"]=device.identifierForVendor!.uuidString.md5()
         
 //        self.deviceParams["appVersion"]=NSBundle.mainBundle().infoDictionary![kCFBundleVersionKey as String]!.description
