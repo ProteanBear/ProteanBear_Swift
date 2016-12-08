@@ -7,13 +7,19 @@
 	<key>communication</key>
 	<dict>
 		<key>protocol</key>
-		<string>HTTP</string>
+		<string>HTTPS</string>
 		<key>method</key>
 		<string>POST</string>
 		<key>responseType</key>
 		<string>JSON</string>
 		<key>timeOut</key>
 		<integer>10</integer>
+		<key>certNameOfServer</key>
+		<string>tomcat</string>
+		<key>certNameOfClient</key>
+		<string>mystore</string>
+		<key>certPassOfClient</key>
+		<string>123456</string>
 	</dict>
 	<key>localCache</key>
 	<dict>
