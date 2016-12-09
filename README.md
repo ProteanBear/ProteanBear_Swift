@@ -55,15 +55,17 @@
 
         使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
 
-        目前CocoaPods上的PbSwiftLibrary的最新版本是0.9.5，Swift2.3语法编写（其实本人想提交Swift3.0语法的但是老是报错……，将错就错还能有个区分吧╮(╯_╰)╭，另外0.9.5版本中跟当前版本很多方法名字有些区别，所以建议还是用最新版本！）。
+        目前CocoaPods上的PbSwiftLibrary的最新版本已经同步为1.0.2，Swift3.0语法。0.9.5版本为Swift2.3版本语法，不过不支持HTTPS协议，建议使用最新版本。
 
-        Master分支上为最新版本1.0.1，Swift3.0语法。
+        Master分支上为最新版本1.0.2，Swift3.0语法。
 
 ###### Swift2.3 Podfile：
 
-	pod 'PbSwiftLibrary'
-
+	pod 'PbSwiftLibrary','~> 0.9.5'
 ###### Swift3.0 Podfile:
+
+	pod 'PbSwiftLibrary','~> 1.0.2'
+###### 最新版本:
 
 	pod 'PbSwiftLibrary',:git => "https://github.com/ProteanBear/ProteanBear_Swift", :branch => "master"
         如果你的项目需要用到网络通讯和用户数据处理模块，则下载配置文件的模板（[DataConfig.plist](./library/pb.swift.basic/DataConfig.plist)、[UseData.plist](./library/pb.swift.basic/UserData.plist)）并拖到你的项目下，在AppDelegate中引入PbSwiftLibrary，并且在didFinishLaunchingWithOptions方法中添加如下内容：
