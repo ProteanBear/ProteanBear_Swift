@@ -6,6 +6,8 @@
 
 ### 更新日志
 
+1.0.3 - 修正增加HTTPS协议支持后，载入HTTPS协议下图片错误的问题
+
 1.0.2 - 增加对HTTPS协议访问网络的支持（使用时只修改DataConfig.plist配置文件即可，详细见[这里](#应用数据层控制器pbdataappcontroller)）
 
 
@@ -55,16 +57,16 @@
 
         使用CocoaPods安装即可快速使用PbSwiftLibrary，如果还没有安装CocoaPods请参见本人博文【[部署：Mac环境部署之iOS](https://github.com/ProteanBear/PbBlog/blob/master/deploy/deploy_mac_6_iOS.md)】。
 
-        目前CocoaPods上的PbSwiftLibrary的最新版本已经同步为1.0.2，Swift3.0语法。0.9.5版本为Swift2.3版本语法，不过不支持HTTPS协议，建议使用最新版本。
+        目前CocoaPods上的PbSwiftLibrary的最新版本已经同步为1.0.3，Swift3.0语法。0.9.5版本为Swift2.3版本语法，不过不支持HTTPS协议，建议使用最新版本。
 
-        Master分支上为最新版本1.0.2，Swift3.0语法。
+        Master分支上为最新版本1.0.3，Swift3.0语法。
 
 ###### Swift2.3 Podfile：
 
 	pod 'PbSwiftLibrary','~> 0.9.5'
 ###### Swift3.0 Podfile:
 
-	pod 'PbSwiftLibrary','~> 1.0.2'
+	pod 'PbSwiftLibrary','~> 1.0.3'
 ###### 最新版本:
 
 	pod 'PbSwiftLibrary',:git => "https://github.com/ProteanBear/ProteanBear_Swift", :branch => "master"
