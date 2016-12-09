@@ -655,7 +655,7 @@ open class PbDataAppController:NSObject,CLLocationManagerDelegate
     /// - parameter url:链接地址
     open func fullUrl(_ url:String) -> String
     {
-        return url.hasPrefix("http:") ? url:(self.server+url)
+        return url.hasPrefix("http") ? url:(self.server+url)
     }
     /*-----------------------结束：业务处理相关方法*/
     

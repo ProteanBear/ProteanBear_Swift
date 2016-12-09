@@ -54,7 +54,7 @@ extension UIImageView
     public func pbLoadWith(_ url:String,scale:Float?,lowMode:UIViewContentMode,overMode:UIViewContentMode)
     {
         //网络格式错误
-        if(!url.hasPrefix("http:"))
+        if(!url.hasPrefix("http"))
         {
             let image=UIImage(named: url)
             self.pbAnimation(image,scale:scale,lowMode:lowMode,overMode:overMode)
@@ -72,7 +72,8 @@ extension UIImageView
         //本地图片不存在，访问网络数据
         else
         {
-            PbDataRequesterHttp().requestForResource(url, callback: { (data, response, error) -> Void in
+            PbDataAppController.instance.requester?.requestForResource(url, callback: { (data, response, error) -> Void in
+                
                 if(data != nil)
                 {
                     //显示图片
