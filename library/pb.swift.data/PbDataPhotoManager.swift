@@ -56,24 +56,25 @@ open class PbDataPhotoDownloadOperate:Operation
         }
         else
         {
-            let data:Data?=try? Data(contentsOf: URL(string: photoRecord.url)!)
-            
-            if(data != nil && data!.count>0)
-            {
-                //更新下载记录状态
-                self.photoRecord.image=UIImage(data: data!)
-                self.photoRecord.state=PbDataPhotoState.downloaded
+            PbDataAppController.instance.requester?.requestForResource(photoRecord.url, callback: { (data, response, error) in
                 
-                PbLog.debug("PbDataPhotoDownloadOperate:main:下载图片("+self.photoRecord.url+")完成")
-                //记录图片到缓存
-                PbDataAppController.instance.saveImageIntoLocalCache(data!,forUrl:self.photoRecord.url)
-            }
-            else
-            {
-                //更新下载记录状态
-                self.photoRecord.image=UIImage(named:"default_failed")
-                self.photoRecord.state=PbDataPhotoState.failed
-            }
+                if(data != nil && data!.count>0)
+                {
+                    //更新下载记录状态
+                    self.photoRecord.image=UIImage(data: data!)
+                    self.photoRecord.state=PbDataPhotoState.downloaded
+                    
+                    PbLog.debug("PbDataPhotoDownloadOperate:main:下载图片("+self.photoRecord.url+")完成")
+                    //记录图片到缓存
+                    PbDataAppController.instance.saveImageIntoLocalCache(data!,forUrl:self.photoRecord.url)
+                }
+                else
+                {
+                    //更新下载记录状态
+                    self.photoRecord.image=UIImage(named:"default_failed")
+                    self.photoRecord.state=PbDataPhotoState.failed
+                }
+            })
         }
     }
 }

@@ -188,7 +188,7 @@ open class PbUITableViewController:UITableViewController,PbUITableViewController
         
         if(result != nil)
         {
-            if(result!.hasPrefix("http:"))
+            if(result!.hasPrefix("http"))
             {
                 
             }
