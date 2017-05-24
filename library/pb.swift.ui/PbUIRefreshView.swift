@@ -334,7 +334,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
                 
                     self.statusLabel.text = "松开立即刷新"
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.arrowView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+                        self.arrowView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
                     })
                     break
                 
@@ -484,7 +484,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
 //                    self.statusLabel.text = "加载更多";
 //                    if (PbUIRefreshState.Refreshing == oldState)
 //                    {
-//                        self.arrowView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+//                        self.arrowView.transform = CGAffineTransformMakeRotation(CGFloat.pi)
 //                        UIView.animateWithDuration(0.3, animations:
 //                        {
 //                            self.scrollView.contentInset.bottom = self.scrollViewOriginalInset.bottom
@@ -494,7 +494,7 @@ open class PbUIRefreshHeaderView:PbUIRefreshBaseView
 //                    {
 //                        UIView.animateWithDuration(0.3, animations:
 //                        {
-//                            self.arrowView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+//                            self.arrowView.transform = CGAffineTransformMakeRotation(CGFloat.pi);
 //                        })
 //                    }
 //                    

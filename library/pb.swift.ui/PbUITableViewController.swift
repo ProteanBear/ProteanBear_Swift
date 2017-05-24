@@ -365,7 +365,7 @@ open class PbUITableViewController:UITableViewController,PbUITableViewController
         if((newData != nil) && (newData!.count > 0))
         {
             //增加表格数据
-            self.tableData?.addObjects(from: newData as! [AnyObject])
+            self.tableData?.addObjects(from: newData! as [AnyObject])
             
             //设置表格动态增加索引
             let insertPaths=NSMutableArray(capacity:newData!.count)
