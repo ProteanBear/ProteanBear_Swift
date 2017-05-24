@@ -13,7 +13,7 @@ extension Double
     /// 度数转化为弧度
     /// - parameter degrees:度数值
     public var toRadians:Double{
-        return (M_PI * (self))/180.0
+        return (.pi * (self))/180.0
     }
 }
 

@@ -8,11 +8,11 @@
 
 /** String extension */
 extension String {
-    
+
     public func md5() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).md5().toHexString()
     }
-    
+
     public func sha1() -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha1().toHexString()
     }
@@ -33,7 +33,11 @@ extension String {
         return self.utf8.lazy.map({ $0 as UInt8 }).sha512().toHexString()
     }
 
-    public func crc32(seed: UInt32? = nil, reflect : Bool = true) -> String {
+    public func sha3(_ variant: SHA3.Variant) -> String {
+        return self.utf8.lazy.map({ $0 as UInt8 }).sha3(variant).toHexString()
+    }
+
+    public func crc32(seed: UInt32? = nil, reflect: Bool = true) -> String {
         return self.utf8.lazy.map({ $0 as UInt8 }).crc32(seed: seed, reflect: reflect).bytes().toHexString()
     }
 
@@ -41,11 +45,16 @@ extension String {
         return self.utf8.lazy.map({ $0 as UInt8 }).crc16(seed: seed).bytes().toHexString()
     }
 
-
     /// - parameter cipher: Instance of `Cipher`
     /// - returns: hex string of bytes
     public func encrypt(cipher: Cipher) throws -> String {
-        return try self.utf8.lazy.map({ $0 as UInt8 }).encrypt(cipher: cipher).toHexString()
+        return try Array(self.utf8).encrypt(cipher: cipher).toHexString()
+    }
+
+    /// - parameter cipher: Instance of `Cipher`
+    /// - returns: base64 encoded string of encrypted bytes
+    public func encryptToBase64(cipher: Cipher) throws -> String? {
+        return try Array(self.utf8).encrypt(cipher: cipher).toBase64()
     }
 
     // decrypt() does not make sense for String
@@ -53,12 +62,7 @@ extension String {
     /// - parameter authenticator: Instance of `Authenticator`
     /// - returns: hex string of string
     public func authenticate<A: Authenticator>(with authenticator: A) throws -> String {
-        return try self.utf8.lazy.map({ $0 as UInt8 }).authenticate(with: authenticator).toHexString()
+        return try Array(self.utf8).authenticate(with: authenticator).toHexString()
     }
     
-    #if !_runtime(_ObjC)
-    public func hasPrefix(_ prefix: String) -> Bool {
-        return prefix == String(self.characters.prefix(prefix.characters.count))
-    }
-    #endif
 }

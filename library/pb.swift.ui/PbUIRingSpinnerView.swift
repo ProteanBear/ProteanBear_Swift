@@ -64,7 +64,7 @@ open class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
         animation.keyPath="transform.rotation"
         animation.duration=1.0
         animation.fromValue=0.0
-        animation.toValue=2 * M_PI
+        animation.toValue=2 * Double.pi
         animation.repeatCount=Float(Int.max)
         animation.timingFunction=CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
         
@@ -99,8 +99,8 @@ open class PbUIRingSpinnerView:UIView,PbUIActivityIndicator
         let val2=self.bounds.height/2
         let redius:CGFloat=(val1<val2 ? val1:val2)-(self.processLayer.lineWidth/2)
         
-        let startAngle:CGFloat=CGFloat(-M_PI_4)
-        let endAngle:CGFloat=CGFloat(3 * M_PI_2)
+        let startAngle:CGFloat=(-CGFloat.pi)
+        let endAngle:CGFloat=3*CGFloat.pi
         
         let path=UIBezierPath(arcCenter: center, radius: redius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         self.processLayer.path=path.cgPath

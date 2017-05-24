@@ -243,7 +243,7 @@ class PbUIAnimatedPageControlIndicatorRotateRect:PbUIAnimatedPageControlIndicato
         let rectPath=UIBezierPath(rect: self.currentRect)
         
         let bounds = rectPath.cgPath.boundingBox
-        let radians = CGFloat(Double(self.index) * M_PI_2)
+        let radians = CGFloat(Double(self.index) * (Double.pi/2))
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         var transform = CGAffineTransform.identity
         transform = transform.translatedBy(x: center.x, y: center.y)

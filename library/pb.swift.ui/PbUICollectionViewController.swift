@@ -283,7 +283,7 @@ open class PbUICollectionViewController:UICollectionViewController,PbUICollectio
         if((newData != nil) && (newData!.count > 0))
         {
             //增加表格数据
-            self.collectionData?.addObjects(from: newData as! [AnyObject])
+            self.collectionData?.addObjects(from: newData! as [AnyObject])
             
             //设置表格动态增加索引
             let insertPaths=NSMutableArray(capacity:newData!.count)

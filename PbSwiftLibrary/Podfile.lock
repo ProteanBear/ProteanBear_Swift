@@ -1,5 +1,5 @@
 PODS:
-  - CryptoSwift (0.6.0)
+  - CryptoSwift (0.6.9)
   - ReachabilitySwift (3)
 
 DEPENDENCIES:
@@ -7,9 +7,9 @@ DEPENDENCIES:
   - ReachabilitySwift
 
 SPEC CHECKSUMS:
-  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  CryptoSwift: a22f6ba238e9ce4d26ee7bf45b9ed82e7122d4a0
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
 
 PODFILE CHECKSUM: 27b8d8ece69c42d1141fd614be1fdd2ae535bc6e
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

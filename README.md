@@ -6,6 +6,8 @@
 
 ### 更新日志
 
+1.0.4 - 更新语法到Swift3.1，去除M_PI
+
 1.0.3 - 修正增加HTTPS协议支持后，载入HTTPS协议下图片错误的问题
 
 1.0.2 - 增加对HTTPS协议访问网络的支持（使用时只修改DataConfig.plist配置文件即可，详细见[这里](#应用数据层控制器pbdataappcontroller)）
